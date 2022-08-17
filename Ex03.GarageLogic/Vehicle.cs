@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Ex03.GarageLogic
 {
-    internal class Vehicle
+    internal abstract class Vehicle
     {
         private readonly string r_Name;
         private readonly string r_LicensePlate;

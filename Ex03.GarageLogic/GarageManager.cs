@@ -3,19 +3,18 @@ using System.Collections.Generic;
 
 namespace Ex03.GarageLogic
 {
-    //======================================================
-    /**                 GarageManager                   **/
-    //======================================================
+    // ======================================================
+    //  ** GarageManager                   **/
+    // ======================================================
     public class GarageManager
     {
-
-        //======================================================
+        // ======================================================
         /** Default values vehicles that can enter the garage **/
-        //======================================================
+        // ======================================================
         // Default number of wheels
-        internal const byte k_MotorbikeNumOfWhell = 2;
-        internal const byte k_CarNumOfWhell = 4;
-        internal const byte k_TruckNumOfWhell = 16;
+        internal const byte k_MotorbikeNumOfWheels = 2;
+        internal const byte k_CarNumOfWheels = 4;
+        internal const byte k_TruckNumOfWheels = 16;
 
         // Default pressure values
         internal const byte k_MotorbikeMaxAirPressure = 31;
@@ -32,9 +31,9 @@ namespace Ex03.GarageLogic
         internal const float k_CarMaxBatteryTime = 4.5f;
 
         // Default Fuel tank contents
-        internal const float k_MotorbikeFuelTankContents = 5.4f;
-        internal const float k_CarFuelTankContents = 52f;
-        internal const float k_TruckFuelTankContents = 135f;
+        internal const float k_MotorbikeFuelTankCapacity = 5.4f;
+        internal const float k_CarFuelTankCapacity = 52f;
+        internal const float k_TruckFuelTankCapacity = 135f;
 
         // Default Truck Refrigerated
         internal const bool v_TruckRefrigerated = true;
@@ -45,28 +44,28 @@ namespace Ex03.GarageLogic
 
         private static readonly List<Vehicle> sr_ValidVehicles;
 
+        // make "Owner" object instead of "string" as KEY in dictionary (?)
+        private Dictionary<string, Vehicle> m_AllVehicles;
+
         static GarageManager()
         {
             sr_ValidVehicles = new List<Vehicle>();
 
             // add the regular Motorbike
-            sr_ValidVehicles.Add(new Motorbike(new GasEngine()));
+            sr_ValidVehicles.Add(Motorbike.MakeDefaultGasMotorbike());
 
             // add the electric Motorbike
-            sr_ValidVehicles.Add(new Motorbike());
+            sr_ValidVehicles.Add(Motorbike.MakeDefaultElectricMotorbike());
 
             // add the regular Car
-            sr_ValidVehicles.Add(new Car());
+            sr_ValidVehicles.Add(Car.MakeDefaultGasCar());
 
             // add the electric Car
-            sr_ValidVehicles.Add(new Car());
+            sr_ValidVehicles.Add(Car.MakeDefaultElectricCar());
 
             // add the electric Truck
-            sr_ValidVehicles.Add(new Truck());
+            sr_ValidVehicles.Add(Truck.MakeDefaultTruck());
         }
-
-        private Dictionary<string, Vehicle> m_AllVehicles;
-
 
         public void InsertNewVehicle(string i_SerialNum, string i_Wheel)
         {
@@ -92,7 +91,7 @@ namespace Ex03.GarageLogic
 
         private void fillEnergy() { }
 
-        private void Fix() { }
+        private void fix() { }
 
         public static bool isEngineElectric(object i_Engine)
         {
