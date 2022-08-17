@@ -1,8 +1,9 @@
-﻿namespace Ex03.GarageLogic
+﻿//using System.Drawing.Color;
+namespace Ex03.GarageLogic
 {
     internal enum eColor
     {
-        Black,
+        Black ,
         Blue,
         Gray,
         White,

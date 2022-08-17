@@ -1,5 +1,5 @@
 ﻿using System;
-using Ex03.GarageLogic;
+
 
 namespace Ex03.ConsoleUI
 {
@@ -12,5 +12,6 @@ namespace Ex03.ConsoleUI
         FillGas,
         ChargeBattery,
         ShowDetails,
+        Exit,
     }
 }

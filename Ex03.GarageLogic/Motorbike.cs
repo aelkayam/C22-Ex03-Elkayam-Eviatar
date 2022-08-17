@@ -5,7 +5,25 @@ namespace Ex03.GarageLogic
 {
     internal class Motorbike : Vehicle
     {
-        // private const eLicence eLicence = new eLicence(""); ??
+        private const string k_LicensePlate = "Demo-Motorbike";
+        private const float k_noFoile = 0f;
+        private const eLicence k_eLicence = eLicence.A;
+        private const int k_EngineCapacity = 1000; 
+
+        private static readonly Motorbike sr_Model ;
+
+        static Motorbike()
+        {
+            string modelName = k_LicensePlate;
+            string modelLicensePlate = k_LicensePlate;
+            float modelEnergyLeft = k_noFoile;
+            Wheel modelWheel = new Wheel(GarageManager.k_MotorbikeMaxAirPressure);
+            List<Wheel> modelWheels = new List<Wheel>(2) { modelWheel, modelWheel };
+            GasEngine gasEngine = new GasEngine();
+            sr_Model = new Motorbike(modelName, modelLicensePlate, modelEnergyLeft, modelWheels, gasEngine
+                ,k_eLicence , k_EngineCapacity);
+        }
+
         private readonly eLicence r_License;
         private readonly int r_EngineCapacity;
 
@@ -21,32 +39,20 @@ namespace Ex03.GarageLogic
         }
 
         /******** Constructor ************/
-        public Motorbike(object i_Engine)
-        {
-            //switch (i_Engine)
-            //{
-            //    case GasEngine engine:
-            //        break;
-            //    case ElectricEngine engine:
-            //        break;
-            //        default: throw new ArgumentException();
-            //}
 
-           // check engine type
-            if (i_Engine is GasEngine)
-            {
-            }
-            else if (i_Engine is ElectricEngine)
-            {
-            }
-            else
-            {
-                throw new FormatException("NOT AN ENGINE!");
-            }
+        public static Motorbike CloneModel()
+        {
+            return sr_Model.Clone();
+        }
+        public Motorbike Clone()
+        {
+            return new Motorbike(this.Name, this.LicencePlate, this.EnergyLeft, this.Wheels
+                , this.Engine, this.r_License, this.EngineCapacity);
         }
 
-        public Motorbike(string i_Name, string i_LicensePlate, float i_EnergyLeft, List<Wheel> i_Wheels, eCarState i_CarState, object i_Engine, eLicence i_License, int i_EngineCapacity)
-            : base(i_Name, i_LicensePlate, i_EnergyLeft, i_Wheels, i_CarState, i_Engine)
+       public Motorbike(string i_Name, string i_LicensePlate, float i_EnergyLeft, List<Wheel> i_Wheels,
+            object i_Engine, eLicence i_License, int i_EngineCapacity) 
+            : base(i_Name, i_LicensePlate, i_EnergyLeft, i_Wheels, i_Engine)
         {
             r_License = i_License;
             r_EngineCapacity = i_EngineCapacity;
@@ -57,5 +63,8 @@ namespace Ex03.GarageLogic
         {
             return string.Format(@"{0}License type: {1} Engine Capacity: {2}", base.ToString(), Licence, EngineCapacity);
         }
+
+      
+
     }
 }

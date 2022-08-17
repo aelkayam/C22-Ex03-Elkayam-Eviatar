@@ -36,6 +36,10 @@ namespace Ex03.GarageLogic
             m_MaxGas = i_MaxGas;
         }
 
+        public GasEngine()
+        {
+        }
+
         /******** Methods ************/
         public override string ToString()
         {
