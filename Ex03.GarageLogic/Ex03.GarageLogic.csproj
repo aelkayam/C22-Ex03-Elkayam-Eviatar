@@ -40,5 +40,21 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Car.cs" />
+    <Compile Include="eCarState.cs" />
+    <Compile Include="eColor.cs" />
+    <Compile Include="eDoors.cs" />
+    <Compile Include="eGasType.cs" />
+    <Compile Include="ElectricEngine.cs" />
+    <Compile Include="eLicence.cs" />
+    <Compile Include="GarageManager.cs" />
+    <Compile Include="GasEngine.cs" />
+    <Compile Include="Motorbike.cs" />
+    <Compile Include="Truck.cs" />
+    <Compile Include="ValueOutOfRangeException.cs" />
+    <Compile Include="Vehicle.cs" />
+    <Compile Include="Wheel.cs" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
