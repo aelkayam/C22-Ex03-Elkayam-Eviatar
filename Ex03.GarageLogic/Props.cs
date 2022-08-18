@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Reflection;
 
 namespace Ex03.GarageLogic
 {
     public class Props
     {
+        private ParameterInfo pi;
+
+        // replace this >>
         private readonly Type r_type;
+
         private readonly string r_msg;
 
         public Props(string i_msg, Type type)

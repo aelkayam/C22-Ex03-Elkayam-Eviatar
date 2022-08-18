@@ -1,6 +1,6 @@
 ﻿namespace Ex03.GarageLogic
 {
-    internal enum eVehiclesTypes
+    public enum eVehiclesTypes
     {
         Motorbike,
         Car,

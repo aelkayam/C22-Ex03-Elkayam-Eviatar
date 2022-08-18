@@ -56,6 +56,7 @@ namespace Ex03.GarageLogic
 
         // make "Owner" object instead of "string" as KEY in dictionary (?)
         private Dictionary<string, Vehicle> m_AllVehicles;
+        private Dictionary<string, VehicleOwner> m_AllOwners;
 
         public string Name
         {
@@ -107,8 +108,19 @@ namespace Ex03.GarageLogic
             m_AllVehicles = new Dictionary<string, Vehicle>();
         }
 
+        /******** Methods ************/
+        public static string[] GetParams(eVehiclesTypes i_VehicleType)
+        {
+            // TODO: MAKE IT HAPPEN
+            return null;
+        }
 
-
+        // 1. receive all the data from the user in the new car
+        // 2. check that LP is new (use IsExist from dictionary)
+        // 3. if it is possible:        otherwise: throw EXCEPTION
+        // 3.1. make new vehicle
+        // 3.2. validate the vehicle (with m_AllValidVehicles)
+        // 3.3. if valid: insert to Dictionary (with name and telephone)    otherwise: throw EXCEPTION
         public void InsertNewVehicle(string i_SerialNum, string i_Wheel)
         {
             //// chack if v is ok
@@ -131,14 +143,15 @@ namespace Ex03.GarageLogic
 
         }
 
-        private bool checkIfExist(string i_lookFor, out Vehicle v)
+        private bool checkIfExist(string i_LicensePlateToLookFor, out Vehicle o_Vehicle)
         {
             bool result = false;
-            v = null;
+            o_Vehicle = null;
 
-            if (i_lookFor != null)
+            if (i_LicensePlateToLookFor != null)
             {
-                result = m_AllVehicles.TryGetValue(i_lookFor, out v);
+
+                result = m_AllVehicles.TryGetValue(i_LicensePlateToLookFor, out o_Vehicle);
             }
 
             return result;
@@ -153,16 +166,19 @@ namespace Ex03.GarageLogic
             return true;
         }
 
-        public bool CheckIfVehicleExists()
-        {
-            return true;
-        }
+        // require license, air (in BAR/PSI) and index of wheels to apply.
+        // if no index given, fill all the wheels in the given amount
+        public void FillAirInWheels(string i_UserLicensePlate, float i_UnitsToFill, params int[] i_WheelIndex) { }
 
-        public void FillAirInWheels() { }
+        // require license and amount of gas
+        public void FillGas(string i_UserLicensePlate, float i_GasToFill) { }
 
-        public void FillEnergy() { }
+        // require license and amount of battery
+        public void FillBattery(string i_UserLicensePlate, float i_EnergyToFill) { }
 
-        public void Fix() { }
+        public void Fix(string i_UserLicensePlate) { }
+
+        public eCarState updateCarState(string i_UserLicensePlate) { return eCarState.InRepair; }
 
         internal static bool IsEngineElectric(object i_Engine)
         {
@@ -183,6 +199,18 @@ namespace Ex03.GarageLogic
 
             return isEngineElectric;
         }
+
+        // TODO: AT THE END
+        //// return list of parameters (name and type) from method name 
+        //public List<Props> getProps(MethodInfo i_MethodName)
+        //{
+        //    ParameterInfo[] parameterInfo = i_MethodName.GetParameters();
+        //    foreach(ParameterInfo pi in parameterInfo)
+        //    {
+                
+        //    }
+           
+        //}
     }
 }
 
