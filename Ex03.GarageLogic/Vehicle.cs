@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Ex03.GarageLogic
 {
-    internal class Vehicle // abstract
+    internal abstract class Vehicle
+
     {
         private const eCarState k_eCarStateInit = eCarState.InRepair;
 

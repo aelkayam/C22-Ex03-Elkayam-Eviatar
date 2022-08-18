@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -13,9 +13,9 @@ namespace Ex03.GarageLogic
         /** Default values vehicles that can enter the garage **/
         // ======================================================
         // Default number of wheels
-        internal const byte k_MotorbikeNumOfWhell = 2;
-        internal const byte k_CarNumOfWhell = 4;
-        internal const byte k_TruckNumOfWhell = 16;
+        internal const byte k_MotorbikeNumOfWheels = 2;
+        internal const byte k_CarNumOfWheels = 4;
+        internal const byte k_TruckNumOfWheels = 16;
 
         // Default pressure values
         internal const byte k_MotorbikeMaxAirPressure = 31;
@@ -32,9 +32,9 @@ namespace Ex03.GarageLogic
         internal const float k_CarMaxBatteryTime = 4.5f;
 
         // Default Fuel tank contents
-        internal const float k_MotorbikeFuelTankContents = 5.4f;
-        internal const float k_CarFuelTankContents = 52f;
-        internal const float k_TruckFuelTankContents = 135f;
+        internal const float k_MotorbikeFuelTankCapacity = 5.4f;
+        internal const float k_CarFuelTankCapacity = 52f;
+        internal const float k_TruckFuelTankCapacity = 135f;
 
         // Default Truck Refrigerated
         internal const bool v_TruckRefrigerated = true;
@@ -129,6 +129,30 @@ namespace Ex03.GarageLogic
             EmployeeNames = i_EmployeeNames;
             new List<string>();
             m_AllVehicles = new Dictionary<string, Vehicle>();
+        }
+
+        // make "Owner" object instead of "string" as KEY in dictionary (?)
+        private Dictionary<string, Vehicle> m_AllVehicles;
+
+        static GarageManager()
+        {
+            sr_ValidVehicles = new List<Vehicle>
+            {
+                // add the regular Motorbike
+                Motorbike.MakeDefaultGasMotorbike(),
+
+                // add the electric Motorbike
+                Motorbike.MakeDefaultElectricMotorbike(),
+                    
+                // add the regular Car
+                Car.MakeDefaultGasCar(),
+
+                // add the electric Car
+                Car.MakeDefaultElectricCar(),
+
+                // add the electric Truck
+                Truck.MakeDefaultTruck(),
+            };
         }
 
         public void InsertNewVehicle(string i_SerialNum, string i_Wheel)

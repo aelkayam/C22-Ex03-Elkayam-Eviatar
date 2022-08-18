@@ -66,6 +66,33 @@ namespace Ex03.GarageLogic
         }
 
         /******** Methods ************/
+
+        // return truck model supported by the garage
+        public static Truck MakeDefaultTruck()
+        {
+            // wheels:
+            List<Wheel> defaultTruckWheels = getDefaultTruckWheels();
+
+            // engine:
+            GasEngine defaultTruckEngine = new GasEngine(GarageManager.k_TruckGasType, 0, GarageManager.k_TruckFuelTankCapacity);
+
+            Truck defaultTruck = new Truck("Manufacturer", "LicesePlate", 0, defaultTruckWheels, eCarState.InRepair, defaultTruckEngine, false, 2000); // default engine capacity for bikes???
+
+            return defaultTruck;
+        }
+
+        // return list of default truck wheels
+        private static List<Wheel> getDefaultTruckWheels()
+        {
+            List<Wheel> defaultTruckWheels = new List<Wheel>(GarageManager.k_TruckNumOfWheels);
+            for (int i = 0; i < GarageManager.k_TruckNumOfWheels; i++)
+            {
+                defaultTruckWheels.Add(new Wheel("default", 0, GarageManager.k_TruckMaxAirPressure));
+            }
+
+            return defaultTruckWheels;
+        }
+
         public override string ToString()
         {
             return string.Format(@"{0}Has refrigerator: {1} Capacity: {2}L", base.ToString(), IsRefrigerator, MaxCapacity);

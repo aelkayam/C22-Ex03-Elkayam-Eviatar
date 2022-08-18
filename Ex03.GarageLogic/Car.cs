@@ -65,6 +65,46 @@ namespace Ex03.GarageLogic
         //}
 
         /******** Methods ************/
+
+        // return electric car model supported by the garage
+        public static Car MakeDefaultElectricCar()
+        {
+            // wheels:
+            List<Wheel> defaultElectricCarWheels = getDefaultCarWheels();
+
+            // engine:
+            ElectricEngine defaultElectricEngine = new ElectricEngine(0, GarageManager.k_CarMaxBatteryTime);
+
+            return new Car("Manufacturer", "LicesePlate", 0, defaultElectricCarWheels, eCarState.InRepair, defaultElectricEngine, eColor.Black, eDoors.FourDoors);
+        }
+
+        // return gas car model supported by the garage
+        public static Car MakeDefaultGasCar()
+        {
+            // wheels:
+            List<Wheel> defaultGasCarWheels = getDefaultCarWheels();
+
+            // engine
+            GasEngine defaultGasEngine = new GasEngine(GarageManager.k_CarGasType, 0, GarageManager.k_CarFuelTankCapacity);
+
+            return new Car("Manufacturer", "LicesePlate", 0, defaultGasCarWheels, eCarState.InRepair, defaultGasEngine, eColor.Black, eDoors.FourDoors);
+        }
+
+        // return list of default car wheels
+        private static List<Wheel> getDefaultCarWheels()
+        {
+            // wheels:
+            List<Wheel> defaultElectricCarWheels = new List<Wheel>(GarageManager.k_CarNumOfWheels)
+            {
+                new Wheel("default", 0, GarageManager.k_CarMaxAirPressure),
+                new Wheel("default", 0, GarageManager.k_CarMaxAirPressure),
+                new Wheel("default", 0, GarageManager.k_CarMaxAirPressure),
+                new Wheel("default", 0, GarageManager.k_CarMaxAirPressure),
+            };
+
+            return defaultElectricCarWheels;
+        }
+
         public override string ToString()
         {
             return string.Format(@"{0}Color:{1} Doors: {2}", base.ToString(), Color, Doors);

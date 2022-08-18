@@ -1,5 +1,4 @@
-﻿using System;
-
+using System;
 
 namespace Ex03.ConsoleUI
 {
@@ -25,6 +24,5 @@ namespace Ex03.ConsoleUI
         {
             return Console.ReadLine();
         }
-
     }
 }
