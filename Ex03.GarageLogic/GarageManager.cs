@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Ex03.GarageLogic
 {
-    //======================================================
-    /**                 GarageManager                   **/
-    //======================================================
+    // ======================================================
+    // ****************** GarageManager ****************** //
+    // ======================================================
     public class GarageManager
     {
-
-        //======================================================
+        // ======================================================
         /** Default values vehicles that can enter the garage **/
-        //======================================================
+        // ======================================================
         // Default number of wheels
         internal const byte k_MotorbikeNumOfWhell = 2;
         internal const byte k_CarNumOfWhell = 4;
@@ -45,56 +45,150 @@ namespace Ex03.GarageLogic
 
         private static readonly List<Vehicle> sr_ValidVehicles;
 
+        public static Random random = new Random();
+
         static GarageManager()
         {
-            sr_ValidVehicles = new List<Vehicle>();
+            List<Wheel> modleMotorbikeWheel = new List<Wheel>();
+            List<Wheel> modleCarWheel = new List<Wheel>();
+            List<Wheel> modleTruckWheel = new List<Wheel>();
 
-            // add the regular Motorbike
-            sr_ValidVehicles.Add(new Motorbike(new GasEngine()));
+            for(int i=0; i < k_MotorbikeNumOfWhell; ++i)
+            {
+                modleMotorbikeWheel.Add(new Wheel(k_CarMaxAirPressure));
+            }
 
-            // add the electric Motorbike
-            sr_ValidVehicles.Add(new Motorbike());
+            for(int i=0; i < k_CarNumOfWhell; ++i)
+            {
+                modleMotorbikeWheel.Add(new Wheel(k_CarMaxAirPressure));
+            }
 
-            // add the regular Car
-            sr_ValidVehicles.Add(new Car());
+            for (int i=0; i < k_TruckNumOfWhell; ++i)
+            {
+                modleMotorbikeWheel.Add(new Wheel(k_CarMaxAirPressure));
+            }
 
-            // add the electric Car
-            sr_ValidVehicles.Add(new Car());
+            GasEngine motorbikeWGasEngine = new GasEngine(k_MotorbikeGasType, k_MotorbikeFuelTankContents,
+                k_MotorbikeFuelTankContents);
+            GasEngine carGasEngine = new GasEngine(k_CarGasType, k_CarFuelTankContents, k_CarFuelTankContents);
+            GasEngine truckGasEngine = new GasEngine(k_TruckGasType, k_TruckFuelTankContents, k_TruckFuelTankContents);
 
-            // add the electric Truck
-            sr_ValidVehicles.Add(new Truck());
+            ElectricEngine motorbikeWElectricEngine = new ElectricEngine(k_MotorbikeMaxBatteryTime,  k_MotorbikeMaxBatteryTime);
+            ElectricEngine carWElectricEngine = new ElectricEngine(k_CarMaxBatteryTime, k_CarMaxBatteryTime);
+
+            sr_ValidVehicles = new List<Vehicle>()
+            {
+                   // add the regular Motorbike
+                new Motorbike("damo", "demo", k_MotorbikeFuelTankContents, modleMotorbikeWheel, motorbikeWGasEngine, 
+                    eLicence.AA, (int)k_MotorbikeFuelTankContents),
+                 // add the electric Motorbike
+                new Motorbike("damo", "demo", k_MotorbikeMaxBatteryTime, modleMotorbikeWheel, motorbikeWElectricEngine, 
+                    eLicence.AA, (int)k_MotorbikeMaxBatteryTime),
+                // add the regular Car
+                new Car("damo", "demo", k_CarFuelTankContents, modleCarWheel, carGasEngine, eColor.Black, eDoors.FourDoors),
+                // add the electric Car
+                new Car("damo", "demo", k_CarMaxBatteryTime, modleCarWheel, carWElectricEngine, eColor.Black, eDoors.FourDoors),
+                // add the electric Truck
+                new Truck("damo", "demo", k_TruckFuelTankContents, modleTruckWheel, truckGasEngine, v_TruckRefrigerated
+               , k_TruckFuelTankContents)
+            };
         }
 
-        private Dictionary<string, Vehicle> m_AllVehicles;
+        // ======================================================
+        /**             Member values of the object         **/
+        // ======================================================
 
+        private Dictionary<string, Vehicle> m_AllVehicles;//  add () v
+        private string m_Name;
+        private List<string> EmployeeNames;
+
+        public string Name
+        {
+            get { return m_Name; }
+            set { m_Name = value; }
+        }
+
+        public string Employee
+        {
+            get
+            {
+                return EmployeeNames[random.Next(EmployeeNames.Count)];
+            }
+        }
+
+        public string Owner
+        {
+            get { return EmployeeNames[0]; }
+            set { EmployeeNames[0] = value; }
+        }
+
+        /******** Constructor ************/
+        public GarageManager(string i_Name, List<string> i_EmployeeNames)
+        {
+            m_Name = i_Name;
+            EmployeeNames = i_EmployeeNames;
+            new List<string>();
+            m_AllVehicles = new Dictionary<string, Vehicle>();
+        }
 
         public void InsertNewVehicle(string i_SerialNum, string i_Wheel)
         {
-            /*
-             *  private string m_Name;
-                private string m_SerialNumber;
-                private float m_EnergyLeft;
-                private List<Wheel> m_Wheels;
-                private eCarState m_CarState;
-                private object m_Engine; // gas or electric
-             */
+            // chack if v is ok
+            Truck t = new Truck();
+            bool result = false;
+
+            foreach(Vehicle v in sr_ValidVehicles)
+            {
+                Truck demo = v as Truck;
+
+                if (demo != null)
+                {
+                    result = demo == t;
+                    if (result)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            // 
+
+        }
+
+        public bool isLinD(string i_lookFor, out Vehicle v)
+        {
+            bool result = false;
+            v = null;
+
+            if (i_lookFor != null)
+            {
+                result = m_AllVehicles.TryGetValue(i_lookFor, out v);
+            }
+
+            return result;
         }
 
         private void createVehicle()
         {
         }
 
-        private bool checkIfValid() { return true; }
+        public bool checkIfValid()
+        {
+            return true;
+        }
 
-        private bool checkIfVehicleExists() { return true; }
+        public bool checkIfVehicleExists()
+        {
+            return true;
+        }
 
-        private void fillAirInWheels() { }
+        public void fillAirInWheels() { }
 
-        private void fillEnergy() { }
+        public void fillEnergy() { }
 
-        private void Fix() { }
+        public void Fix() { }
 
-        public static bool isEngineElectric(object i_Engine)
+        internal static bool isEngineElectric(object i_Engine)
         {
             bool isEngineElectric = false;
 
@@ -115,3 +209,23 @@ namespace Ex03.GarageLogic
         }
     }
 }
+
+/*
+ * 
+ *  
+ * 
+ * 
+ * 
+ *           {
+            ThrowHelper.IfNullAndNullsAreIllegalThenThrow<T>(item, ExceptionArgument.item);
+            try
+            {
+                Add((T) item);
+    }
+            catch (InvalidCastException)
+            {
+                ThrowHelper.ThrowWrongValueTypeArgumentException(item, typeof(T));
+            }
+
+return Count - 1;
+*/

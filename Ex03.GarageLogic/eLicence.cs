@@ -2,9 +2,9 @@
 {
     internal enum eLicence
     {
-        A,
-        AA,
-        B1,
-        BB,
+        A=1,
+        AA=2,
+        B1=3,
+        BB=4,
     }
 }

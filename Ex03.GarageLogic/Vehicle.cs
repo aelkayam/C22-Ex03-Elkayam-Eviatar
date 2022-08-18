@@ -3,29 +3,35 @@ using System.Collections.Generic;
 
 namespace Ex03.GarageLogic
 {
-    internal class Vehicle
+    internal class Vehicle // abstract
     {
-        private readonly string r_Name;
-        private readonly string r_LicensePlate;
-        private readonly List<Wheel> r_Wheels;
-        private float m_EnergyLeft;
+        private const eCarState k_eCarStateInit = eCarState.InRepair;
+
+        private string m_LicensePlate; // diff
+
+        //an relvent for compr 
+        private string m_Name;
         private eCarState m_CarState;
-        private object m_Engine; // gas or electric
+        private float m_EnergyLeft;
+
+        // relvent for compr 
+        private object m_Engine;                // gas or electric
+        private List<Wheel> m_Wheels;           // Shouldn't it be a arr[]? >>It isnt possible to add another wheel
 
         /******** Properties ************/
         public string Name
         {
-            get { return r_Name; }
+            get { return m_Name; }
         }
 
         public string LicencePlate
         {
-            get { return r_LicensePlate; }
+            get { return m_LicensePlate; }
         }
 
         public List<Wheel> Wheels
         {
-            get { return r_Wheels; }
+            get { return m_Wheels; }
         }
 
         public float EnergyLeft
@@ -47,17 +53,13 @@ namespace Ex03.GarageLogic
         }
 
         /******** Constructor ************/
-        public Vehicle(string i_Name, string i_LicensePlate, float i_EnergyLeft, List<Wheel> i_Wheels, eCarState i_CarState, object i_Engine)
+        public Vehicle(string i_Name, string i_LicensePlate, float i_EnergyLeft, List<Wheel> i_Wheels, object i_Engine)
         {
-            r_Name = i_Name;
-            r_LicensePlate = i_LicensePlate;
+            m_Name = i_Name;
+            m_LicensePlate = i_LicensePlate;
             m_EnergyLeft = i_EnergyLeft;
-            r_Wheels = i_Wheels;
-            m_CarState = i_CarState;
-
-            // check if object i_Engine is an engine
-            bool isElectric = GarageManager.isEngineElectric(i_Engine);
-
+            m_Wheels = i_Wheels;
+            m_CarState = k_eCarStateInit; 
             m_Engine = i_Engine;
         }
 
@@ -76,6 +78,38 @@ Engine,
 Wheels,
 EnergyLeft,
 CarState);
+        }
+
+        public override bool Equals(object obj)
+        {
+            bool results = false;
+            Vehicle otherVehicle = obj as Vehicle;
+            if (otherVehicle != null)
+            {
+                results = this == otherVehicle;
+            }
+
+            return results;
+        }
+
+        public static bool operator ==(Vehicle i_vehicle1, Vehicle i_vehicle2)
+        {
+            return i_vehicle1.LicencePlate == i_vehicle2.LicencePlate;
+        }
+
+        public static bool operator !=(Vehicle i_vehicle1, Vehicle i_vehicle2)
+        {
+            return i_vehicle1 != i_vehicle2;
+        }
+
+        public override int GetHashCode()
+        {
+            return LicencePlate.GetHashCode();
+        }
+
+        public bool isHaveTheSameFildse()
+        {
+
         }
     }
 }

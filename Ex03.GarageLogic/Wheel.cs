@@ -8,19 +8,24 @@ namespace Ex03.GarageLogic
 {
     internal struct Wheel
     {
-        private readonly string r_ManufacturerName;
-        private readonly float r_MaxAirPressure;
+        private const string k_Manufacturer = "MICHELIN";
+        private const float k_InflatedPercentage = 0.75f;
+
+        private string m_ManufacturerName;
+        private float m_MaxAirPressure;
         private float m_CurrentAirPressure;
 
         /******** Properties ************/
         public string ManufacturerName
         {
-            get { return r_ManufacturerName; }
+            get { return m_ManufacturerName; }
+            set { this.m_ManufacturerName = value; }
         }
 
         public float MaxAirPressure
         {
-            get { return r_MaxAirPressure; }
+            get { return m_MaxAirPressure; }
+            set { this.m_MaxAirPressure = value; }
         }
 
         public float CurrentAirPressure
@@ -32,9 +37,14 @@ namespace Ex03.GarageLogic
         /******** Constructor ************/
         public Wheel(string i_ManufacturerName, float i_CurrentAirPressure, float i_MaxAirPressure)
         {
-            r_ManufacturerName = i_ManufacturerName;
-            m_CurrentAirPressure = i_CurrentAirPressure;
-            r_MaxAirPressure = i_MaxAirPressure;
+            m_ManufacturerName = i_ManufacturerName;
+            m_CurrentAirPressure = Math.Min(i_CurrentAirPressure,  i_MaxAirPressure);
+            m_MaxAirPressure = i_MaxAirPressure;
+        }
+
+        public Wheel(float i_MaxAirPressure)
+            : this(k_Manufacturer, i_MaxAirPressure, i_MaxAirPressure * k_InflatedPercentage)
+        {
         }
 
         /******** Methods ************/

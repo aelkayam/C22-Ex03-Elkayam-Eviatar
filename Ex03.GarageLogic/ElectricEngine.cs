@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Ex03.GarageLogic
 {
-    internal class ElectricEngine
+    internal struct ElectricEngine
     {
         private float m_BatteryLeft;
         private float m_MaxBattery;
