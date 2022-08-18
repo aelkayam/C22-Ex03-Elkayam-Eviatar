@@ -21,7 +21,7 @@ namespace Ex03.GarageLogic
             List<Wheel> modelWheels = new List<Wheel>(2) { modelWheel, modelWheel };
             GasEngine gasEngine = new GasEngine();
             sr_Model = new Motorbike(modelName, modelLicensePlate, modelEnergyLeft, modelWheels, gasEngine
-                ,k_eLicence , k_EngineCapacity);
+               , k_eLicence,  k_EngineCapacity);
         }
 
         private readonly eLicence r_License;
@@ -42,15 +42,21 @@ namespace Ex03.GarageLogic
 
         public static Motorbike CloneModel()
         {
-            return sr_Model.Clone();
-        }
-        public Motorbike Clone()
-        {
-            return new Motorbike(this.Name, this.LicencePlate, this.EnergyLeft, this.Wheels
-                , this.Engine, this.r_License, this.EngineCapacity);
+            return (Motorbike)sr_Model.MemberwiseClone();
         }
 
-       public Motorbike(string i_Name, string i_LicensePlate, float i_EnergyLeft, List<Wheel> i_Wheels,
+        //public static Motorbike Clone(Motorbike i_j)
+        //{
+        //    return new Motorbike();
+        //}
+
+        public Motorbike clone()
+        {
+            return new Motorbike(this.Name, this.LicencePlate, this.EnergyLeft, this.Wheels
+               ,this.Engine, this.r_License, this.EngineCapacity);
+        }
+
+        public Motorbike(string i_Name, string i_LicensePlate, float i_EnergyLeft, List<Wheel> i_Wheels,
             object i_Engine, eLicence i_License, int i_EngineCapacity) 
             : base(i_Name, i_LicensePlate, i_EnergyLeft, i_Wheels, i_Engine)
         {

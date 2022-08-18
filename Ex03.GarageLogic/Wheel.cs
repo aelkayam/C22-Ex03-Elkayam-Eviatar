@@ -9,7 +9,8 @@ namespace Ex03.GarageLogic
     internal struct Wheel
     {
         private const string k_Manufacturer = "MICHELIN";
-        private const float k_InflatedPercentage = 0.75f; 
+        private const float k_InflatedPercentage = 0.75f;
+
         private string m_ManufacturerName;
         private float m_MaxAirPressure;
         private float m_CurrentAirPressure;
@@ -37,14 +38,13 @@ namespace Ex03.GarageLogic
         public Wheel(string i_ManufacturerName, float i_CurrentAirPressure, float i_MaxAirPressure)
         {
             m_ManufacturerName = i_ManufacturerName;
-            m_CurrentAirPressure =Math.Min(i_CurrentAirPressure , i_MaxAirPressure);
+            m_CurrentAirPressure = Math.Min(i_CurrentAirPressure,  i_MaxAirPressure);
             m_MaxAirPressure = i_MaxAirPressure;
         }
 
         public Wheel(float i_MaxAirPressure)
-            :this(k_Manufacturer ,i_MaxAirPressure , i_MaxAirPressure* k_InflatedPercentage)
+            : this(k_Manufacturer, i_MaxAirPressure, i_MaxAirPressure * k_InflatedPercentage)
         {
-
         }
 
         /******** Methods ************/

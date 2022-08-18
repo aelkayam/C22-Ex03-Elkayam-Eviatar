@@ -26,7 +26,7 @@ namespace Ex03.GarageLogic
             {
                 modelWheels.Add(new Wheel());
             }
-            sr_Model = new Car(k_modle, k_modle, GarageManager.k_CarFuelTankContents, modelWheels, new GasEngine , k_Color, k_Doors);
+            sr_Model = new Car(k_modle, k_modle, GarageManager.k_CarFuelTankContents, modelWheels, new GasEngine,  k_Color, k_Doors);
         }
 
         /******** Properties ************/

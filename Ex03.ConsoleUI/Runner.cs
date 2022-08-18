@@ -8,9 +8,7 @@ namespace Ex03.ConsoleUI
         private bool m_IsRunning;
         private Screen m_Screen;
         private UserInput m_UserInput;
-
-
-
+        private GarageManager m_GarageManager;
 
         /******** Properties ************/
         public bool IsRunning
@@ -42,6 +40,7 @@ namespace Ex03.ConsoleUI
             m_Screen = new Screen();
             m_UserInput = new UserInput();
             List<string> Employees = new List<string>() { "Shimon", "Asaf-Plutz", "KMNO" };
+
             m_GarageManager = new GarageManager("Abba Shimon and Sons' garage", Employees);
         }
 

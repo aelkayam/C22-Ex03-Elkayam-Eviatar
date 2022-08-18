@@ -3,16 +3,20 @@ using System.Collections.Generic;
 
 namespace Ex03.GarageLogic
 {
-    internal class Vehicle //abstract 
+    internal class Vehicle // abstract
     {
         private const eCarState k_eCarStateInit = eCarState.InRepair;
 
+        private string m_LicensePlate; // diff
+
+        //an relvent for compr 
         private string m_Name;
-        private string m_LicensePlate;
-        private List<Wheel> m_Wheels; // Shouldn't it be a arr[]? >>It isnt possible to add another wheel
-        private float m_EnergyLeft;// Shouldn't it be inside the engine? 
         private eCarState m_CarState;
-        private object m_Engine; // gas or electric
+        private float m_EnergyLeft;
+
+        // relvent for compr 
+        private object m_Engine;                // gas or electric
+        private List<Wheel> m_Wheels;           // Shouldn't it be a arr[]? >>It isnt possible to add another wheel
 
         /******** Properties ************/
         public string Name
@@ -76,10 +80,9 @@ EnergyLeft,
 CarState);
         }
 
-
         public override bool Equals(object obj)
         {
-            bool results  = false;
+            bool results = false;
             Vehicle otherVehicle = obj as Vehicle;
             if (otherVehicle != null)
             {
@@ -104,6 +107,9 @@ CarState);
             return LicencePlate.GetHashCode();
         }
 
-    }
+        public bool isHaveTheSameFildse()
+        {
 
+        }
+    }
 }

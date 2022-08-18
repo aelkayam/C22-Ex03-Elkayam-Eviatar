@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Ex03.GarageLogic
 {
-    internal class GasEngine
+    internal struct GasEngine 
     {
         private eGasType m_GasType;
         private float m_GasLeft;

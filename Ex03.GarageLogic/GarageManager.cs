@@ -4,14 +4,14 @@ using System.Reflection;
 
 namespace Ex03.GarageLogic
 {
-    //======================================================
-    /**                 GarageManager                   **/
-    //======================================================
+    // ======================================================
+    // ****************** GarageManager ****************** //
+    // ======================================================
     public class GarageManager
     {
-        //======================================================
+        // ======================================================
         /** Default values vehicles that can enter the garage **/
-        //======================================================
+        // ======================================================
         // Default number of wheels
         internal const byte k_MotorbikeNumOfWhell = 2;
         internal const byte k_CarNumOfWhell = 4;
@@ -62,51 +62,52 @@ namespace Ex03.GarageLogic
             {
                 modleMotorbikeWheel.Add(new Wheel(k_CarMaxAirPressure));
             }
-            
+
             for (int i=0; i < k_TruckNumOfWhell; ++i)
             {
                 modleMotorbikeWheel.Add(new Wheel(k_CarMaxAirPressure));
             }
 
-            GasEngine motorbikeWGasEngine = new GasEngine(k_MotorbikeGasType ,k_MotorbikeFuelTankContents ,
+            GasEngine motorbikeWGasEngine = new GasEngine(k_MotorbikeGasType, k_MotorbikeFuelTankContents,
                 k_MotorbikeFuelTankContents);
-            GasEngine carGasEngine = new GasEngine(k_CarGasType ,k_CarFuelTankContents ,k_CarFuelTankContents);
-            GasEngine truckGasEngine = new GasEngine(k_TruckGasType ,k_TruckFuelTankContents ,k_TruckFuelTankContents);
+            GasEngine carGasEngine = new GasEngine(k_CarGasType, k_CarFuelTankContents, k_CarFuelTankContents);
+            GasEngine truckGasEngine = new GasEngine(k_TruckGasType, k_TruckFuelTankContents, k_TruckFuelTankContents);
 
-            ElectricEngine motorbikeWElectricEngine = new ElectricEngine(k_MotorbikeMaxBatteryTime , k_MotorbikeMaxBatteryTime);
-            ElectricEngine carWElectricEngine = new ElectricEngine(k_CarMaxBatteryTime ,k_CarMaxBatteryTime);
+            ElectricEngine motorbikeWElectricEngine = new ElectricEngine(k_MotorbikeMaxBatteryTime,  k_MotorbikeMaxBatteryTime);
+            ElectricEngine carWElectricEngine = new ElectricEngine(k_CarMaxBatteryTime, k_CarMaxBatteryTime);
 
             sr_ValidVehicles = new List<Vehicle>()
             {
                    // add the regular Motorbike
-                new Motorbike("damo" ,"demo" ,k_MotorbikeFuelTankContents ,modleMotorbikeWheel ,motorbikeWGasEngine ,
-                    eLicence.AA ,(int)k_MotorbikeFuelTankContents),
+                new Motorbike("damo", "demo", k_MotorbikeFuelTankContents, modleMotorbikeWheel, motorbikeWGasEngine, 
+                    eLicence.AA, (int)k_MotorbikeFuelTankContents),
                  // add the electric Motorbike
-                new Motorbike("damo" ,"demo" ,k_MotorbikeMaxBatteryTime ,modleMotorbikeWheel ,motorbikeWElectricEngine ,
-                    eLicence.AA ,(int)k_MotorbikeMaxBatteryTime),
+                new Motorbike("damo", "demo", k_MotorbikeMaxBatteryTime, modleMotorbikeWheel, motorbikeWElectricEngine, 
+                    eLicence.AA, (int)k_MotorbikeMaxBatteryTime),
                 // add the regular Car
-                new Car("damo" ,"demo" ,k_CarFuelTankContents ,modleCarWheel ,carGasEngine ,eColor.Black ,eDoors.FourDoors),
+                new Car("damo", "demo", k_CarFuelTankContents, modleCarWheel, carGasEngine, eColor.Black, eDoors.FourDoors),
                 // add the electric Car
-                new Car("damo" ,"demo" ,k_CarMaxBatteryTime ,modleCarWheel ,carWElectricEngine, eColor.Black ,eDoors.FourDoors),
+                new Car("damo", "demo", k_CarMaxBatteryTime, modleCarWheel, carWElectricEngine, eColor.Black, eDoors.FourDoors),
                 // add the electric Truck
-                new Truck("damo" ,"demo" ,k_TruckFuelTankContents ,modleTruckWheel ,truckGasEngine ,v_TruckRefrigerated
-                ,k_TruckFuelTankContents)
+                new Truck("damo", "demo", k_TruckFuelTankContents, modleTruckWheel, truckGasEngine, v_TruckRefrigerated
+               , k_TruckFuelTankContents)
             };
         }
 
-        //======================================================
+        // ======================================================
         /**             Member values of the object         **/
-        //======================================================
+        // ======================================================
 
-        private Dictionary<string, Vehicle> m_AllVehicles;
+        private Dictionary<string, Vehicle> m_AllVehicles;//  add () v
         private string m_Name;
         private List<string> EmployeeNames;
+
         public string Name
         {
             get { return m_Name; }
             set { m_Name = value; }
         }
-        
+
         public string Employee
         {
             get
@@ -114,6 +115,7 @@ namespace Ex03.GarageLogic
                 return EmployeeNames[random.Next(EmployeeNames.Count)];
             }
         }
+
         public string Owner
         {
             get { return EmployeeNames[0]; }
@@ -121,28 +123,64 @@ namespace Ex03.GarageLogic
         }
 
         /******** Constructor ************/
-        public GarageManager(string i_Name ,List<string> i_EmployeeNames)
+        public GarageManager(string i_Name, List<string> i_EmployeeNames)
         {
             m_Name = i_Name;
             EmployeeNames = i_EmployeeNames;
             new List<string>();
             m_AllVehicles = new Dictionary<string, Vehicle>();
         }
-        
 
         public void InsertNewVehicle(string i_SerialNum, string i_Wheel)
         {
+            // chack if v is ok
+            Truck t = new Truck();
+            bool result = false;
 
+            foreach(Vehicle v in sr_ValidVehicles)
+            {
+                Truck demo = v as Truck;
+
+                if (demo != null)
+                {
+                    result = demo == t;
+                    if (result)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            // 
+
+        }
+
+        public bool isLinD(string i_lookFor, out Vehicle v)
+        {
+            bool result = false;
+            v = null;
+
+            if (i_lookFor != null)
+            {
+                result = m_AllVehicles.TryGetValue(i_lookFor, out v);
+            }
+
+            return result;
         }
 
         private void createVehicle()
         {
-
         }
 
-        public bool checkIfValid() { return true; }
+        public bool checkIfValid()
+        {
+            return true;
+        }
 
-        public bool checkIfVehicleExists() { return true; }
+        public bool checkIfVehicleExists()
+        {
+            return true;
+        }
 
         public void fillAirInWheels() { }
 
@@ -171,7 +209,13 @@ namespace Ex03.GarageLogic
         }
     }
 }
+
 /*
+ * 
+ *  
+ * 
+ * 
+ * 
  *           {
             ThrowHelper.IfNullAndNullsAreIllegalThenThrow<T>(item, ExceptionArgument.item);
             try

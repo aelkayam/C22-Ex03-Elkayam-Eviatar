@@ -41,7 +41,7 @@ namespace Ex03.GarageLogic
 
         public Truck Clone()
         {
-            return new Truck(Name, LicencePlate, EnergyLeft, Wheels, Engine ,IsRefrigerator , MaxCapacity );
+            return new Truck(Name, LicencePlate, EnergyLeft, Wheels, Engine, IsRefrigerator,  MaxCapacity );
         }
 
         /******** Properties ************/
@@ -65,17 +65,41 @@ namespace Ex03.GarageLogic
             r_MaxCapacity = i_MaxCapacity;
         }
 
-       
-
-        //public Truck(GasEngine gasEngine)
-        //    :this(gasEngine)
-        //{
-        //}
-
         /******** Methods ************/
         public override string ToString()
         {
             return string.Format(@"{0}Has refrigerator: {1} Capacity: {2}L", base.ToString(), IsRefrigerator, MaxCapacity);
+        }
+
+        public override bool Equals(object obj)
+        {
+            bool results = false;
+            Truck otherVehicle = obj as Truck;
+            if (otherVehicle != null)
+            {
+                results = this == otherVehicle;
+            }
+
+            return results;
+        }
+
+        public static bool operator ==(Truck i_vehicle1, Truck i_vehicle2)
+        {
+            bool asTHeSemLIcane = ((Vehicle)i_vehicle1) == ((Vehicle)i_vehicle2);
+
+
+            if(i_vehicle1.Wheels == i_vehicle2.Wheels) && ()
+            return i_vehicle1.LicencePlate == i_vehicle2.LicencePlate;
+        }
+
+        public static bool operator !=(Vehicle i_vehicle1, Vehicle i_vehicle2)
+        {
+            return i_vehicle1 != i_vehicle2;
+        }
+
+        public override int GetHashCode()
+        {
+            return LicencePlate.GetHashCode();
         }
     }
 }
