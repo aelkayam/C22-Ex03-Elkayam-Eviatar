@@ -49,22 +49,23 @@ namespace Ex03.GarageLogic
 
         static GarageManager()
         {
-            sr_ValidVehicles = new List<Vehicle>();
+            sr_ValidVehicles = new List<Vehicle>
+            {
+                // add the regular Motorbike
+                Motorbike.MakeDefaultGasMotorbike(),
 
-            // add the regular Motorbike
-            sr_ValidVehicles.Add(Motorbike.MakeDefaultGasMotorbike());
+                // add the electric Motorbike
+                Motorbike.MakeDefaultElectricMotorbike(),
+                    
+                // add the regular Car
+                Car.MakeDefaultGasCar(),
 
-            // add the electric Motorbike
-            sr_ValidVehicles.Add(Motorbike.MakeDefaultElectricMotorbike());
+                // add the electric Car
+                Car.MakeDefaultElectricCar(),
 
-            // add the regular Car
-            sr_ValidVehicles.Add(Car.MakeDefaultGasCar());
-
-            // add the electric Car
-            sr_ValidVehicles.Add(Car.MakeDefaultElectricCar());
-
-            // add the electric Truck
-            sr_ValidVehicles.Add(Truck.MakeDefaultTruck());
+                // add the electric Truck
+                Truck.MakeDefaultTruck(),
+            };
         }
 
         public void InsertNewVehicle(string i_SerialNum, string i_Wheel)
