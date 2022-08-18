@@ -11,6 +11,6 @@ namespace Ex03.ConsoleUI
         FillGas = 5,
         ChargeBattery = 6,
         ShowDetails = 7,
-        Exit = 9,
+        Exit = 0,
     }
 }
