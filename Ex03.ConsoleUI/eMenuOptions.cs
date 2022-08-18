@@ -5,13 +5,13 @@ namespace Ex03.ConsoleUI
 {
     internal enum eMenuOptions
     {
-        InsertCar,
-        AllSerialNumbers, // (filter by eCarState))
-        UpdateCar,
-        PutAirInWheels,
-        FillGas,
-        ChargeBattery,
-        ShowDetails,
-        Exit,
+        InsertCar = 1,
+        AllLicensePlates = 2, // (filter by eCarState))license plates
+        UpdateVehicle = 3,
+        FillAirInWheels = 4,
+        FillGas = 5,
+        ChargeBattery = 6,
+        ShowDetails = 7,
+        Exit = 9,
     }
 }

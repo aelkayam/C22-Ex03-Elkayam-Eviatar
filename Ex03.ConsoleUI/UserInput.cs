@@ -9,7 +9,7 @@ namespace Ex03.ConsoleUI
 
         internal bool getMenuOptions(out eMenuOptions o_result)
         {
-            throw new NotImplementedException();
+            return Enum.TryParse(readInput(), out o_result);
         }
 
         internal bool GetInuput(Type type)

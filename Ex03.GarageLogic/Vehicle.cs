@@ -7,7 +7,6 @@ namespace Ex03.GarageLogic
     {
         private const eCarState k_eCarStateInit = eCarState.InRepair;
 
-
         private string m_Name;
         private string m_LicensePlate;
         private List<Wheel> m_Wheels; // Shouldn't it be a arr[]? >>It isnt possible to add another wheel
@@ -76,6 +75,35 @@ Wheels,
 EnergyLeft,
 CarState);
         }
+
+
+        public override bool Equals(object obj)
+        {
+            bool results  = false;
+            Vehicle otherVehicle = obj as Vehicle;
+            if (otherVehicle != null)
+            {
+                results = this == otherVehicle;
+            }
+
+            return results;
+        }
+
+        public static bool operator ==(Vehicle i_vehicle1, Vehicle i_vehicle2)
+        {
+            return i_vehicle1.LicencePlate == i_vehicle2.LicencePlate;
+        }
+
+        public static bool operator !=(Vehicle i_vehicle1, Vehicle i_vehicle2)
+        {
+            return i_vehicle1 != i_vehicle2;
+        }
+
+        public override int GetHashCode()
+        {
+            return LicencePlate.GetHashCode();
+        }
+
     }
 
 }
