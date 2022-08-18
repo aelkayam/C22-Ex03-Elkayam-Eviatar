@@ -52,5 +52,15 @@ namespace Ex03.GarageLogic
         {
             return string.Format(@"Current: {0} Max: {1}", CurrentAirPressure, MaxAirPressure);
         }
+
+        internal static List<string> getPramsForNew()
+        {
+            List<string> prams = new List<string>();
+            prams.Add("wheel Manufacturer");
+            prams.Add("wheel Max Air Pressure");
+            prams.Add("Current Air Pressure");
+
+            return prams;
+        }
     }
 }

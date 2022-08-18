@@ -109,10 +109,45 @@ namespace Ex03.GarageLogic
         }
 
         /******** Methods ************/
-        public static string[] GetParams(eVehiclesTypes i_VehicleType)
+
+        /**** Methods  for a new car Vehicles ****/
+        public List<string> GetParams(string i_VehicleType, bool i_isElctiric ,int i_NumOfWheel)
         {
-            // TODO: MAKE IT HAPPEN
-            return null;
+            List<string> list = new List<string>();
+
+            switch(i_VehicleType)
+            {
+                case "Car":
+                    list = Car.GetParmsForNew(i_isElctiric, i_NumOfWheel);
+                    break;
+                case "Truck":
+                    list = Truck.GetParmsForNew(i_isElctiric, i_NumOfWheel);
+                    break;
+                case "Motorbike":
+                    list = Motorbike.GetParmsForNew(i_isElctiric, i_NumOfWheel);
+                    break;
+            }
+
+            list.Add("The name of the owner of the vehicle");
+            list.Add("The phone number of the owner of the vehicle");
+
+            return list;
+        }
+
+        public List<string> GetVehicleTypes()
+        {
+            List<string> result = new List<string>();
+            foreach(Vehicle vehicle in sr_ValidVehicles)
+            {
+                string nameVehicle = vehicle.GetType().Name;
+
+                if (!result.Contains(nameVehicle))
+                {
+                    result.Add(nameVehicle);
+                }
+            }
+
+            return result;
         }
 
         // 1. receive all the data from the user in the new car
@@ -121,26 +156,9 @@ namespace Ex03.GarageLogic
         // 3.1. make new vehicle
         // 3.2. validate the vehicle (with m_AllValidVehicles)
         // 3.3. if valid: insert to Dictionary (with name and telephone)    otherwise: throw EXCEPTION
-        public void InsertNewVehicle(string i_SerialNum, string i_Wheel)
+        public void InsertNewVehicle(string i_VehicleType, List<string> i_ArgsForNewVehicle)
         {
-            //// chack if v is ok
-            //Truck t = new Truck();
-            //bool result = false;
-
-            //foreach(Vehicle v in sr_ValidVehicles)
-            //{
-            //    Truck demo = v as Truck;
-
-            //    if (demo != null)
-            //    {
-            //        result = demo == t;
-            //        if (result)
-            //        {
-            //            break;
-            //        }
-            //    }
-            //}
-
+            Console.WriteLine("in InsertNewVehicle");
         }
 
         private bool checkIfExist(string i_LicensePlateToLookFor, out Vehicle o_Vehicle)
@@ -165,6 +183,8 @@ namespace Ex03.GarageLogic
         {
             return true;
         }
+
+
 
         // require license, air (in BAR/PSI) and index of wheels to apply.
         // if no index given, fill all the wheels in the given amount

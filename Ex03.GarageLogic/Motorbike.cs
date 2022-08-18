@@ -85,5 +85,21 @@ namespace Ex03.GarageLogic
         {
             return string.Format(@"{0}License type: {1} Engine Capacity: {2}", base.ToString(), Licence, EngineCapacity);
         }
+
+        //protected static override List<string> GetParmsForNew(bool i_isElctiric, int i_NumOfWheel)
+        //{
+        //    Vehicle.GetParmsForNew()
+        //    throw new NotImplementedException();
+        //}
+
+        internal static List<string> GetParmsForNew(bool i_isElctiric, int i_NumOfWheel)
+        {
+            List<string> parms = Vehicle.GetParmsForNew(i_isElctiric, i_NumOfWheel);
+
+            parms.Add("Licence type :  A = 1,AA = 2, B1 = 3, BB = 4,");
+            parms.Add("Engine Capacity");
+
+            return parms;
+        }
     }
 }

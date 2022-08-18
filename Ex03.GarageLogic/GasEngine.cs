@@ -41,5 +41,16 @@ namespace Ex03.GarageLogic
         {
             return string.Format(@"Gas type: {0}    Left: {1}L  Max: {2}L", GasType, GasLeft, MaxGas);
         }
+
+        internal static List<string> getPramsForNew()
+        {
+            List<string> prams = new List<string>();
+
+            prams.Add("GasType : Soler = 1, Octan95 = 95,Octan96 = 96,Octan98 = 97, ");
+            prams.Add("Gas Left");
+            prams.Add("Max Gas");
+
+            return prams;
+        }
     }
 }
