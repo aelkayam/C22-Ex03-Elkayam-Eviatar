@@ -1,6 +1,6 @@
 ﻿namespace Ex03.GarageLogic
 {
-    internal enum eDoors
+    public enum eDoors
     {
         TwoDoors = 2,
         ThreeDoors = 3,

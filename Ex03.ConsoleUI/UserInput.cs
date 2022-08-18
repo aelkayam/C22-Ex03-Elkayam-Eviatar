@@ -1,4 +1,5 @@
 using System;
+using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
 {
@@ -6,22 +7,64 @@ namespace Ex03.ConsoleUI
     {
         public string UserName { get; set; }
 
-        internal bool GetMenuOptions(out eMenuOptions o_result)
+        internal bool GetMenuOptions(out eMenuOptions o_Result)
         {
-            return Enum.TryParse<eMenuOptions>(readInput(), out o_result);
+            return Enum.TryParse<eMenuOptions>(ReadInput(), out o_Result);
+        }
+
+        internal string LicensePlatePrompt()
+        {
+            // no restrictions :D
+            return ReadInput();
+        }
+
+        internal float EnergyToFillPrompt()
+        {
+            if(float.TryParse(ReadInput(), out float value))
+            {
+                return value;
+            }
+            else
+            {
+                throw new FormatException();
+            }
+        }
+
+        internal eGasType GasTypePrompt()
+        {
+            if(Enum.TryParse<eGasType>(ReadInput(), out eGasType o_GasType))
+            {
+                return o_GasType;
+            }
+            else
+            {
+                throw new FormatException();
+            }
+        }
+
+        internal eCarState CarStatePrompt()
+        {
+            if(Enum.TryParse<eCarState>(ReadInput(), out eCarState o_CarState))
+            {
+                return o_CarState;
+            }
+            else
+            {
+                throw new FormatException();
+            }
         }
 
         internal bool GetInput(Type type)
         {
             bool ans = false;
-            readInput();
+            ReadInput();
 
             return ans;
         }
 
-        private string readInput()
+        internal string ReadInput()
         {
-            return Console.ReadLine();
+            return Console.ReadLine().Trim();
         }
     }
 }
