@@ -33,6 +33,5 @@ namespace Ex03.GarageLogic
         {
             return string.Format(@"Battery Left: {0}%    Max:{1}%", BatteryLeft, MaxBattery);
         }
-
     }
 }

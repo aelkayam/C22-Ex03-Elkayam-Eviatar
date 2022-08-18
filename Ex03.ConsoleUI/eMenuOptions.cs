@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace Ex03.ConsoleUI
 {
     internal enum eMenuOptions

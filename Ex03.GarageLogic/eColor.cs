@@ -1,5 +1,4 @@
-﻿//using System.Drawing.Color;
-namespace Ex03.GarageLogic
+﻿namespace Ex03.GarageLogic
 {
     internal enum eColor
     {

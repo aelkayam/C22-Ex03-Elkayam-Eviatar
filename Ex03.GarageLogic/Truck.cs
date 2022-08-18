@@ -8,41 +8,11 @@ namespace Ex03.GarageLogic
 {
     internal class Truck : Vehicle
     {
-        private const string k_modle = "Truck-Modle"; 
-        private const float k_EnergyLeft = 20f ;
+        private const bool k_IsRefrigerated = false;
+        private const float k_MaxCapacity = 2000;
 
         private readonly bool r_IsRefrigerator;
         private readonly float r_MaxCapacity;
-
-        private readonly static Truck sr_Model;
-        /*
-         *  public Truck(string i_Name, string i_LicensePlate, float i_EnergyLeft, List<Wheel> i_Wheels, eCarState i_CarState, object i_Engine, bool i_isRefrigerator, int i_MaxCapacity)
-            : base(i_Name, i_LicensePlate, i_EnergyLeft, i_Wheels, i_CarState, i_Engine)
-         */
-        static Truck()
-        {
-            // object i_Engine, bool i_isRefrigerator, int i_MaxCapacity)
-            //: base(i_Name, i_LicensePlate, i_EnergyLeft, i_Wheels, i_CarState, i_Engine)
-            List<Wheel> modelWheels = new List<Wheel>() ;
-
-            for(int i = 0; i < GarageManager.k_TruckNumOfWhell; i++)
-            {
-                modelWheels.Add(new Wheel()); // is it mast ?? 
-            }
-
-            GasEngine gasEngine = new GasEngine();
-            sr_Model = new Truck(k_modle, k_modle, k_EnergyLeft, modelWheels, gasEngine, GarageManager.v_TruckRefrigerated, GarageManager.k_TruckFuelTankContents);
-        }
-
-        public static Truck CloneModel()
-        {
-            return sr_Model.Clone();
-        }
-
-        public Truck Clone()
-        {
-            return new Truck(Name, LicencePlate, EnergyLeft, Wheels, Engine, IsRefrigerator,  MaxCapacity );
-        }
 
         /******** Properties ************/
         public bool IsRefrigerator
@@ -55,8 +25,6 @@ namespace Ex03.GarageLogic
             get { return r_MaxCapacity; }
         }
 
-        public Object GasEngine { get; }
-
         /******** Constructor ************/
         public Truck(string i_Name, string i_LicensePlate, float i_EnergyLeft, List<Wheel> i_Wheels, object i_Engine, bool i_isRefrigerator, float i_MaxCapacity)
             : base(i_Name, i_LicensePlate, i_EnergyLeft, i_Wheels, i_Engine)
@@ -66,40 +34,50 @@ namespace Ex03.GarageLogic
         }
 
         /******** Methods ************/
+
+        // return truck model supported by the garage
+        public static Truck MakeDefaultTruck()
+        {
+            // wheels:
+            List<Wheel> defaultTruckWheels = getDefaultTruckWheels();
+
+            // engine:
+            GasEngine defaultTruckEngine = new GasEngine(GarageManager.k_TruckGasType, 0, GarageManager.k_TruckFuelTankCapacity);
+
+            Truck defaultTruck = new Truck("Manufacturer", "LicesePlate", 0, defaultTruckWheels, defaultTruckEngine, k_IsRefrigerated, k_MaxCapacity);
+
+            return defaultTruck;
+        }
+
+        // return list of default truck wheels
+        private static List<Wheel> getDefaultTruckWheels()
+        {
+            List<Wheel> defaultTruckWheels = new List<Wheel>(GarageManager.k_TruckNumOfWheels);
+            for (int i = 0; i < GarageManager.k_TruckNumOfWheels; i++)
+            {
+                defaultTruckWheels.Add(new Wheel("default", 0, GarageManager.k_TruckMaxAirPressure));
+            }
+
+            return defaultTruckWheels;
+        }
+
         public override string ToString()
         {
             return string.Format(@"{0}Has refrigerator: {1} Capacity: {2}L", base.ToString(), IsRefrigerator, MaxCapacity);
         }
 
-        public override bool Equals(object obj)
+        public static bool operator ==(Truck i_Truck1, Truck i_Truck2)
         {
-            bool results = false;
-            Truck otherVehicle = obj as Truck;
-            if (otherVehicle != null)
-            {
-                results = this == otherVehicle;
-            }
+            bool hasTheSameFields = i_Truck1.HaveTheSameFields(i_Truck2);
+            bool hasTheSameTruckFields = i_Truck1.IsRefrigerator == i_Truck2.IsRefrigerator &&
+                i_Truck1.MaxCapacity == i_Truck2.MaxCapacity;
 
-            return results;
+            return hasTheSameFields && hasTheSameTruckFields;
         }
 
-        public static bool operator ==(Truck i_vehicle1, Truck i_vehicle2)
+        public static bool operator !=(Truck i_Truck1, Truck i_Truck2)
         {
-            bool asTHeSemLIcane = ((Vehicle)i_vehicle1) == ((Vehicle)i_vehicle2);
-
-
-            if(i_vehicle1.Wheels == i_vehicle2.Wheels) && ()
-            return i_vehicle1.LicencePlate == i_vehicle2.LicencePlate;
-        }
-
-        public static bool operator !=(Vehicle i_vehicle1, Vehicle i_vehicle2)
-        {
-            return i_vehicle1 != i_vehicle2;
-        }
-
-        public override int GetHashCode()
-        {
-            return LicencePlate.GetHashCode();
+            return i_Truck1 != i_Truck2;
         }
     }
 }
