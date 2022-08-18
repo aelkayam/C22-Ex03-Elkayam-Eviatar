@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Ex03.GarageLogic
 {
-    internal struct GasEngine
+    internal struct GasEngine 
     {
         private eGasType m_GasType;
         private float m_GasLeft;
@@ -34,6 +34,10 @@ namespace Ex03.GarageLogic
             m_GasType = i_GasType;
             m_GasLeft = i_GasLeft;
             m_MaxGas = i_MaxGas;
+        }
+
+        public GasEngine()
+        {
         }
 
         /******** Methods ************/

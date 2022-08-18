@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Car.cs" />
+    <Compile Include="Props.cs" />
+    <Compile Include="eVehiclesTypes.cs" />
     <Compile Include="eCarState.cs" />
     <Compile Include="eColor.cs" />
     <Compile Include="eDoors.cs" />
