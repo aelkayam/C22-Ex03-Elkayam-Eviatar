@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Ex03.GarageLogic;
+
 namespace Ex03.ConsoleUI
 {
     internal class Runner
@@ -39,12 +40,12 @@ namespace Ex03.ConsoleUI
             IsRunning = false;
             m_Screen = new Screen();
             m_UserInput = new UserInput();
-            List<string> Employees = new List<string>() { "Shimon", "Asaf-Plutz", "KMNO" };
+            List<string> employees = new List<string>() { "Shimon", "Asaf-Plutz", "KMNO" };
 
-            m_GarageManager = new GarageManager("Abba Shimon and Sons' garage", Employees);
+            m_GarageManager = new GarageManager("Abba Shimon and Sons' garage", employees);
         }
 
-        /********    ************/
+        /******** Methods ************/
         public void Start()
         {
             this.IsRunning = true;
@@ -53,23 +54,23 @@ namespace Ex03.ConsoleUI
 
         private void run()
         {
-            m_Screen.ShowMessage(string.Format("Welcome to {0} garage"), Garage.Neme);
+            m_Screen.ShowMessage(string.Format("Welcome to {0} garage", Garage.Name));
             while (IsRunning)
             {
                 try
                 {
-                    eMenuOptions eMenu =MenuOptionsOperation();
-                    Props[] argForMenueCosie =  Garage.GetPropForMenuOptions();
+                    eMenuOptions eMenu = menuOptionsOperation();
+
+                    // Props[] argForMenueCosie =  Garage.GetPropForMenuOptions();
                     switch (eMenu)
                     {
                         case eMenuOptions.InsertCar:
-                            
                             break;
-                        case eMenuOptions.AllSerialNumbers:
+                        case eMenuOptions.AllLicensePlates:
                             break;
-                        case eMenuOptions.UpdateCar:
+                        case eMenuOptions.UpdateVehicle:
                             break;
-                        case eMenuOptions.PutAirInWheels:
+                        case eMenuOptions.FillAirInWheels:
                             break;
                         case eMenuOptions.FillGas:
                             break;
@@ -80,7 +81,6 @@ namespace Ex03.ConsoleUI
                         case eMenuOptions.Exit:
                             break;
                     }
-
                 }
                 catch(Exception)
                 {
@@ -88,34 +88,19 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        private eMenuOptions MenuOptionsOperation()
+        private eMenuOptions menuOptionsOperation()
         {
-            bool isValidChoice= false;
-            eMenuOptions o_result;
+            eMenuOptions o_Result;
 
+            bool isValidChoice;
             do
             {
                 m_Screen.ShowMenu();
-                isValidChoice= UI.getMenuOptions(out o_result);
+                isValidChoice = UI.GetMenuOptions(out o_Result);
             }
             while (isValidChoice);
 
-            return o_result; 
-
-        }
-
-        private string askFordataExecuter(Props[] i_props)
-        {
-            foreach(Props Prop in i_props)
-            {
-                bool isSuccess;
-                do
-                {
-                    Screen.ShowMessage(Prop.Message);
-                    isSuccess = UI.GetInuput(Prop.Type);
-                }while (!isSuccess);
-
-            }
+            return o_Result;
         }
     }
 }

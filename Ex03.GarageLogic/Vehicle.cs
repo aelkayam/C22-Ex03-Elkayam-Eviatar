@@ -4,25 +4,24 @@ using System.Collections.Generic;
 namespace Ex03.GarageLogic
 {
     internal abstract class Vehicle
-
     {
         private const eCarState k_eCarStateInit = eCarState.InRepair;
 
-        private string m_LicensePlate; // diff
+        private string m_LicensePlate; // different
 
-        //an relvent for compr 
-        private string m_Name;
+        // irrelevant for compare
         private eCarState m_CarState;
         private float m_EnergyLeft;
 
-        // relvent for compr 
-        private object m_Engine;                // gas or electric
-        private List<Wheel> m_Wheels;           // Shouldn't it be a arr[]? >>It isnt possible to add another wheel
+        // relevant for compare
+        private string m_ModelName;
+        private object m_Engine; // gas or electric
+        private List<Wheel> m_Wheels;
 
         /******** Properties ************/
         public string Name
         {
-            get { return m_Name; }
+            get { return m_ModelName; }
         }
 
         public string LicencePlate
@@ -56,11 +55,11 @@ namespace Ex03.GarageLogic
         /******** Constructor ************/
         public Vehicle(string i_Name, string i_LicensePlate, float i_EnergyLeft, List<Wheel> i_Wheels, object i_Engine)
         {
-            m_Name = i_Name;
+            m_ModelName = i_Name;
             m_LicensePlate = i_LicensePlate;
             m_EnergyLeft = i_EnergyLeft;
             m_Wheels = i_Wheels;
-            m_CarState = k_eCarStateInit; 
+            m_CarState = k_eCarStateInit;
             m_Engine = i_Engine;
         }
 
@@ -93,6 +92,7 @@ CarState);
             return results;
         }
 
+        // license plate comparison
         public static bool operator ==(Vehicle i_vehicle1, Vehicle i_vehicle2)
         {
             return i_vehicle1.LicencePlate == i_vehicle2.LicencePlate;
@@ -108,9 +108,14 @@ CarState);
             return LicencePlate.GetHashCode();
         }
 
-        public bool isHaveTheSameFildse()
+        protected bool HaveTheSameFields(Vehicle i_OtherVehicle)
         {
+            return m_Engine == i_OtherVehicle.Engine &&
+                m_Wheels == i_OtherVehicle.Wheels &&
+                m_ModelName == i_OtherVehicle.Name;
 
+            // TODO: create engine compare method for Wheels & Engine!!
+            // TODO: create compare method for <WHEELS>
         }
     }
 }
