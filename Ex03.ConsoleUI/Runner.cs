@@ -8,14 +8,13 @@ namespace Ex03.ConsoleUI
 {
     internal class Runner
     {
+        // todo : move to ui 
         private const string k_askForCarType = @"Please enter the type of vehicle you want to enter the garage";
 
         private bool m_IsRunning;
         private Screen m_Screen;
         private UserInput m_UserInput;
         private GarageManager m_GarageManager;
-        private object sdzx;
-
 
         /******** Properties ************/
         public bool IsRunning
@@ -66,20 +65,23 @@ namespace Ex03.ConsoleUI
                 try
                 {
                     eMenuOptions eMenu = menuOptionsOperation();
-
-                    Screen.GetLicensePlateFromUser();
-                    string userLicensePlate = UI.LicensePlatePrompt();
-
+                    string userLicensePlate = string.Empty;
                     float energyToFill;
                     eGasType gasTypeToFill;
                     eCarState carStateTarget;
 
+                    if (eMenu != eMenuOptions.Exit || eMenu != eMenuOptions.AllLicensePlates || eMenu!= eMenuOptions.InsertVehicle)
+                    {
+                        // TODO: fix th problem 
+                        Screen.GetLicensePlateFromUser();
+                        userLicensePlate = UI.LicensePlatePrompt();
+
+                    }
+
                     // TODO: each case will have ONLY FUCTION CALLS!!!
                     switch (eMenu)
                     {
-                            
-
-                        case eMenuOptions.InsertVehicle:
+                        case eMenuOptions.InsertVehicle:// 1
                             insertNewVehicle();
                             // Garage.InsertNewVehicle(userLicensePlate);
                             // TODO: make enum for CAR, MOTORBIKE, TRUCK
@@ -87,13 +89,14 @@ namespace Ex03.ConsoleUI
                             // TODO: make getUserInput function
                             break;
 
-                        case eMenuOptions.AllLicensePlates:
+                        case eMenuOptions.AllLicensePlates: //2 
                             Screen.ShowMessage(Garage.GetDetailsAboutAllVehicles());
 
                             // TODO: filter by car state
                             break;
 
-                        case eMenuOptions.UpdateVehicle:
+                        case eMenuOptions.UpdateVehicle: //3
+
                             Screen.GetVehicleStateFromUser();
                             carStateTarget = UI.CarStatePrompt();
                             Garage.updateCarState(userLicensePlate, carStateTarget);
@@ -101,11 +104,11 @@ namespace Ex03.ConsoleUI
                             // TODO: filter by car state
                             break;
 
-                        case eMenuOptions.FillAirInWheels:
+                        case eMenuOptions.FillAirInWheels://4
                             Garage.FillAir(userLicensePlate); // fill to the max!
                             break;
 
-                        case eMenuOptions.FillGas:
+                        case eMenuOptions.FillGas://5 
                             Screen.GetGasFromUser();
                             energyToFill = UI.EnergyToFillPrompt();
                             Screen.GetGasTypeFromUSer();
@@ -113,17 +116,17 @@ namespace Ex03.ConsoleUI
                             Garage.FillGas(userLicensePlate, energyToFill, gasTypeToFill);
                             break;
 
-                        case eMenuOptions.ChargeBattery:
+                        case eMenuOptions.ChargeBattery:// todo: move to func //6
                             Screen.GetBatteryFromUser();
                             energyToFill = UI.EnergyToFillPrompt();
                             Garage.FillBattery(userLicensePlate, energyToFill);
                             break;
 
-                        case eMenuOptions.ShowDetails:
+                        case eMenuOptions.ShowDetails://7
                             Screen.ShowMessage(Garage.GetDetailsAboutVehicle(userLicensePlate));
                             break;
 
-                        case eMenuOptions.Exit:
+                        case eMenuOptions.Exit://0
                             stopProgram();
                             break;
 
@@ -199,10 +202,10 @@ namespace Ex03.ConsoleUI
             foreach (string arg in argsNeedForNewVehiclem)
             {
                 Screen.ShowMessage(string.Format("Please enter {0}", arg));
-                userArgsForNewVehicle.Add(UI.GetInput());
+                userArgsForNewVehicle.Add(UI.ReadInput());
             }
 
-            Garage.InsertNewVehicle(vehicleType ,userArgsForNewVehicle);
+            Garage.InsertNewVehicle(vehicleType, userArgsForNewVehicle);
         }
 
         private int askInt(string i_Msg)
