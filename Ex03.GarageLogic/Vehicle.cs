@@ -122,10 +122,9 @@ CarState);
         protected static List<string> GetParmsForNew(bool i_isElctiric, int i_NumOfWheel)
         {
             List<string> parms = new List<string>();
-            // in vhacl 
             parms.Add("Name of of the model");
             parms.Add("License Plate");
-            parms.Add("i_EnergyLeft");
+            parms.Add(" Energy Left");
 
             List<string> wheelPams = Wheel.getPramsForNew();
             for (int i = 0; i < i_NumOfWheel; ++i)

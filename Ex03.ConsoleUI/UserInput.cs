@@ -56,15 +56,6 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        internal string GetInput()
-        {
-            bool ans = false;
-            ReadInput();
-
-            return ans;
-
-        }
-
         internal string ReadInput()
         {
             return Console.ReadLine().Trim();
@@ -77,7 +68,7 @@ namespace Ex03.ConsoleUI
 
             do
             {
-                result = readInput().Trim();
+                result = ReadInput().Trim();
                 isUserchooseFormArray = i_StrArrValues.Contains(result);
             }
             while (!isUserchooseFormArray);
@@ -99,11 +90,11 @@ namespace Ex03.ConsoleUI
                     Console.WriteLine(i_Msg);
                 }
 
-                result = readInput();
-                isAns = rm_TrueFalseAns.Contains(result);
+                result = ReadInput();
+                isAns = rm_TrueFalseAns.Contains(result.ToUpper());
             }
             while (isAns);
-            
+
             int i = 0;
             foreach(string s in rm_TrueFalseAns)
             {
@@ -136,7 +127,7 @@ namespace Ex03.ConsoleUI
                     Console.WriteLine(i_Msg);
                 }
 
-                string result = readInput();
+                string result = ReadInput();
                 isAns = Int32.TryParse(result, out ans);
             }
             while (isAns);

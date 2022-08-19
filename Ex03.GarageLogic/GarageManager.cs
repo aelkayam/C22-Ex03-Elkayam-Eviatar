@@ -154,30 +154,6 @@ namespace Ex03.GarageLogic
         // 3.1. make new vehicle
         // 3.2. validate the vehicle (with m_AllValidVehicles)
         // 3.3. if valid: insert to Dictionary (with name and telephone)    otherwise: throw EXCEPTION
-        public void InsertNewVehicle(string i_SerialNum)
-        {
-            // TODO: get parameters for: CAR, MOTORBIKE, TRUCK
-
-            //// check if v is ok
-            //Truck t = new Truck();
-            //bool result = false;
-
-            //foreach(Vehicle v in sr_ValidVehicles)
-            //{
-            //    Truck demo = v as Truck;
-
-            //    if (demo != null)
-            //    {
-            //        result = demo == t;
-            //        if (result)
-            //        {
-            //            break;
-            //        }
-            //    }
-            //}
-
-
-        }
 
         private bool checkIfExist(string i_LicensePlateToLookFor, out Vehicle o_Vehicle)
         {
@@ -207,6 +183,29 @@ namespace Ex03.GarageLogic
         // require license, air (in BAR/PSI) and index of wheels to apply.
         // if no index given, fill all the wheels in the given amount
         public void FillAirInWheels(string i_UserLicensePlate, float i_UnitsToFill, params int[] i_WheelIndex) { }
+
+        public void InsertNewVehicle(string i_vehicleType, List<string> userArgsForNewVehicle)
+        {
+            // TODO: get parameters for: CAR, MOTORBIKE, TRUCK
+
+            //// check if v is ok
+            //Truck t = new Truck();
+            //bool result = false;
+
+            //foreach(Vehicle v in sr_ValidVehicles)
+            //{
+            //    Truck demo = v as Truck;
+
+            //    if (demo != null)
+            //    {
+            //        result = demo == t;
+            //        if (result)
+            //        {
+            //            break;
+            //        }
+            //    }
+            //}
+        }
 
         // require license. Fill air to the max
         public void FillAir(string i_UserLicensePlate) { }
