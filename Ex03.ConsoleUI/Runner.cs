@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Text;
 using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
 {
     internal class Runner
     {
+        private const string k_askForCarType = @"Please enter the type of vehicle you want to enter the garage";
+
         private bool m_IsRunning;
         private Screen m_Screen;
         private UserInput m_UserInput;
         private GarageManager m_GarageManager;
+        private object sdzx;
+
 
         /******** Properties ************/
         public bool IsRunning
@@ -72,9 +77,13 @@ namespace Ex03.ConsoleUI
                     // TODO: each case will have ONLY FUCTION CALLS!!!
                     switch (eMenu)
                     {
-                        case eMenuOptions.InsertCar:
-                            Garage.InsertNewVehicle(userLicensePlate);
+                            
 
+                        case eMenuOptions.InsertVehicle:
+                            insertNewVehicle();
+                            // Garage.InsertNewVehicle(userLicensePlate);
+                            // TODO: make enum for CAR, MOTORBIKE, TRUCK
+                            // TODO: get parameters for: CAR, MOTORBIKE, TRUCK
                             // TODO: make getUserInput function
                             break;
 
@@ -177,5 +186,52 @@ namespace Ex03.ConsoleUI
 
             return o_Result;
         }
+
+        private void insertNewVehicle()
+        {
+            string vehicleType = getNewVehicleType();
+
+            Console.WriteLine("vehicleType" + vehicleType);
+            bool isElectric = askedBouliani("is the Vehicle Electric?");
+            int numOfWhell = askInt("How many wheels are there?");
+            List<string> argsNeedForNewVehiclem = Garage.GetParams(vehicleType, isElectric, numOfWhell);
+            List<string> userArgsForNewVehicle = new List<string>();
+            foreach (string arg in argsNeedForNewVehiclem)
+            {
+                Screen.ShowMessage(string.Format("Please enter {0}", arg));
+                userArgsForNewVehicle.Add(UI.GetInput());
+            }
+
+            Garage.InsertNewVehicle(vehicleType ,userArgsForNewVehicle);
+        }
+
+        private int askInt(string i_Msg)
+        {
+            Screen.ShowMessage(i_Msg);
+            return UI.GetInt(i_Msg);
+        }
+
+        private bool askedBouliani(string i_Msg)
+        {
+            Screen.ShowMessage(i_Msg);
+            return UI.GetBool(i_Msg);
+        }
+
+        private string getNewVehicleType()
+        {
+            List<string> vehicleTypes = Garage.GetVehicleTypes();
+            StringBuilder sb = new StringBuilder(k_askForCarType);
+
+            sb.AppendLine();
+            foreach (string vehicleType in vehicleTypes)
+            {
+                sb.AppendFormat(" {0} ,", vehicleType);
+            }
+
+            Screen.ShowMessage(sb.ToString());
+
+            return UI.GetInputFormArray(vehicleTypes, sb.ToString());
+        }
+
     }
 }

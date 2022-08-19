@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Ex03.GarageLogic
 {
@@ -116,6 +117,32 @@ CarState);
 
             // TODO: create engine compare method for Wheels & Engine!!
             // TODO: create compare method for <WHEELS>
+        }
+
+        protected static List<string> GetParmsForNew(bool i_isElctiric, int i_NumOfWheel)
+        {
+            List<string> parms = new List<string>();
+            // in vhacl 
+            parms.Add("Name of of the model");
+            parms.Add("License Plate");
+            parms.Add("i_EnergyLeft");
+
+            List<string> wheelPams = Wheel.getPramsForNew();
+            for (int i = 0; i < i_NumOfWheel; ++i)
+            {
+                parms.AddRange(wheelPams);
+            }
+
+            if (i_isElctiric)
+            {
+                parms.AddRange(GasEngine.getPramsForNew());
+            }
+            else
+            {
+                parms.AddRange(ElectricEngine.getPramsForNew());
+            }
+
+            return parms;
         }
     }
 }

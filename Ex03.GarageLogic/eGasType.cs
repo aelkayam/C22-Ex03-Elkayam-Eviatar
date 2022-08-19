@@ -2,9 +2,9 @@
 {
     public enum eGasType
     {
-        Soler,
-        Octan95,
-        Octan96,
-        Octan98,
+        Soler = 1,
+        Octan95 = 95,
+        Octan96 = 96,
+        Octan98 = 97,
     }
 }

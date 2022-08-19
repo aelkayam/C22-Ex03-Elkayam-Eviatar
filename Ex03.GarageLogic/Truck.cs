@@ -78,6 +78,17 @@ namespace Ex03.GarageLogic
         public static bool operator !=(Truck i_Truck1, Truck i_Truck2)
         {
             return i_Truck1 != i_Truck2;
+
+        }
+
+        internal static List<string> GetParmsForNew(bool i_isElctiric, int i_NumOfWheel)
+        {
+            List<string> parms = Vehicle.GetParmsForNew(i_isElctiric, i_NumOfWheel);
+
+            parms.Add("Is Refrigerated");
+            parms.Add("Max Capacity");
+
+            return parms;
         }
     }
 }
