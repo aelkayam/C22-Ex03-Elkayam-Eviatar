@@ -105,11 +105,16 @@ namespace Ex03.GarageLogic
             EmployeeNames = i_EmployeeNames;
             new List<string>();
             m_AllVehicles = new Dictionary<string, Vehicle>();
+
+            // for debugging
+            m_AllVehicles.Add("1234", sr_ValidVehicles[0]);
+            m_AllVehicles.Add("5678", sr_ValidVehicles[1]);
+            m_AllVehicles.Add("9012", sr_ValidVehicles[2]);
         }
 
         /******** Methods ************/
 
-        /**** Methods  for a new car Vehicles ****/
+        /**** Methods for a new car Vehicles ****/
         public List<string> GetParams(string i_VehicleType, bool i_isElctiric ,int i_NumOfWheel)
         {
             List<string> list = new List<string>();
@@ -224,19 +229,80 @@ namespace Ex03.GarageLogic
         }
 
         // require license. Fill air to the max
-        public void FillAir(string i_UserLicensePlate) { }
+        public void FillAir(string i_UserLicensePlate)
+        {
+            if (checkIfExist(i_UserLicensePlate, out Vehicle o_TargetVehicle))
+            {
+                foreach(Wheel wheel in o_TargetVehicle.Wheels)
+                {
+                    wheel.FillAir();
+                }
+            }
+            else
+            {
+                throw new ArgumentException("This vehicle does not exist in our garage");
+            }
+        }
 
         // require license and amount of gas
-        public void FillGas(string i_UserLicensePlate, float i_GasToFill, eGasType i_TypeOfGasToFill) { }
+        public void FillGas(string i_UserLicensePlate, float i_GasToFill, eGasType i_TypeOfGasToFill)
+        {
+            if (checkIfExist(i_UserLicensePlate, out Vehicle o_TargetVehicle))
+            {
+                if (o_TargetVehicle.Engine is GasEngine gasEngine)
+                {
+                    gasEngine.FillTank(i_GasToFill, i_TypeOfGasToFill);
+                }
+                else
+                {
+                    throw new ArgumentException("This vehicle is not powered by gas");
+                }
+            }
+            else
+            {
+                throw new ArgumentException("This vehicle does not exist in our garage");
+            }
+        }
 
         // require license and amount of battery
-        public void FillBattery(string i_UserLicensePlate, float i_EnergyToFill) { }
+        public void FillBattery(string i_UserLicensePlate, float i_EnergyToFill)
+        {
+            if (checkIfExist(i_UserLicensePlate, out Vehicle o_TargetVehicle))
+            {
+                if (o_TargetVehicle.Engine is ElectricEngine electricEngine)
+                {
+                    electricEngine.ChargeBattery(i_EnergyToFill);
+                }
+                else
+                {
+                    throw new ArgumentException("This vehicle is not powered by electricity");
+                }
+            }
+            else
+            {
+                throw new ArgumentException("This vehicle does not exist in our garage");
+            }
+        }
 
         // require license.
-        public void Fix(string i_UserLicensePlate) { }
+        public void Fix(string i_UserLicensePlate)
+        {
+            UpdateCarState(i_UserLicensePlate, eCarState.Repaired);
+        }
 
         // require license and car state.
-        public eCarState updateCarState(string i_UserLicensePlate, eCarState i_CarStateTarget) { return eCarState.InRepair; }
+        public eCarState UpdateCarState(string i_UserLicensePlate, eCarState i_CarStateTarget)
+        {
+            if(checkIfExist(i_UserLicensePlate, out Vehicle o_TargetVehicle))
+            {
+                o_TargetVehicle.UpdateVehicleState(i_CarStateTarget);
+                return o_TargetVehicle.CarState;
+            }
+            else
+            {
+                throw new ArgumentException("This vehicle does not exist in our garage");
+            }
+        }
 
         // require license.
         public string GetDetailsAboutVehicle(string i_LicensePlate)

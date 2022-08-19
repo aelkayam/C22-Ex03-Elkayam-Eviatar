@@ -48,17 +48,36 @@ namespace Ex03.GarageLogic
         }
 
         /******** Methods ************/
+        public void FillAir()
+        {
+            CurrentAirPressure = MaxAirPressure;
+        }
+
+        public void FillAir(float i_AirPressureToAdd)
+        {
+            if(CurrentAirPressure + i_AirPressureToAdd <= MaxAirPressure)
+            {
+                CurrentAirPressure += i_AirPressureToAdd;
+            }
+            else
+            {
+                throw new ValueOutOfRangeException(MaxAirPressure - CurrentAirPressure, 0);
+            }
+        }
+
         public override string ToString()
         {
-            return string.Format(@"Current: {0} Max: {1}", CurrentAirPressure, MaxAirPressure);
+            return string.Format(@"Current: {0}     Max: {1}", CurrentAirPressure, MaxAirPressure);
         }
 
         internal static List<string> getPramsForNew()
         {
-            List<string> prams = new List<string>();
-            prams.Add("wheel Manufacturer");
-            prams.Add("wheel Max Air Pressure");
-            prams.Add("Current Air Pressure");
+            List<string> prams = new List<string>
+            {
+                "wheel Manufacturer",
+                "wheel Max Air Pressure",
+                "Current Air Pressure",
+            };
 
             return prams;
         }

@@ -84,7 +84,7 @@ namespace Ex03.ConsoleUI
                             break;
 
                         case eMenuOptions.AllLicensePlates: // 2
-                            ShowAllLicensePlates();
+                            showAllLicensePlates();
                             break;
 
                         case eMenuOptions.UpdateVehicle: // 3
@@ -95,7 +95,7 @@ namespace Ex03.ConsoleUI
                             fillAirInWheels(userLicensePlate);
                             break;
 
-                        case eMenuOptions.FillGas: //5 
+                        case eMenuOptions.FillGas: // 5
                             fillGas(userLicensePlate);
                             break;
 
@@ -121,14 +121,17 @@ namespace Ex03.ConsoleUI
                 catch (FormatException fe)
                 {
                     Screen.ShowError(eErrorType.FormatError);
+                    Screen.ShowMessage(fe.Message);
                 }
                 catch (ArgumentException ae)
                 {
                     Screen.ShowError(eErrorType.ArgumentError);
+                    Screen.ShowMessage(ae.Message);
                 }
                 catch (ValueOutOfRangeException voore)
                 {
                     Screen.ShowError(eErrorType.ValueOutOfRangeError);
+                    Screen.ShowMessage(voore.Message);
                 }
                 catch (Exception e)
                 {
@@ -139,7 +142,7 @@ namespace Ex03.ConsoleUI
             exitProgram();
         }
 
-        private void ShowAllLicensePlates()
+        private void showAllLicensePlates()
         {
             Screen.ShowFilters();
             Screen.ShowMessage(Garage.GetDetailsAboutAllVehicles());
@@ -148,18 +151,23 @@ namespace Ex03.ConsoleUI
             Screen.ShowMessage(Garage.FilterByVehicleState(filterTarget));
         }
 
+        // update Vehicle to the next step
         private void updateVehicle(string userLicensePlate)
         {
             Screen.GetVehicleStateFromUser();
             eCarState carStateTarget = UI.CarStatePrompt();
-            Garage.updateCarState(userLicensePlate, carStateTarget);
+            Garage.UpdateCarState(userLicensePlate, carStateTarget);
+            Screen.Confirmation();
         }
 
+        // Fill air in the vehicle
         private void fillAirInWheels(string userLicensePlate)
         {
             Garage.FillAir(userLicensePlate); // fill to the max!
+            Screen.Confirmation();
         }
 
+        // Fill gas in the vehicle and confirm
         private void fillGas(string userLicensePlate)
         {
             Screen.GetGasFromUser();
@@ -169,13 +177,17 @@ namespace Ex03.ConsoleUI
             eGasType gasTypeToFill = UI.GasTypePrompt();
 
             Garage.FillGas(userLicensePlate, energyToFill, gasTypeToFill);
+            Screen.Confirmation();
         }
 
+        // Charge battery in the vehicle and confirm
         private void chargeBattery(string userLicensePlate)
         {
             Screen.GetBatteryFromUser();
             float energyToFill = UI.EnergyToFillPrompt();
+
             Garage.FillBattery(userLicensePlate, energyToFill);
+            Screen.Confirmation();
         }
 
         private void showDetails(string i_UserLicensePlate)
@@ -260,6 +272,5 @@ namespace Ex03.ConsoleUI
 
             return UI.GetInputFormArray(vehicleTypes, sb.ToString());
         }
-
     }
 }
