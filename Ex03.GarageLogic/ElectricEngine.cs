@@ -42,5 +42,26 @@ namespace Ex03.GarageLogic
 
             return prams;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is ElectricEngine engine &&
+                   MaxBattery == engine.MaxBattery;
+        }
+
+        public static bool operator ==(ElectricEngine left, ElectricEngine right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(ElectricEngine left, ElectricEngine right)
+        {
+            return !left.Equals(right);
+        }
+
+        public override int GetHashCode()
+        {
+            return -250832942 + MaxBattery.GetHashCode();
+        }
     }
 }

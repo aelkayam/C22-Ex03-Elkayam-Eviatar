@@ -52,5 +52,30 @@ namespace Ex03.GarageLogic
 
             return prams;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is GasEngine engine &&
+                   GasType == engine.GasType &&
+                   MaxGas == engine.MaxGas;
+        }
+
+        public override int GetHashCode()
+        {
+            int hashCode = 1948794520;
+            hashCode = (hashCode * -1521134295) + GasType.GetHashCode();
+            hashCode = (hashCode * -1521134295) + MaxGas.GetHashCode();
+            return hashCode;
+        }
+
+        public static bool operator ==(GasEngine i_gasEngine1, GasEngine i_GasEngine2)
+        {
+            return i_gasEngine1.Equals(i_GasEngine2);
+        }
+
+        public static bool operator !=(GasEngine i_gasEngine1, GasEngine i_GasEngine2)
+        {
+            return !i_gasEngine1.Equals(i_GasEngine2);
+        }
     }
 }

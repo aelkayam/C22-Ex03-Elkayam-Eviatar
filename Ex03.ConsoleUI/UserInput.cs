@@ -1,6 +1,6 @@
 using System;
-using Ex03.GarageLogic;
 using System.Collections.Generic;
+using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
 {
@@ -61,7 +61,7 @@ namespace Ex03.ConsoleUI
             return Console.ReadLine().Trim();
         }
 
-        internal string GetInputFormArray(List<string> i_StrArrValues ,params string[] i_AnotherMessage)
+        internal string GetInputFormArray(List<string> i_StrArrValues, params string[] i_AnotherMessage)
         {
             bool isUserchooseFormArray = false;
             string result = string.Empty;
@@ -78,8 +78,8 @@ namespace Ex03.ConsoleUI
 
         internal bool GetBool(string i_Msg)
         {
-            bool isAns = true; //trst time not do it 
-            bool resletBool = false; 
+            bool isAns = true; // first time not do it
+            bool resletBool = false;
             string result;
 
             do

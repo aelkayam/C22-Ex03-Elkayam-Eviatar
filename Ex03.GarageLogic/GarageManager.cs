@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text;
 
 namespace Ex03.GarageLogic
 {
@@ -148,6 +149,21 @@ namespace Ex03.GarageLogic
             return result;
         }
 
+        public string FilterByVehicleState(eCarState filterTarget)
+        {
+            StringBuilder filteredVehicles = new StringBuilder();
+
+            foreach(Vehicle vehicle in AllVehicles.Values)
+            {
+                if(vehicle.CarState == filterTarget)
+                {
+                    filteredVehicles.AppendLine(vehicle.LicencePlate);
+                }
+            }
+
+            return filteredVehicles.ToString();
+        }
+
         // 1. receive all the data from the user in the new car
         // 2. check that LP is new (use IsExist from dictionary)
         // 3. if it is possible:        otherwise: throw EXCEPTION
@@ -235,7 +251,18 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public string GetDetailsAboutAllVehicles() { return AllVehicles.Keys.ToString(); }
+        // return string of all license plates currently in the garage
+        public string GetDetailsAboutAllVehicles()
+        {
+            StringBuilder allLicensePlates = new StringBuilder(string.Empty);
+
+            foreach (string licensePlate in AllVehicles.Keys)
+            {
+                allLicensePlates.AppendLine(licensePlate);
+            }
+
+            return allLicensePlates.ToString();
+        }
 
         internal static bool IsEngineElectric(object i_Engine)
         {

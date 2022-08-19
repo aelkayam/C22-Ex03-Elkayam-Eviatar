@@ -114,9 +114,6 @@ CarState);
             return m_Engine == i_OtherVehicle.Engine &&
                 m_Wheels == i_OtherVehicle.Wheels &&
                 m_ModelName == i_OtherVehicle.Name;
-
-            // TODO: create engine compare method for Wheels & Engine!!
-            // TODO: create compare method for <WHEELS>
         }
 
         protected static List<string> GetParmsForNew(bool i_isElctiric, int i_NumOfWheel)

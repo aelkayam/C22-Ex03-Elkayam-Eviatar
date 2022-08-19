@@ -62,5 +62,30 @@ namespace Ex03.GarageLogic
 
             return prams;
         }
+
+        public static bool operator ==(Wheel i_Wheel1, Wheel i_Wheel2)
+        {
+            return i_Wheel1.Equals(i_Wheel2);
+        }
+
+        public static bool operator !=(Wheel i_Wheel1, Wheel i_Wheel2)
+        {
+            return !i_Wheel1.Equals(i_Wheel2);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Wheel wheel &&
+                   ManufacturerName == wheel.ManufacturerName &&
+                   MaxAirPressure == wheel.MaxAirPressure;
+        }
+
+        public override int GetHashCode()
+        {
+            int hashCode = -944765117;
+            hashCode = (hashCode * -1521134295) + EqualityComparer<string>.Default.GetHashCode(ManufacturerName);
+            hashCode = (hashCode * -1521134295) + MaxAirPressure.GetHashCode();
+            return hashCode;
+        }
     }
 }

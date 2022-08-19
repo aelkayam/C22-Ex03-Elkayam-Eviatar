@@ -15,6 +15,12 @@ namespace Ex03.ConsoleUI
 0   - To Exit.
 ";
 
+        private const string k_FiltersMsg = @"Filter by vehicle state:
+1  - InRepair
+2  - Repaired
+3  - Paid
+";
+
         private const string k_FormatMsg = "Parsing failure, invalid input was typed.";
         private const string k_ArgumentMsg = "Wrong argument was typed.";
         private const string k_ValueOutOfRangeMsg = "Value out of range was typed.";
@@ -24,6 +30,7 @@ namespace Ex03.ConsoleUI
         private const string k_GetGasMsg = "Please enter how much gas you want to fill:";
         private const string k_GetGasTypeMsg = @"Please enter what type of gas to fill 
 (1 - Soler/95 - Octan95 /96 - Octan96/98 - Octan98):";
+
         private const string k_GetVehicleStateMsg = "Please enter the new state (Repaired/Paid):";
 
         /******** Methods ************/
@@ -81,6 +88,11 @@ namespace Ex03.ConsoleUI
         internal void ShowMenu()
         {
             print(k_MenuMsg);
+        }
+
+        internal void ShowFilters()
+        {
+            print(k_FiltersMsg);
         }
     }
 }
