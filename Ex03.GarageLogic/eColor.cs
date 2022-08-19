@@ -1,6 +1,6 @@
 ﻿namespace Ex03.GarageLogic
 {
-    internal enum eColor
+    public enum eColor
     {
         Black,
         Blue,

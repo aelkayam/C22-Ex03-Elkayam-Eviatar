@@ -1,6 +1,6 @@
 ﻿namespace Ex03.GarageLogic
 {
-    internal enum eGasType
+    public enum eGasType
     {
         Soler = 1,
         Octan95 = 95,

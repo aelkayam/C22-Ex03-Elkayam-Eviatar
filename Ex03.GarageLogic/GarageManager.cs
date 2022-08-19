@@ -39,12 +39,7 @@ namespace Ex03.GarageLogic
         // Default Truck Refrigerated
         internal const bool v_TruckRefrigerated = true;
 
-        // Default eLicence  string
-        // 0 = class
-        internal const string k_FormtLicenceDefult = "Default{0}{1}";
-
         private static readonly List<Vehicle> sr_ValidVehicles;
-
         public static Random random = new Random();
 
         // ======================================================
@@ -58,6 +53,7 @@ namespace Ex03.GarageLogic
         private Dictionary<string, Vehicle> m_AllVehicles;
         private Dictionary<string, VehicleOwner> m_AllOwners;
 
+        /******** Properties ************/
         public string Name
         {
             get { return m_Name; }
@@ -77,6 +73,8 @@ namespace Ex03.GarageLogic
             get { return EmployeeNames[0]; }
             set { EmployeeNames[0] = value; }
         }
+
+        internal Dictionary<string, Vehicle> AllVehicles { get { return m_AllVehicles; } }
 
         static GarageManager()
         {
@@ -156,9 +154,29 @@ namespace Ex03.GarageLogic
         // 3.1. make new vehicle
         // 3.2. validate the vehicle (with m_AllValidVehicles)
         // 3.3. if valid: insert to Dictionary (with name and telephone)    otherwise: throw EXCEPTION
-        public void InsertNewVehicle(string i_VehicleType, List<string> i_ArgsForNewVehicle)
+        public void InsertNewVehicle(string i_SerialNum)
         {
-            Console.WriteLine("in InsertNewVehicle");
+            // TODO: get parameters for: CAR, MOTORBIKE, TRUCK
+
+            //// check if v is ok
+            //Truck t = new Truck();
+            //bool result = false;
+
+            //foreach(Vehicle v in sr_ValidVehicles)
+            //{
+            //    Truck demo = v as Truck;
+
+            //    if (demo != null)
+            //    {
+            //        result = demo == t;
+            //        if (result)
+            //        {
+            //            break;
+            //        }
+            //    }
+            //}
+
+
         }
 
         private bool checkIfExist(string i_LicensePlateToLookFor, out Vehicle o_Vehicle)
@@ -190,15 +208,35 @@ namespace Ex03.GarageLogic
         // if no index given, fill all the wheels in the given amount
         public void FillAirInWheels(string i_UserLicensePlate, float i_UnitsToFill, params int[] i_WheelIndex) { }
 
+        // require license. Fill air to the max
+        public void FillAir(string i_UserLicensePlate) { }
+
         // require license and amount of gas
-        public void FillGas(string i_UserLicensePlate, float i_GasToFill) { }
+        public void FillGas(string i_UserLicensePlate, float i_GasToFill, eGasType i_TypeOfGasToFill) { }
 
         // require license and amount of battery
         public void FillBattery(string i_UserLicensePlate, float i_EnergyToFill) { }
 
+        // require license.
         public void Fix(string i_UserLicensePlate) { }
 
-        public eCarState updateCarState(string i_UserLicensePlate) { return eCarState.InRepair; }
+        // require license and car state.
+        public eCarState updateCarState(string i_UserLicensePlate, eCarState i_CarStateTarget) { return eCarState.InRepair; }
+
+        // require license.
+        public string GetDetailsAboutVehicle(string i_LicensePlate)
+        {
+            if (checkIfExist(i_LicensePlate, out Vehicle o_ChosenVehicle))
+            {
+                return o_ChosenVehicle.ToString();
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
+        }
+
+        public string GetDetailsAboutAllVehicles() { return AllVehicles.Keys.ToString(); }
 
         internal static bool IsEngineElectric(object i_Engine)
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Text;
 using Ex03.GarageLogic;
 
@@ -66,71 +67,105 @@ namespace Ex03.ConsoleUI
                 {
                     eMenuOptions eMenu = menuOptionsOperation();
 
+                    Screen.GetLicensePlateFromUser();
+                    string userLicensePlate = UI.LicensePlatePrompt();
+
+                    float energyToFill;
+                    eGasType gasTypeToFill;
+                    eCarState carStateTarget;
+
                     // TODO: each case will have ONLY FUCTION CALLS!!!
                     switch (eMenu)
                     {
+                            
+
                         case eMenuOptions.InsertVehicle:
                             insertNewVehicle();
+                            // Garage.InsertNewVehicle(userLicensePlate);
                             // TODO: make enum for CAR, MOTORBIKE, TRUCK
                             // TODO: get parameters for: CAR, MOTORBIKE, TRUCK
                             // TODO: make getUserInput function
                             break;
+
                         case eMenuOptions.AllLicensePlates:
-                            // TODO: get all vehicles from the garage and print the license plates
+                            Screen.ShowMessage(Garage.GetDetailsAboutAllVehicles());
+
                             // TODO: filter by car state
                             break;
+
                         case eMenuOptions.UpdateVehicle:
-                            // TODO: get from user: get license plate
-                            // TODO: create method for changing state: INREPAIR > REPAIRED > PAYED
+                            Screen.GetVehicleStateFromUser();
+                            carStateTarget = UI.CarStatePrompt();
+                            Garage.updateCarState(userLicensePlate, carStateTarget);
+
                             // TODO: filter by car state
                             break;
+
                         case eMenuOptions.FillAirInWheels:
-                            // TODO: get from user: get license plate
-                            // TODO: get from user: fill one wheel(by index) or all wheels
-                            // TODO: get from user: how much air to fill (bar or PSI)
+                            Garage.FillAir(userLicensePlate); // fill to the max!
                             break;
+
                         case eMenuOptions.FillGas:
-                            // TODO: get from user: get license plate
-                            // TODO: get from user: how much gas you want to fill
+                            Screen.GetGasFromUser();
+                            energyToFill = UI.EnergyToFillPrompt();
+                            Screen.GetGasTypeFromUSer();
+                            gasTypeToFill = UI.GasTypePrompt();
+                            Garage.FillGas(userLicensePlate, energyToFill, gasTypeToFill);
                             break;
+
                         case eMenuOptions.ChargeBattery:
-                            // TODO: get from user: get license plate
-                            // TODO: get from user: how much battery you want to fill
+                            Screen.GetBatteryFromUser();
+                            energyToFill = UI.EnergyToFillPrompt();
+                            Garage.FillBattery(userLicensePlate, energyToFill);
                             break;
+
                         case eMenuOptions.ShowDetails:
-                            // TODO: get from user: get license plate and return DETAILS about the car
+                            Screen.ShowMessage(Garage.GetDetailsAboutVehicle(userLicensePlate));
                             break;
+
                         case eMenuOptions.Exit:
-                            m_IsRunning = false;
+                            stopProgram();
                             break;
+
                         default:
                             Console.WriteLine("default");
                             break;
                     }
                 }
 
-                // TODO: check the order
+                // TODO: check the order (~what order?)
                 catch (FormatException fe)
                 {
-                    // TODO: think about what will happen with FormatException
+                    Screen.ShowError(eErrorType.FormatError);
                 }
                 catch (ArgumentException ae)
                 {
-                    // TODO: think about what will happen with ArgumentException
+                    Screen.ShowError(eErrorType.ArgumentError);
                 }
                 catch (ValueOutOfRangeException voore)
                 {
-                    // TODO: think about what will happen with ValueOutOfRangeException
+                    Screen.ShowError(eErrorType.ValueOutOfRangeError);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    // TODO:
+                    Screen.ShowMessage(e.Message);
                 }
             } // END OF WHILE
 
-            // TODO: create 'Goodbye' method
-            Screen.ShowMessage("Goodbye! press enter to exit");
-            Console.ReadLine();
+            exitProgram();
+        }
+
+        private void stopProgram()
+        {
+            Screen.ShowMessage("Exiting...");
+            Thread.Sleep(1000);
+            m_IsRunning = false;
+        }
+
+        private void exitProgram()
+        {
+            Screen.ShowMessage("Goodbye! press enter to exit the garage :D");
+            UI.ReadInput();
         }
 
         private eMenuOptions menuOptionsOperation()
