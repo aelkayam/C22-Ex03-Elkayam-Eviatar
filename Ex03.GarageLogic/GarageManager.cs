@@ -39,12 +39,7 @@ namespace Ex03.GarageLogic
         // Default Truck Refrigerated
         internal const bool v_TruckRefrigerated = true;
 
-        // Default eLicence  string
-        // 0 = class
-        internal const string k_FormtLicenceDefult = "Default{0}{1}";
-
         private static readonly List<Vehicle> sr_ValidVehicles;
-
         public static Random random = new Random();
 
         // ======================================================
@@ -58,6 +53,7 @@ namespace Ex03.GarageLogic
         private Dictionary<string, Vehicle> m_AllVehicles;
         private Dictionary<string, VehicleOwner> m_AllOwners;
 
+        /******** Properties ************/
         public string Name
         {
             get { return m_Name; }
@@ -77,6 +73,8 @@ namespace Ex03.GarageLogic
             get { return EmployeeNames[0]; }
             set { EmployeeNames[0] = value; }
         }
+
+        internal Dictionary<string, Vehicle> AllVehicles { get { return m_AllVehicles; } }
 
         static GarageManager()
         {
@@ -109,10 +107,45 @@ namespace Ex03.GarageLogic
         }
 
         /******** Methods ************/
-        public static string[] GetParams(eVehiclesTypes i_VehicleType)
+
+        /**** Methods  for a new car Vehicles ****/
+        public List<string> GetParams(string i_VehicleType, bool i_isElctiric ,int i_NumOfWheel)
         {
-            // TODO: MAKE IT HAPPEN
-            return null;
+            List<string> list = new List<string>();
+
+            switch(i_VehicleType)
+            {
+                case "Car":
+                    list = Car.GetParmsForNew(i_isElctiric, i_NumOfWheel);
+                    break;
+                case "Truck":
+                    list = Truck.GetParmsForNew(i_isElctiric, i_NumOfWheel);
+                    break;
+                case "Motorbike":
+                    list = Motorbike.GetParmsForNew(i_isElctiric, i_NumOfWheel);
+                    break;
+            }
+
+            list.Add("The name of the owner of the vehicle");
+            list.Add("The phone number of the owner of the vehicle");
+
+            return list;
+        }
+
+        public List<string> GetVehicleTypes()
+        {
+            List<string> result = new List<string>();
+            foreach(Vehicle vehicle in sr_ValidVehicles)
+            {
+                string nameVehicle = vehicle.GetType().Name;
+
+                if (!result.Contains(nameVehicle))
+                {
+                    result.Add(nameVehicle);
+                }
+            }
+
+            return result;
         }
 
         // 1. receive all the data from the user in the new car
@@ -121,9 +154,11 @@ namespace Ex03.GarageLogic
         // 3.1. make new vehicle
         // 3.2. validate the vehicle (with m_AllValidVehicles)
         // 3.3. if valid: insert to Dictionary (with name and telephone)    otherwise: throw EXCEPTION
-        public void InsertNewVehicle(string i_SerialNum, string i_Wheel)
+        public void InsertNewVehicle(string i_SerialNum)
         {
-            //// chack if v is ok
+            // TODO: get parameters for: CAR, MOTORBIKE, TRUCK
+
+            //// check if v is ok
             //Truck t = new Truck();
             //bool result = false;
 
@@ -140,6 +175,7 @@ namespace Ex03.GarageLogic
             //        }
             //    }
             //}
+
 
         }
 
@@ -166,19 +202,41 @@ namespace Ex03.GarageLogic
             return true;
         }
 
+
+
         // require license, air (in BAR/PSI) and index of wheels to apply.
         // if no index given, fill all the wheels in the given amount
         public void FillAirInWheels(string i_UserLicensePlate, float i_UnitsToFill, params int[] i_WheelIndex) { }
 
+        // require license. Fill air to the max
+        public void FillAir(string i_UserLicensePlate) { }
+
         // require license and amount of gas
-        public void FillGas(string i_UserLicensePlate, float i_GasToFill) { }
+        public void FillGas(string i_UserLicensePlate, float i_GasToFill, eGasType i_TypeOfGasToFill) { }
 
         // require license and amount of battery
         public void FillBattery(string i_UserLicensePlate, float i_EnergyToFill) { }
 
+        // require license.
         public void Fix(string i_UserLicensePlate) { }
 
-        public eCarState updateCarState(string i_UserLicensePlate) { return eCarState.InRepair; }
+        // require license and car state.
+        public eCarState updateCarState(string i_UserLicensePlate, eCarState i_CarStateTarget) { return eCarState.InRepair; }
+
+        // require license.
+        public string GetDetailsAboutVehicle(string i_LicensePlate)
+        {
+            if (checkIfExist(i_LicensePlate, out Vehicle o_ChosenVehicle))
+            {
+                return o_ChosenVehicle.ToString();
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
+        }
+
+        public string GetDetailsAboutAllVehicles() { return AllVehicles.Keys.ToString(); }
 
         internal static bool IsEngineElectric(object i_Engine)
         {
