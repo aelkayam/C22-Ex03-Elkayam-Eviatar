@@ -6,7 +6,7 @@ namespace Ex03.ConsoleUI
 {
     internal class UserInput
     {
-        private static readonly List<string> sr_TrueFalseAns = new List<string>() { "true", "yes", "y", "false", "no", "n" };
+        private static readonly List<string> sr_TrueFalseAns = new List<string>() { "TRUE", "YES", "Y", "false", "NO", "N" };
 
         public string UserName { get; set; }
 
@@ -91,10 +91,10 @@ namespace Ex03.ConsoleUI
                     Console.WriteLine(i_Msg);
                 }
 
-                result = ReadInput().ToLower();
-                isAns = sr_TrueFalseAns.Contains(result);
+                result = ReadInput();
+                isAns = sr_TrueFalseAns.Contains(result.ToUpper());
             }
-            while (!isAns);
+            while (isAns);
 
             int i = 0;
             foreach(string s in sr_TrueFalseAns)
