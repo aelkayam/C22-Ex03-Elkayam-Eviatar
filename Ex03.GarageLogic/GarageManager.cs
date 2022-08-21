@@ -116,18 +116,15 @@ namespace Ex03.GarageLogic
             switch(i_VehicleType)
             {
                 case "Car":
-                    list = Car.GetParmsForNew(i_isElctiric, i_NumOfWheel);
+                    list = Car.GetParmsForNew();
                     break;
                 case "Truck":
-                    list = Truck.GetParmsForNew(i_isElctiric, i_NumOfWheel);
+                    list = Truck.GetParmsForNew();
                     break;
                 case "Motorbike":
-                    list = Motorbike.GetParmsForNew(i_isElctiric, i_NumOfWheel);
+                    list = Motorbike.GetParmsForNew();
                     break;
             }
-
-            list.Add("The name of the owner of the vehicle");
-            list.Add("The phone number of the owner of the vehicle");
 
             return list;
         }
