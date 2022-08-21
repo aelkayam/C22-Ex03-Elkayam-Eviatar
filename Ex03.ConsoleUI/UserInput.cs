@@ -62,6 +62,11 @@ namespace Ex03.ConsoleUI
             return Console.ReadLine().Trim();
         }
 
+        internal string GetString()
+        {
+            return ReadInput();
+        }
+
         internal string GetInputFormArray(List<string> i_StrArrValues, params string[] i_AnotherMessage)
         {
             bool isUserchooseFormArray = false;

@@ -93,6 +93,22 @@ CarState);
             return results;
         }
 
+        protected static List<string> GetParmsForNew(bool i_isElctiric)
+        {
+            List<string> parms = new List<string>();
+
+            if (i_isElctiric)
+            {
+                parms.AddRange(GasEngine.getPramsForNew());
+            }
+            else
+            {
+                parms.AddRange(ElectricEngine.getPramsForNew());
+            }
+
+            return parms;
+        }
+
         // license plate comparison
         public static bool operator ==(Vehicle i_vehicle1, Vehicle i_vehicle2)
         {
@@ -117,56 +133,6 @@ CarState);
 
             // TODO: create engine compare method for Wheels & Engine!!
             // TODO: create compare method for <WHEELS>
-        }
-
-        protected static List<string> GetParmsForNew(bool i_isElctiric, int i_NumOfWheel)
-        {
-            List<string> parms = new List<string>();
-            parms.Add("Name of of the model");
-            parms.Add("License Plate");
-            parms.Add(" Energy Left");
-
-            List<string> wheelPams = Wheel.getPramsForNew();
-            for (int i = 0; i < i_NumOfWheel; ++i)
-            {
-                parms.AddRange(wheelPams);
-            }
-
-            if (i_isElctiric)
-            {
-                parms.AddRange(GasEngine.getPramsForNew());
-            }
-            else
-            {
-                parms.AddRange(ElectricEngine.getPramsForNew());
-            }
-
-            return parms;
-        }
-
-        protected static List<string> GetParmsForNew(bool i_isElctiric, int i_NumOfWheel)
-        {
-            List<string> parms = new List<string>();
-            parms.Add("Name of the model");
-            parms.Add("License Plate");
-            parms.Add("Energy Left");
-
-            List<string> wheelPams = Wheel.getPramsForNew();
-            for (int i = 0; i < i_NumOfWheel; ++i)
-            {
-                parms.AddRange(wheelPams);
-            }
-
-            if (i_isElctiric)
-            {
-                parms.AddRange(GasEngine.getPramsForNew());
-            }
-            else
-            {
-                parms.AddRange(ElectricEngine.getPramsForNew());
-            }
-
-            return parms;
         }
 
         internal void UpdateVehicleState(eCarState i_CarStateTarget)

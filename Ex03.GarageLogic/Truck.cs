@@ -66,12 +66,13 @@ namespace Ex03.GarageLogic
             return string.Format(@"{0}Has refrigerator: {1}     Capacity: {2}L", base.ToString(), IsRefrigerator, MaxCapacity);
         }
 
-        internal static List<string> GetParmsForNew(bool i_isElctiric, int i_NumOfWheel)
+        internal static List<string> GetParmsForNew()
         {
-            List<string> parms = Vehicle.GetParmsForNew(i_isElctiric, i_NumOfWheel);
-
-            parms.Add("Is Refrigerated");
-            parms.Add("Max Capacity");
+            List<string> parms = new List<string>
+            {
+                "Is Refrigerated",
+                "Max Capacity",
+            };
 
             return parms;
         }

@@ -26,8 +26,8 @@ namespace Ex03.ConsoleUI
         private const string k_ValueOutOfRangeMsg = "Value out of range was typed.";
 
         private const string k_GetLicensePlateMsg = "Please enter your license plate number:";
-        private const string k_GetBatteryMsg = "Please enter how many hours you want to charge into the battery:";
-        private const string k_GetGasMsg = "Please enter how much gas you want to fill:";
+        public const string k_GetBatteryMsg = "Please enter how many hours you want to charge into the battery:";
+        public const string k_GetGasMsg = "Please enter how much gas you want to fill:";
         private const string k_GetGasTypeMsg = @"Please enter what type of gas to fill 
 (1 - Soler / 95 - Octan95 / 96 - Octan96 / 98 - Octan98):";
 

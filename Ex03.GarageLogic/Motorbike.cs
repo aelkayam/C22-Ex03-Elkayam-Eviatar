@@ -5,14 +5,14 @@ namespace Ex03.GarageLogic
 {
     internal class Motorbike : Vehicle
     {
-        private const eLicence k_License = eLicence.A;
+        private const eLicense k_License = eLicense.A;
         private const int k_EngineVolume = 1000;
 
-        private readonly eLicence r_License;
+        private readonly eLicense r_License;
         private readonly int r_EngineCapacity;
 
         /******** Properties ************/
-        public eLicence Licence
+        public eLicense Licence
         {
             get { return r_License; }
         }
@@ -23,7 +23,7 @@ namespace Ex03.GarageLogic
         }
 
         /******** Constructor ************/
-        private Motorbike(string i_Name, string i_LicensePlate, float i_EnergyLeft, List<Wheel> i_Wheels, object i_Engine, eLicence i_License, int i_EngineCapacity)
+        private Motorbike(string i_Name, string i_LicensePlate, float i_EnergyLeft, List<Wheel> i_Wheels, object i_Engine, eLicense i_License, int i_EngineCapacity)
             : base(i_Name, i_LicensePlate, i_EnergyLeft, i_Wheels, i_Engine)
         {
             r_License = i_License;
@@ -31,13 +31,13 @@ namespace Ex03.GarageLogic
         }
 
         // gas motorbike
-        public Motorbike(string i_Name, string i_LicensePlate, float i_EnergyLeft, List<Wheel> i_Wheels, GasEngine i_Engine, eLicence i_License, int i_EngineCapacity)
+        public Motorbike(string i_Name, string i_LicensePlate, float i_EnergyLeft, List<Wheel> i_Wheels, GasEngine i_Engine, eLicense i_License, int i_EngineCapacity)
             : this(i_Name, i_LicensePlate, i_EnergyLeft, i_Wheels, (object)i_Engine, i_License, i_EngineCapacity)
         {
         }
 
         // electric motorbike
-        public Motorbike(string i_Name, string i_LicensePlate, float i_EnergyLeft, List<Wheel> i_Wheels, ElectricEngine i_Engine, eLicence i_License, int i_EngineCapacity)
+        public Motorbike(string i_Name, string i_LicensePlate, float i_EnergyLeft, List<Wheel> i_Wheels, ElectricEngine i_Engine, eLicense i_License, int i_EngineCapacity)
             : this(i_Name, i_LicensePlate, i_EnergyLeft, i_Wheels, (object)i_Engine, i_License, i_EngineCapacity)
         {
         }
@@ -92,12 +92,13 @@ namespace Ex03.GarageLogic
         //    throw new NotImplementedException();
         //}
 
-        internal static List<string> GetParmsForNew(bool i_isElctiric, int i_NumOfWheel)
+        internal static List<string> GetParmsForNew()
         {
-            List<string> parms = Vehicle.GetParmsForNew(i_isElctiric, i_NumOfWheel);
-
-            parms.Add("License type :  A = 1,AA = 2, B1 = 3, BB = 4,");
-            parms.Add("Engine Capacity");
+            List<string> parms = new List<string>
+            {
+                "License type :  A = 1,AA = 2, B1 = 3, BB = 4,",
+                "Engine Capacity",
+            };
 
             return parms;
         }
