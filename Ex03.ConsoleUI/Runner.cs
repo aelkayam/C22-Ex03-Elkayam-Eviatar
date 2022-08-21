@@ -9,7 +9,8 @@ namespace Ex03.ConsoleUI
     internal class Runner
     {
         // todo : move to ui 
-        private const string k_askForCarType = @"Please enter the type of vehicle you want to enter the garage";
+        private const string k_AskForCarType = @"Please enter the type of vehicle you want to enter the garage";
+        private const bool k_IsMenuOption = true;
 
         private bool m_IsRunning;
         private Screen m_Screen;
@@ -66,67 +67,48 @@ namespace Ex03.ConsoleUI
                 {
                     eMenuOptions eMenu = menuOptionsOperation();
                     string userLicensePlate = string.Empty;
-                    float energyToFill;
-                    eGasType gasTypeToFill;
-                    eCarState carStateTarget;
 
-                    if (eMenu != eMenuOptions.Exit || eMenu != eMenuOptions.AllLicensePlates || eMenu!= eMenuOptions.InsertVehicle)
+                    if (eMenu != eMenuOptions.Exit && eMenu != eMenuOptions.AllLicensePlates)
                     {
-                        // TODO: fix th problem 
                         Screen.GetLicensePlateFromUser();
                         userLicensePlate = UI.LicensePlatePrompt();
-
                     }
 
-                    // TODO: each case will have ONLY FUCTION CALLS!!!
                     switch (eMenu)
                     {
-                        case eMenuOptions.InsertVehicle:// 1
-                            insertNewVehicle();
+                        case eMenuOptions.InsertVehicle: // 1
+                            insertNewVehicle(userLicensePlate);
                             // Garage.InsertNewVehicle(userLicensePlate);
                             // TODO: make enum for CAR, MOTORBIKE, TRUCK
                             // TODO: get parameters for: CAR, MOTORBIKE, TRUCK
                             // TODO: make getUserInput function
                             break;
 
-                        case eMenuOptions.AllLicensePlates: //2 
-                            Screen.ShowMessage(Garage.GetDetailsAboutAllVehicles());
-
-                            // TODO: filter by car state
+                        case eMenuOptions.AllLicensePlates: // 2
+                            showAllLicensePlates();
                             break;
 
-                        case eMenuOptions.UpdateVehicle: //3
-
-                            Screen.GetVehicleStateFromUser();
-                            carStateTarget = UI.CarStatePrompt();
-                            Garage.updateCarState(userLicensePlate, carStateTarget);
-
-                            // TODO: filter by car state
+                        case eMenuOptions.UpdateVehicle: // 3
+                            updateVehicle(userLicensePlate, k_IsMenuOption);
                             break;
 
-                        case eMenuOptions.FillAirInWheels://4
-                            Garage.FillAir(userLicensePlate); // fill to the max!
+                        case eMenuOptions.FillAirInWheels: // 4
+                            fillAirInWheels(userLicensePlate);
                             break;
 
-                        case eMenuOptions.FillGas://5 
-                            Screen.GetGasFromUser();
-                            energyToFill = UI.EnergyToFillPrompt();
-                            Screen.GetGasTypeFromUSer();
-                            gasTypeToFill = UI.GasTypePrompt();
-                            Garage.FillGas(userLicensePlate, energyToFill, gasTypeToFill);
+                        case eMenuOptions.FillGas: // 5
+                            fillGas(userLicensePlate);
                             break;
 
-                        case eMenuOptions.ChargeBattery:// todo: move to func //6
-                            Screen.GetBatteryFromUser();
-                            energyToFill = UI.EnergyToFillPrompt();
-                            Garage.FillBattery(userLicensePlate, energyToFill);
+                        case eMenuOptions.ChargeBattery: // 6
+                            chargeBattery(userLicensePlate);
                             break;
 
-                        case eMenuOptions.ShowDetails://7
-                            Screen.ShowMessage(Garage.GetDetailsAboutVehicle(userLicensePlate));
+                        case eMenuOptions.ShowDetails: // 7
+                            showDetails(userLicensePlate);
                             break;
 
-                        case eMenuOptions.Exit://0
+                        case eMenuOptions.Exit: // 0
                             stopProgram();
                             break;
 
@@ -140,14 +122,17 @@ namespace Ex03.ConsoleUI
                 catch (FormatException fe)
                 {
                     Screen.ShowError(eErrorType.FormatError);
+                    Screen.ShowMessage(fe.Message);
                 }
                 catch (ArgumentException ae)
                 {
                     Screen.ShowError(eErrorType.ArgumentError);
+                    Screen.ShowMessage(ae.Message);
                 }
                 catch (ValueOutOfRangeException voore)
                 {
                     Screen.ShowError(eErrorType.ValueOutOfRangeError);
+                    Screen.ShowMessage(voore.Message);
                 }
                 catch (Exception e)
                 {
@@ -156,6 +141,120 @@ namespace Ex03.ConsoleUI
             } // END OF WHILE
 
             exitProgram();
+        }
+
+        private void showAllLicensePlates()
+        {
+            Screen.ShowFilters();
+            Screen.ShowMessage(Garage.GetDetailsAboutAllVehicles());
+
+            eCarState filterTarget = UI.CarStatePrompt();
+            Screen.ShowMessage(Garage.FilterByVehicleState(filterTarget));
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="i_UserLicensePlate"></param>
+        /// <param name="i_IsUserRequest"></param>
+        /// <returns>True if the license plate exists</returns>
+        private bool updateVehicle(string i_UserLicensePlate, bool i_IsUserRequest)
+        {
+            bool ans = false;
+            eCarState carStateTarget = eCarState.Repaired;
+
+            bool isExistsLicensePlates = Garage.DoesLicensePlateExist(i_UserLicensePlate);
+            if (isExistsLicensePlates)
+            {
+                if (i_IsUserRequest)
+                {
+                    Screen.GetVehicleStateFromUser();
+                    carStateTarget = UI.CarStatePrompt();
+                }
+
+                Garage.UpdateCarState(i_UserLicensePlate, carStateTarget);
+                Screen.Confirmation();
+
+                ans = true;
+            }
+
+            return ans;
+        }
+
+        // Fill air in the vehicle
+        private void fillAirInWheels(string userLicensePlate)
+        {
+            Garage.FillAir(userLicensePlate); // fill to the max!
+            Screen.Confirmation();
+        }
+
+        // Fill gas in the vehicle and confirm
+        private void fillGas(string userLicensePlate)
+        {
+            float energyToFill = getFloatForUser(Screen.k_GetGasMsg);
+
+            eGasType gasTypeToFill = getEGasType();
+
+            Garage.FillGas(userLicensePlate, energyToFill, gasTypeToFill);
+            Screen.Confirmation();
+        }
+
+        // Charge battery in the vehicle and confirm
+        private void chargeBattery(string userLicensePlate)
+        {
+            float energyToFill = getFloatForUser(Screen.k_GetBatteryMsg);
+
+            Garage.FillBattery(userLicensePlate, energyToFill);
+            Screen.Confirmation();
+        }
+
+        private eGasType getEGasType()
+        {
+            bool userResponse = true;
+            eGasType gasType = eGasType.Octan98;
+            do
+            {
+                try
+                {
+                    Screen.GetGasFromUser();
+                    gasType = UI.GasTypePrompt();
+                    userResponse = false;
+                }
+                catch (FormatException fe)
+                {
+                    Screen.ShowError(eErrorType.FormatError);
+                }
+            }
+            while (userResponse);
+
+            return gasType;
+        }
+
+        private float getFloatForUser(string i_msg)
+        {
+            bool userResponse = true;
+            float userInpu = 0f;
+            do
+            {
+                try
+                {
+                    Screen.ShowMessage(i_msg);
+
+                    userInpu = UI.EnergyToFillPrompt();
+                }
+                catch (FormatException fe)
+                {
+                    Screen.ShowError(eErrorType.FormatError);
+                }
+            }
+            while (userResponse);
+
+            return userInpu;
+        }
+
+        private void showDetails(string i_UserLicensePlate)
+        {
+            Screen.ShowMessage(Garage.GetDetailsAboutVehicle(i_UserLicensePlate));
         }
 
         private void stopProgram()
@@ -190,22 +289,47 @@ namespace Ex03.ConsoleUI
             return o_Result;
         }
 
-        private void insertNewVehicle()
+        private void insertNewVehicle(string i_UserLicensePlate)
         {
-            string vehicleType = getNewVehicleType();
+            // check if the vehicle exists
+            bool vehicleExists = updateVehicle(i_UserLicensePlate, k_IsMenuOption);
 
-            Console.WriteLine("vehicleType" + vehicleType);
-            bool isElectric = askedBouliani("is the Vehicle Electric?");
-            int numOfWhell = askInt("How many wheels are there?");
-            List<string> argsNeedForNewVehiclem = Garage.GetParams(vehicleType, isElectric, numOfWhell);
-            List<string> userArgsForNewVehicle = new List<string>();
-            foreach (string arg in argsNeedForNewVehiclem)
+            if (!vehicleExists)
             {
-                Screen.ShowMessage(string.Format("Please enter {0}", arg));
-                userArgsForNewVehicle.Add(UI.ReadInput());
-            }
+                eGasType gasTypeToFill = eGasType.Soler;
+                string vehicleType = getNewVehicleType();
+                string msgForAmountOfEnergy = Screen.k_GetBatteryMsg;
+                string msgForMaxEnergy = "What is the max battery?";
+                string vehicleModel = askString("What is the vehicle manufacturer");
+                bool isElectric = askedBoolean("is the Vehicle Electric?");
 
-            Garage.InsertNewVehicle(vehicleType, userArgsForNewVehicle);
+                if (!isElectric)
+                {
+                    gasTypeToFill = getEGasType();
+                    msgForAmountOfEnergy = Screen.k_GetGasMsg;
+                }
+
+                float energyToFill = getFloatForUser(msgForAmountOfEnergy);
+                float maxBattery = getFloatForUser(msgForMaxEnergy);
+
+                int numOfWheels = askInt("How many wheels are there?");
+                float maxAirPressure = getFloatForUser("What is the max pressure of the wheels?");
+                float currentAirPressure = getFloatForUser("What is the current pressure of the wheels?");
+                string manufacturer = askString("What is the Wheel manufacturer");
+
+                List<string> argsNeedForNewVehiclem = Garage.GetParams(vehicleType);
+                List<string> userArgsForNewVehicle = new List<string>();
+                foreach (string arg in argsNeedForNewVehiclem)
+                {
+                    Screen.ShowMessage(string.Format("Please enter {0}", arg));
+                    userArgsForNewVehicle.Add(UI.ReadInput());
+                }
+
+                string name = askString("What is the owner name?");
+                string phoneNumber = askString("What is the owner's phone number?");
+
+                Garage.InsertNewVehicle(i_UserLicensePlate, vehicleType, vehicleModel, isElectric, gasTypeToFill, maxBattery, energyToFill, numOfWheels, maxAirPressure, currentAirPressure, manufacturer, userArgsForNewVehicle, name, phoneNumber);
+            }
         }
 
         private int askInt(string i_Msg)
@@ -214,27 +338,32 @@ namespace Ex03.ConsoleUI
             return UI.GetInt(i_Msg);
         }
 
-        private bool askedBouliani(string i_Msg)
+        private bool askedBoolean(string i_Msg)
         {
             Screen.ShowMessage(i_Msg);
             return UI.GetBool(i_Msg);
         }
 
+        private string askString(string i_Msg)
+        {
+            Screen.ShowMessage(i_Msg);
+            return UI.GetString();
+        }
+
         private string getNewVehicleType()
         {
             List<string> vehicleTypes = Garage.GetVehicleTypes();
-            StringBuilder sb = new StringBuilder(k_askForCarType);
+            StringBuilder sb = new StringBuilder(k_AskForCarType);
 
             sb.AppendLine();
             foreach (string vehicleType in vehicleTypes)
             {
-                sb.AppendFormat(" {0} ,", vehicleType);
+                sb.AppendFormat("{0}, ", vehicleType);
             }
 
             Screen.ShowMessage(sb.ToString());
 
             return UI.GetInputFormArray(vehicleTypes, sb.ToString());
         }
-
     }
 }

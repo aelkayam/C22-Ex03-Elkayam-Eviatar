@@ -8,16 +8,30 @@ namespace Ex03.GarageLogic
 {
     internal struct VehicleOwner
     {
-        // TODO: continue building VehicleOwner
         private string m_OwnerName;
         private int m_OwnerTel;
         private string m_LicensePlate;
 
-        public string OwnerName { get { return m_OwnerName; } }
+        public VehicleOwner(string i_OwnerName, int i_OwnerTel, string i_LicensePlate)
+        {
+            m_OwnerName = i_OwnerName;
+            m_OwnerTel = i_OwnerTel;
+            m_LicensePlate = i_LicensePlate;
+        }
 
-        public int OwnerTel { get { return m_OwnerTel; } }
+        public string OwnerName
+        {
+            get { return m_OwnerName; }
+        }
 
-        public string LicensePlate { get { return m_LicensePlate; } }
+        public int OwnerTel
+        {
+            get { return m_OwnerTel; }
+        }
 
+        public string LicensePlate
+        {
+            get { return m_LicensePlate; }
+        }
     }
 }

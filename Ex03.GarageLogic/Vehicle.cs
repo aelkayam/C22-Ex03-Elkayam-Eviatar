@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text;
 
 namespace Ex03.GarageLogic
 {
@@ -65,18 +66,35 @@ namespace Ex03.GarageLogic
         }
 
         /******** Methods ************/
+        private string getAllWheels()
+        {
+            StringBuilder wheelsList = new StringBuilder();
+            foreach(Wheel wheel in Wheels)
+            {
+                wheelsList.AppendLine(wheel.ToString());
+            }
+
+            wheelsList.AppendLine();
+            return wheelsList.ToString();
+        }
+
         public override string ToString()
         {
             return string.Format(
-@"Manufacturer: {0} License: {1} Engine Type: {2}
-Wheels: {3}
-Energy Left: {4}%
+@"
+Manufacturer: {0} License: {1}
+Engine:
+{2}
+Wheels:
+{3}
+Energy Left: {4} hours
 Current state: {5}
+
 ",
 Name,
 LicencePlate,
 Engine,
-Wheels,
+getAllWheels(),
 EnergyLeft,
 CarState);
         }
@@ -114,34 +132,18 @@ CarState);
             return m_Engine == i_OtherVehicle.Engine &&
                 m_Wheels == i_OtherVehicle.Wheels &&
                 m_ModelName == i_OtherVehicle.Name;
-
-            // TODO: create engine compare method for Wheels & Engine!!
-            // TODO: create compare method for <WHEELS>
         }
 
-        protected static List<string> GetParmsForNew(bool i_isElctiric, int i_NumOfWheel)
+        internal void UpdateVehicleState(eCarState i_CarStateTarget)
         {
-            List<string> parms = new List<string>();
-            parms.Add("Name of of the model");
-            parms.Add("License Plate");
-            parms.Add(" Energy Left");
-
-            List<string> wheelPams = Wheel.getPramsForNew();
-            for (int i = 0; i < i_NumOfWheel; ++i)
+            if(i_CarStateTarget > CarState)
             {
-                parms.AddRange(wheelPams);
-            }
-
-            if (i_isElctiric)
-            {
-                parms.AddRange(GasEngine.getPramsForNew());
+                CarState = i_CarStateTarget;
             }
             else
             {
-                parms.AddRange(ElectricEngine.getPramsForNew());
+                throw new ArgumentException("Cannot go back to " + i_CarStateTarget.ToString());
             }
-
-            return parms;
         }
     }
 }

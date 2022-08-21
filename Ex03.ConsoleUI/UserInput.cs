@@ -1,12 +1,13 @@
 using System;
-using Ex03.GarageLogic;
 using System.Collections.Generic;
+using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
 {
     internal class UserInput
     {
-        public static readonly List<string> rm_TrueFalseAns = new List<string>() { "TRUE", "YES", "Y", "false", "NO", "N" };
+        private static readonly List<string> sr_TrueFalseAns = new List<string>() { "TRUE", "YES", "Y", "false", "NO", "N" };
+
         public string UserName { get; set; }
 
         internal bool GetMenuOptions(out eMenuOptions o_Result)
@@ -15,6 +16,12 @@ namespace Ex03.ConsoleUI
         }
 
         internal string LicensePlatePrompt()
+        {
+            // no restrictions :D
+            return ReadInput();
+        }
+
+        internal string GetString()
         {
             // no restrictions :D
             return ReadInput();
@@ -61,7 +68,7 @@ namespace Ex03.ConsoleUI
             return Console.ReadLine().Trim();
         }
 
-        internal string GetInputFormArray(List<string> i_StrArrValues ,params string[] i_AnotherMessage)
+        internal string GetInputFormArray(List<string> i_StrArrValues, params string[] i_AnotherMessage)
         {
             bool isUserchooseFormArray = false;
             string result = string.Empty;
@@ -78,8 +85,8 @@ namespace Ex03.ConsoleUI
 
         internal bool GetBool(string i_Msg)
         {
-            bool isAns = true; //trst time not do it 
-            bool resletBool = false; 
+            bool isAns = true; // first time not do it
+            bool resletBool = false;
             string result;
 
             do
@@ -91,19 +98,19 @@ namespace Ex03.ConsoleUI
                 }
 
                 result = ReadInput();
-                isAns = rm_TrueFalseAns.Contains(result.ToUpper());
+                isAns = sr_TrueFalseAns.Contains(result.ToUpper());
             }
             while (isAns);
 
             int i = 0;
-            foreach(string s in rm_TrueFalseAns)
+            foreach(string s in sr_TrueFalseAns)
             {
                 if (s == result)
                 {
                     resletBool = true;
                 }
 
-                if(i <= rm_TrueFalseAns.Count / 2 )
+                if(i <= sr_TrueFalseAns.Count / 2 )
                 {
                     break;
                 }
@@ -117,7 +124,7 @@ namespace Ex03.ConsoleUI
         internal int GetInt(string i_Msg)
         {
             int ans;
-            bool isAns = true; //trst time not do it 
+            bool isAns = true; // first time not do it 
 
             do
             {
@@ -128,7 +135,7 @@ namespace Ex03.ConsoleUI
                 }
 
                 string result = ReadInput();
-                isAns = Int32.TryParse(result, out ans);
+                isAns = int.TryParse(result, out ans);
             }
             while (isAns);
 
