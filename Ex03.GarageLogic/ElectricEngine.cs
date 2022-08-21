@@ -34,16 +34,23 @@ namespace Ex03.GarageLogic
             return string.Format(@"Battery Left: {0}%    Max:{1}%", BatteryLeft, MaxBattery);
         }
 
-        internal static List<string> getPramsForNew()
+        public override bool Equals(object obj)
         {
-            List<string> prams = new List<string>();
-            prams.Add("Battery Left");
-            prams.Add("Max Battery");
-
-            return prams;
+            return obj is ElectricEngine engine &&
+                   MaxBattery == engine.MaxBattery;
         }
 
-        internal void ChargeBattery(float i_EnergyToFill)
+        public static bool operator ==(ElectricEngine left, ElectricEngine right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(ElectricEngine left, ElectricEngine right)
+        {
+            return !left.Equals(right);
+        }
+
+        public override int GetHashCode()
         {
             throw new NotImplementedException();
         }

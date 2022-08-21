@@ -53,19 +53,21 @@ namespace Ex03.GarageLogic
             return string.Format(@"Current: {0} Max: {1}", CurrentAirPressure, MaxAirPressure);
         }
 
-        internal static List<string> getPramsForNew()
+        public static bool operator ==(Wheel i_Wheel1, Wheel i_Wheel2)
         {
-            List<string> prams = new List<string>();
-            prams.Add("wheel Manufacturer");
-            prams.Add("wheel Max Air Pressure");
-            prams.Add("Current Air Pressure");
-
-            return prams;
+            return i_Wheel1.Equals(i_Wheel2);
         }
 
-        internal void FillAir()
+        public static bool operator !=(Wheel i_Wheel1, Wheel i_Wheel2)
         {
-            throw new NotImplementedException();
+            return !i_Wheel1.Equals(i_Wheel2);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Wheel wheel &&
+                   ManufacturerName == wheel.ManufacturerName &&
+                   MaxAirPressure == wheel.MaxAirPressure;
         }
     }
 }
