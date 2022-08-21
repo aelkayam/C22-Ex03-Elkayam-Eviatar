@@ -1,6 +1,6 @@
 ﻿namespace Ex03.GarageLogic
 {
-    public enum eLicense
+    public enum eLicence
     {
         A = 1,
         AA = 2,

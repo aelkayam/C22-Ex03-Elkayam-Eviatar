@@ -121,20 +121,16 @@ namespace Ex03.ConsoleUI
                 // TODO: check the order (~what order?)
                 catch (FormatException fe)
                 {
-                    Console.WriteLine(fe.Message);
-
                     Screen.ShowError(eErrorType.FormatError);
                     Screen.ShowMessage(fe.Message);
                 }
                 catch (ArgumentException ae)
                 {
-                   Console.WriteLine(ae.Message);
-                   Screen.ShowError(eErrorType.ArgumentError);
-                   Screen.ShowMessage(ae.Message);
+                    Screen.ShowError(eErrorType.ArgumentError);
+                    Screen.ShowMessage(ae.Message);
                 }
                 catch (ValueOutOfRangeException voore)
                 {
-                    Console.WriteLine(voore.Message);
                     Screen.ShowError(eErrorType.ValueOutOfRangeError);
                     Screen.ShowMessage(voore.Message);
                 }
