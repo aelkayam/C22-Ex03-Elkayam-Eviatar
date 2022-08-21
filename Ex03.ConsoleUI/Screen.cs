@@ -34,6 +34,7 @@ namespace Ex03.ConsoleUI
         private const string k_GetVehicleStateMsg = "Please enter the new state (Repaired/Paid):";
         private const string k_ActionSucces = "Successfully done!";
         private const string k_ActionFailure = "Action denied.";
+        public const string k_AskForCarType = @"Please enter the type of vehicle you want to enter the garage";
 
         /******** Methods ************/
         public void ShowMessage(string i_MessageToShow)

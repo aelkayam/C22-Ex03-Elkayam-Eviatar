@@ -29,9 +29,29 @@ namespace Ex03.GarageLogic
         }
 
         /******** Methods ************/
+
+        // charge to the max
+        internal void ChargeBattery()
+        {
+            BatteryLeft = MaxBattery;
+        }
+
+        // charge by given amount (hours)
+        internal void ChargeBattery(float i_EnergyToFill)
+        {
+            if(BatteryLeft + i_EnergyToFill <= MaxBattery)
+            {
+                BatteryLeft += i_EnergyToFill;
+            }
+            else
+            {
+                throw new ValueOutOfRangeException(MaxBattery - BatteryLeft, 0);
+            }
+        }
+
         public override string ToString()
         {
-            return string.Format(@"Battery Left: {0}%    Max:{1}%", BatteryLeft, MaxBattery);
+            return string.Format(@"Battery Left: {0} hours   Max:{1} hours", BatteryLeft, MaxBattery);
         }
 
         public override bool Equals(object obj)
@@ -52,7 +72,7 @@ namespace Ex03.GarageLogic
 
         public override int GetHashCode()
         {
-            throw new NotImplementedException();
+            return -250832942 + MaxBattery.GetHashCode();
         }
     }
 }

@@ -21,6 +21,12 @@ namespace Ex03.ConsoleUI
             return ReadInput();
         }
 
+        internal string GetString()
+        {
+            // no restrictions :D
+            return ReadInput();
+        }
+
         internal float EnergyToFillPrompt()
         {
             if(float.TryParse(ReadInput(), out float value))
@@ -60,11 +66,6 @@ namespace Ex03.ConsoleUI
         internal string ReadInput()
         {
             return Console.ReadLine().Trim();
-        }
-
-        internal string GetString()
-        {
-            return ReadInput();
         }
 
         internal string GetInputFormArray(List<string> i_StrArrValues, params string[] i_AnotherMessage)
