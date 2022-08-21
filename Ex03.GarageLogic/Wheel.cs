@@ -48,26 +48,9 @@ namespace Ex03.GarageLogic
         }
 
         /******** Methods ************/
-        public void FillAir()
-        {
-            CurrentAirPressure = MaxAirPressure;
-        }
-
-        public void FillAir(float i_AirPressureToAdd)
-        {
-            if(CurrentAirPressure + i_AirPressureToAdd <= MaxAirPressure)
-            {
-                CurrentAirPressure += i_AirPressureToAdd;
-            }
-            else
-            {
-                throw new ValueOutOfRangeException(MaxAirPressure - CurrentAirPressure, 0);
-            }
-        }
-
         public override string ToString()
         {
-            return string.Format(@"Current: {0}     Max: {1}", CurrentAirPressure, MaxAirPressure);
+            return string.Format(@"Current: {0} Max: {1}", CurrentAirPressure, MaxAirPressure);
         }
 
         public static bool operator ==(Wheel i_Wheel1, Wheel i_Wheel2)
@@ -85,14 +68,6 @@ namespace Ex03.GarageLogic
             return obj is Wheel wheel &&
                    ManufacturerName == wheel.ManufacturerName &&
                    MaxAirPressure == wheel.MaxAirPressure;
-        }
-
-        public override int GetHashCode()
-        {
-            int hashCode = -944765117;
-            hashCode = (hashCode * -1521134295) + EqualityComparer<string>.Default.GetHashCode(ManufacturerName);
-            hashCode = (hashCode * -1521134295) + MaxAirPressure.GetHashCode();
-            return hashCode;
         }
     }
 }

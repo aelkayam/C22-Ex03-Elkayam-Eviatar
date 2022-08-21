@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 
 namespace Ex03.GarageLogic
 {
@@ -66,35 +65,18 @@ namespace Ex03.GarageLogic
         }
 
         /******** Methods ************/
-        private string getAllWheels()
-        {
-            StringBuilder wheelsList = new StringBuilder();
-            foreach(Wheel wheel in Wheels)
-            {
-                wheelsList.AppendLine(wheel.ToString());
-            }
-
-            wheelsList.AppendLine();
-            return wheelsList.ToString();
-        }
-
         public override string ToString()
         {
             return string.Format(
-@"
-Manufacturer: {0} License: {1}
-Engine:
-{2}
-Wheels:
-{3}
-Energy Left: {4} hours
+@"Manufacturer: {0} License: {1} Engine Type: {2}
+Wheels: {3}
+Energy Left: {4}%
 Current state: {5}
-
 ",
 Name,
 LicencePlate,
 Engine,
-getAllWheels(),
+Wheels,
 EnergyLeft,
 CarState);
         }
@@ -109,6 +91,22 @@ CarState);
             }
 
             return results;
+        }
+
+        protected static List<string> GetParmsForNew(bool i_isElctiric)
+        {
+            List<string> parms = new List<string>();
+
+            if (i_isElctiric)
+            {
+                parms.AddRange(GasEngine.getPramsForNew());
+            }
+            else
+            {
+                parms.AddRange(ElectricEngine.getPramsForNew());
+            }
+
+            return parms;
         }
 
         // license plate comparison
@@ -132,18 +130,14 @@ CarState);
             return m_Engine == i_OtherVehicle.Engine &&
                 m_Wheels == i_OtherVehicle.Wheels &&
                 m_ModelName == i_OtherVehicle.Name;
+
+            // TODO: create engine compare method for Wheels & Engine!!
+            // TODO: create compare method for <WHEELS>
         }
 
         internal void UpdateVehicleState(eCarState i_CarStateTarget)
         {
-            if(i_CarStateTarget > CarState)
-            {
-                CarState = i_CarStateTarget;
-            }
-            else
-            {
-                throw new ArgumentException("Cannot go back to " + i_CarStateTarget.ToString());
-            }
+            throw new NotImplementedException();
         }
     }
 }
