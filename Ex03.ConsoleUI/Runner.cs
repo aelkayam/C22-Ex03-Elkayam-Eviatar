@@ -121,21 +121,26 @@ namespace Ex03.ConsoleUI
                 // TODO: check the order (~what order?)
                 catch (FormatException fe)
                 {
+                    Console.WriteLine(fe.Message);
+
                     Screen.ShowError(eErrorType.FormatError);
                     Screen.ShowMessage(fe.Message);
                 }
                 catch (ArgumentException ae)
                 {
-                    Screen.ShowError(eErrorType.ArgumentError);
-                    Screen.ShowMessage(ae.Message);
+                   Console.WriteLine(ae.Message);
+                   Screen.ShowError(eErrorType.ArgumentError);
+                   Screen.ShowMessage(ae.Message);
                 }
                 catch (ValueOutOfRangeException voore)
                 {
+                    Console.WriteLine(voore.Message);
                     Screen.ShowError(eErrorType.ValueOutOfRangeError);
                     Screen.ShowMessage(voore.Message);
                 }
                 catch (Exception e)
                 {
+
                     Screen.ShowMessage(e.Message);
                 }
             } // END OF WHILE
@@ -308,6 +313,7 @@ namespace Ex03.ConsoleUI
                 {
                     gasTypeToFill = getEGasType();
                     msgForAmountOfEnergy = Screen.k_GetGasMsg;
+                    msgForMaxEnergy = "What is the The contents of the fuel tank?";
                 }
 
                 float energyToFill = getFloatForUser(msgForAmountOfEnergy);
