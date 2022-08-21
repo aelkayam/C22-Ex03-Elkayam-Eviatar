@@ -90,7 +90,7 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            return string.Format(@"{0}Color:{1} Doors: {2}", base.ToString(), Color, Doors);
+            return string.Format(@"{0}Color:{1}     Doors: {2}", base.ToString(), Color, Doors);
         }
 
         internal static List<string> GetParmsForNew(bool i_isElctiric, int i_NumOfWheel)
