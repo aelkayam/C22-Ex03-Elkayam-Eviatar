@@ -8,8 +8,6 @@ namespace Ex03.ConsoleUI
 {
     internal class Runner
     {
-        // todo : move to ui 
-        private const string k_AskForCarType = @"Please enter the type of vehicle you want to enter the garage";
         private const bool k_IsMenuOption = true;
 
         private bool m_IsRunning;
@@ -356,7 +354,7 @@ namespace Ex03.ConsoleUI
         private string getNewVehicleType()
         {
             List<string> vehicleTypes = Garage.GetVehicleTypes();
-            StringBuilder sb = new StringBuilder(k_AskForCarType);
+            StringBuilder sb = new StringBuilder(Screen.k_AskForCarType);
 
             sb.AppendLine();
             foreach (string vehicleType in vehicleTypes)
