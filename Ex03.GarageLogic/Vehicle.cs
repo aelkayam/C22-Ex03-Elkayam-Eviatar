@@ -7,7 +7,7 @@ namespace Ex03.GarageLogic
 {
     internal abstract class Vehicle
     {
-        private const eCarState k_eCarStateInit = eCarState.InRepair;
+        private const eCarState k_ECarStateInit = eCarState.InRepair;
 
         private string m_LicensePlate; // different
 
@@ -61,7 +61,7 @@ namespace Ex03.GarageLogic
             m_LicensePlate = i_LicensePlate;
             m_EnergyLeft = i_EnergyLeft;
             m_Wheels = i_Wheels;
-            m_CarState = k_eCarStateInit;
+            m_CarState = k_ECarStateInit;
             m_Engine = i_Engine;
         }
 
