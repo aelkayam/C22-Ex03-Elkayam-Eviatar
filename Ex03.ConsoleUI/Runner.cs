@@ -241,6 +241,7 @@ namespace Ex03.ConsoleUI
                     Screen.ShowMessage(i_msg);
 
                     userInpu = UI.EnergyToFillPrompt();
+                    userResponse = false;
                 }
                 catch (FormatException fe)
                 {
