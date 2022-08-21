@@ -21,12 +21,6 @@ namespace Ex03.ConsoleUI
             return ReadInput();
         }
 
-        internal string GetString()
-        {
-            // no restrictions :D
-            return ReadInput();
-        }
-
         internal float EnergyToFillPrompt()
         {
             if(float.TryParse(ReadInput(), out float value))

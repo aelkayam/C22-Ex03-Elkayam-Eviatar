@@ -136,6 +136,7 @@ namespace Ex03.ConsoleUI
                 }
                 catch (Exception e)
                 {
+
                     Screen.ShowMessage(e.Message);
                 }
             } // END OF WHILE
@@ -241,6 +242,7 @@ namespace Ex03.ConsoleUI
                     Screen.ShowMessage(i_msg);
 
                     userInpu = UI.EnergyToFillPrompt();
+                    userResponse = false;
                 }
                 catch (FormatException fe)
                 {
@@ -307,6 +309,7 @@ namespace Ex03.ConsoleUI
                 {
                     gasTypeToFill = getEGasType();
                     msgForAmountOfEnergy = Screen.k_GetGasMsg;
+                    msgForMaxEnergy = "What is the The contents of the fuel tank?";
                 }
 
                 float energyToFill = getFloatForUser(msgForAmountOfEnergy);
