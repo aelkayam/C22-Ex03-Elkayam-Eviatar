@@ -95,9 +95,11 @@ namespace Ex03.GarageLogic
 
         internal static List<string> GetParmsForNew()
         {
-            List<string> parms = new List<string>();
-            parms.Add("color");
-            parms.Add("number of doors ");
+            List<string> parms = new List<string>
+            {
+                "color",
+                "number of doors ",
+            };
 
             return parms;
         }

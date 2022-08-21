@@ -68,10 +68,11 @@ namespace Ex03.GarageLogic
 
         internal static List<string> GetParmsForNew()
         {
-            List<string> parms = new List<string>();
-
-            parms.Add("Is Refrigerated");
-            parms.Add("Max Capacity");
+            List<string> parms = new List<string>
+            {
+                "Is Refrigerated",
+                "Max Capacity",
+            };
 
             return parms;
         }

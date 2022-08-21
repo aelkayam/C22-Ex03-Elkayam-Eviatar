@@ -94,10 +94,11 @@ namespace Ex03.GarageLogic
 
         internal static List<string> GetParmsForNew()
         {
-            List<string> parms = new List<string>();
-
-            parms.Add("License type :  A = 1,AA = 2, B1 = 3, BB = 4,");
-            parms.Add("Engine Capacity");
+            List<string> parms = new List<string>
+            {
+                "License type :  A = 1,AA = 2, B1 = 3, BB = 4,",
+                "Engine Capacity",
+            };
 
             return parms;
         }
