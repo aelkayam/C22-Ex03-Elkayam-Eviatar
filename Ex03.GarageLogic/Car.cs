@@ -25,8 +25,6 @@ namespace Ex03.GarageLogic
             get { return r_Doors; }
         }
 
-        public ElectricEngine ElectricEngine { get; }
-
         /******** Constructor ************/
         private Car(string i_Name, string i_LicensePlate, float i_EnergyLeft, List<Wheel> i_Wheels, object i_Engine, eColor i_Color, eDoors i_Doors)
             : base(i_Name, i_LicensePlate, i_EnergyLeft, i_Wheels, i_Engine)
@@ -98,7 +96,7 @@ namespace Ex03.GarageLogic
             List<string> parms = new List<string>
             {
                 "color",
-                "number of doors ",
+                "number of doors",
             };
 
             return parms;

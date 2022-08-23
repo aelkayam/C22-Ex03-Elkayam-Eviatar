@@ -17,13 +17,11 @@ namespace Ex03.ConsoleUI
 
         internal string LicensePlatePrompt()
         {
-            // no restrictions :D
             return ReadInput();
         }
 
         internal string GetString()
         {
-            // no restrictions :D
             return ReadInput();
         }
 

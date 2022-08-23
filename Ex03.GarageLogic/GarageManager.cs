@@ -41,7 +41,7 @@ namespace Ex03.GarageLogic
         internal const bool k_TruckRefrigerated = true;
 
         private static readonly List<Vehicle> sr_ValidVehicles;
-        public static Random s_Random = new Random();
+        private static readonly Random sr_Random = new Random();
 
         // ======================================================
         /** Member values of the object         **/
@@ -65,7 +65,7 @@ namespace Ex03.GarageLogic
         {
             get
             {
-                return m_EmployeeNames[s_Random.Next(m_EmployeeNames.Count)];
+                return m_EmployeeNames[sr_Random.Next(m_EmployeeNames.Count)];
             }
         }
 

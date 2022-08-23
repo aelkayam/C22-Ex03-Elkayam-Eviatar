@@ -10,9 +10,9 @@ namespace Ex03.ConsoleUI
     {
         private const bool k_IsMenuOption = true;
 
+        private readonly Screen r_Screen;
+        private readonly UserInput r_UserInput;
         private bool m_IsRunning;
-        private Screen m_Screen;
-        private UserInput m_UserInput;
         private GarageManager m_GarageManager;
 
         /******** Properties ************/
@@ -24,12 +24,12 @@ namespace Ex03.ConsoleUI
 
         public Screen Screen
         {
-            get { return m_Screen; }
+            get { return r_Screen; }
         }
 
         public UserInput UI
         {
-            get { return m_UserInput; }
+            get { return r_UserInput; }
         }
 
         public GarageManager Garage
@@ -42,8 +42,8 @@ namespace Ex03.ConsoleUI
         public Runner()
         {
             IsRunning = false;
-            m_Screen = new Screen();
-            m_UserInput = new UserInput();
+            r_Screen = new Screen();
+            r_UserInput = new UserInput();
             List<string> employees = new List<string>() { "Shimon", "Asaf-Plutz", "KMNO" };
 
             m_GarageManager = new GarageManager("Abba Shimon and Sons' garage", employees);
@@ -76,6 +76,7 @@ namespace Ex03.ConsoleUI
                     {
                         case eMenuOptions.InsertVehicle: // 1
                             insertNewVehicle(userLicensePlate);
+
                             // Garage.InsertNewVehicle(userLicensePlate);
                             // TODO: make enum for CAR, MOTORBIKE, TRUCK
                             // TODO: get parameters for: CAR, MOTORBIKE, TRUCK
@@ -134,7 +135,6 @@ namespace Ex03.ConsoleUI
                 }
                 catch (Exception e)
                 {
-
                     Screen.ShowMessage(e.Message);
                 }
             } // END OF WHILE
@@ -222,6 +222,7 @@ namespace Ex03.ConsoleUI
                 catch (FormatException fe)
                 {
                     Screen.ShowError(eErrorType.FormatError);
+                    Screen.ShowMessage(fe.Message);
                 }
             }
             while (userResponse);
@@ -245,6 +246,7 @@ namespace Ex03.ConsoleUI
                 catch (FormatException fe)
                 {
                     Screen.ShowError(eErrorType.FormatError);
+                    Screen.ShowMessage(fe.Message);
                 }
             }
             while (userResponse);
@@ -277,7 +279,7 @@ namespace Ex03.ConsoleUI
             bool isValidChoice;
             do
             {
-                m_Screen.ShowMenu();
+                r_Screen.ShowMenu();
                 isValidChoice = UI.GetMenuOptions(out o_Result);
                 if (!isValidChoice)
                 {
@@ -307,7 +309,7 @@ namespace Ex03.ConsoleUI
                 {
                     gasTypeToFill = getEGasType();
                     msgForAmountOfEnergy = Screen.k_GetGasMsg;
-                    msgForMaxEnergy = "What is the The contents of the fuel tank?";
+                    msgForMaxEnergy = "What is the contents of the fuel tank?";
                 }
 
                 float energyToFill = getFloatForUser(msgForAmountOfEnergy);
