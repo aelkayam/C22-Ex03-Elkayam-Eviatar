@@ -5,14 +5,10 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    // ======================================================
-    // ****************** GarageManager ****************** //
-    // ======================================================
     public class GarageManager
     {
-        // ======================================================
+        // TODO: move to appropriate departments
         /** Default values vehicles that can enter the garage **/
-        // ======================================================
         // Default number of wheels
         internal const byte k_MotorbikeNumOfWheels = 2;
         internal const byte k_CarNumOfWheels = 4;
@@ -43,10 +39,7 @@ namespace Ex03.GarageLogic
         private static readonly List<Vehicle> sr_ValidVehicles;
         public static Random s_Random = new Random();
 
-        // ======================================================
         /** Member values of the object         **/
-        // ======================================================
-
         private string m_Name;
         private List<string> m_EmployeeNames;
 
@@ -105,16 +98,17 @@ namespace Ex03.GarageLogic
             m_EmployeeNames = i_EmployeeNames;
             new List<string>();
             m_AllVehicles = new Dictionary<string, Vehicle>();
-
-            //// for debugging
-            //m_AllVehicles.Add("1234", sr_ValidVehicles[0]);
-            //m_AllVehicles.Add("5678", sr_ValidVehicles[1]);
-            //m_AllVehicles.Add("9012", sr_ValidVehicles[2]);
+            m_AllOwners = new Dictionary<string, VehicleOwner>();
+            /*
+             *  for debugging
+            m_allvehicles.add("1234", sr_validvehicles[0]);
+            m_allvehicles.add("5678", sr_validvehicles[1]);
+            m_allvehicles.add("9012", sr_validvehicles[2]);
+             */
         }
 
         /******** Methods ************/
 
-        /**** Methods for a new car Vehicles ****/
         public List<string> GetParams(string i_VehicleType)
         {
             List<string> list = new List<string>();
@@ -151,13 +145,18 @@ namespace Ex03.GarageLogic
             return result;
         }
 
-        public string FilterByVehicleState(eCarState filterTarget)
+        public bool DoesLicensePlateExist(string i_LicensePlates)
+        {
+            return checkIfExist(i_LicensePlates, out _);
+        }
+
+        public string FilterByVehicleState(eCarState i_FilterTarget)
         {
             StringBuilder filteredVehicles = new StringBuilder();
 
             foreach (Vehicle vehicle in AllVehicles.Values)
             {
-                if (vehicle.CarState == filterTarget)
+                if (vehicle.CarState == i_FilterTarget)
                 {
                     filteredVehicles.AppendLine(vehicle.LicencePlate);
                 }
@@ -166,12 +165,19 @@ namespace Ex03.GarageLogic
             return filteredVehicles.ToString();
         }
 
-        // 1. receive all the data from the user in the new car
-        // 2. check that LP is new (use IsExist from dictionary)
-        // 3. if it is possible:        otherwise: throw EXCEPTION
-        // 3.1. make new vehicle
-        // 3.2. validate the vehicle (with m_AllValidVehicles)
-        // 3.3. if valid: insert to Dictionary (with name and telephone)    otherwise: throw EXCEPTION
+        public void FillAirInWheels(string i_UserLicensePlate, float i_UnitsToFill, params int[] i_WheelIndex) { }
+
+        public void FillAir(string i_UserLicensePlate)
+        {
+            if (checkIfExist(i_UserLicensePlate, out Vehicle o_TargetVehicle))
+            {
+                o_TargetVehicle.Wheels.FillAir();
+            }
+            else
+            {
+                throw new ArgumentException("This vehicle does not exist in our garage");
+            }
+        }
 
         private bool checkIfExist(string i_LicensePlateToLookFor, out Vehicle o_Vehicle)
         {
@@ -186,41 +192,7 @@ namespace Ex03.GarageLogic
             return result;
         }
 
-        public bool DoesLicensePlateExist(string i_LicensePlates)
-        {
-            return checkIfExist(i_LicensePlates, out _);
-        }
-
-        private void createVehicle()
-        {
-        }
-
-        public bool CheckIfValid()
-        {
-            return true;
-        }
-
-
-
-        // require license, air (in BAR/PSI) and index of wheels to apply.
-        // if no index given, fill all the wheels in the given amount
-        public void FillAirInWheels(string i_UserLicensePlate, float i_UnitsToFill, params int[] i_WheelIndex) { }
-
         // require license. Fill air to the max MOVE TO VEHICLE
-        public void FillAir(string i_UserLicensePlate)
-        {
-            if (checkIfExist(i_UserLicensePlate, out Vehicle o_TargetVehicle))
-            {
-                foreach (Wheel wheel in o_TargetVehicle.Wheels)
-                {
-                    wheel.FillAir();
-                }
-            }
-            else
-            {
-                throw new ArgumentException("This vehicle does not exist in our garage");
-            }
-        }
 
         // require license and amount of gas MOVE TO VEHICLE
         public void FillGas(string i_UserLicensePlate, float i_GasToFill, eGasType i_TypeOfGasToFill)
@@ -262,12 +234,6 @@ namespace Ex03.GarageLogic
             }
         }
 
-        // require license.
-        public void Fix(string i_UserLicensePlate)
-        {
-            UpdateCarState(i_UserLicensePlate, eCarState.Repaired);
-        }
-
         // require license and car state.
         public eCarState UpdateCarState(string i_UserLicensePlate, eCarState i_CarStateTarget)
         {
@@ -275,6 +241,8 @@ namespace Ex03.GarageLogic
             {
                 o_TargetVehicle.UpdateVehicleState(i_CarStateTarget);
                 return o_TargetVehicle.CarState;
+                // TODO : If CarState is paid remove it from the system
+                // TODO : if CarState Repaired  notice of how much should be paid   Any number of regrets
             }
             else
             {
@@ -296,36 +264,21 @@ namespace Ex03.GarageLogic
         }
 
         // return string of all license plates currently in the garage
-        public string GetDetailsAboutAllVehicles()
+        private bool validationNewVehicle(Vehicle i_newVehicle) // Validation = the action of checking or proving the validity or accuracy of something.
         {
-            StringBuilder allLicensePlates = new StringBuilder(string.Empty);
+            bool ans = false;
 
-            foreach (string licensePlate in AllVehicles.Keys)
+            foreach (Vehicle v in sr_ValidVehicles)
             {
-                allLicensePlates.AppendLine(licensePlate);
+                ans = i_newVehicle.IsPropertiesEqual(v);
+
+                if (ans)
+                {
+                    break;
+                }
             }
 
-            return allLicensePlates.ToString();
-        }
-
-        internal static bool IsEngineElectric(object i_Engine)
-        {
-            bool isEngineElectric = false;
-
-            switch (i_Engine)
-            {
-                case GasEngine ge: /// typeof(GasEngine engine):
-                    break;
-                case ElectricEngine ee:
-                    isEngineElectric = true;
-                    break;
-                case null:
-                    throw new ArgumentNullException("NO ENGIN!");
-                default:
-                    throw new FormatException();
-            }
-
-            return isEngineElectric;
+            return ans;
         }
 
         public void InsertNewVehicle(string i_LicensePlate, string i_VehicleType, string i_ModelName, bool i_IsElectric,
@@ -335,8 +288,9 @@ namespace Ex03.GarageLogic
         {
             try
             {
+                Console.WriteLine("in v ");
                 Vehicle v;
-                List<Wheel> wheels = createWheels(i_NumOfWheels, i_WheelsManufacturer, i_MaxAirPressure, i_CurrentAirPressure);
+                WheelArr wheels = new WheelArr(i_NumOfWheels, i_WheelsManufacturer, i_CurrentAirPressure, i_MaxAirPressure);
                 object engine = createEngine(i_IsElectric, i_GasTypeToFill, i_EnergyToFill, i_MaxEnergy);
 
                 switch (i_VehicleType)
@@ -352,21 +306,44 @@ namespace Ex03.GarageLogic
                         break;
                     default: throw new FormatException();
                 }
+                bool isCarValid = validationNewVehicle(v);
+                if (isCarValid)
+                {
+                    AllVehicles.Add(i_LicensePlate, v);
+                    m_AllOwners.Add(i_LicensePlate, new VehicleOwner(i_Name, /* this is the wrong parameter */i_NumOfWheels, i_LicensePlate));
+                }
+                else
+                {
+                    throw new FormatException(string.Format("{0} : the Insert of the New Vehicle fald  ", Employee));
+                }
+
                 Console.WriteLine(v.ToString());
-                AllVehicles.Add(i_LicensePlate, v);
             }
             catch (ArgumentException ae)
             {
-                throw new FormatException("the Insert of the New Vehicle fald  ", ae);
+                throw new FormatException(string.Format("{0} : the Insert of the New Vehicle fald  ", Employee), ae);
 
                 // we already catch exceptions in runner!
             }
             catch (Exception e)
             {
-                throw new FormatException("the Insert of the New Vehicle fald  " , e);
+                Console.WriteLine(e.Message);
+                throw new FormatException(string.Format("{0} : the Insert of the New Vehicle fald  ", Employee), e);
                 // we already catch exceptions in runner!
             }
 
+        }
+
+        public string GetDetailsAboutAllVehicles()
+        {
+            StringBuilder allLicensePlates = new StringBuilder(string.Empty);
+
+            foreach (string licensePlate in AllVehicles.Keys)
+            {
+                allLicensePlates.AppendLine(licensePlate);
+            }
+
+            return allLicensePlates.ToString();
         }
 
         private object createEngine(bool i_IsElectric, eGasType i_GasTypeToFill, float i_EnergyToFill, float i_MaxEnergy)
@@ -384,18 +361,7 @@ namespace Ex03.GarageLogic
             return engine;
         }
 
-        private List<Wheel> createWheels(int i_NumOfWheels, string i_Manufacturer, float i_MaxAirPressure, float i_CurrentAirPressure)
-        {
-            List<Wheel> wheels = new List<Wheel>(i_NumOfWheels);
-            for (int i = 0; i < wheels.Count; i++)
-            {
-                wheels.Add(new Wheel(i_Manufacturer, i_CurrentAirPressure, i_MaxAirPressure));
-            }
-
-            return wheels;
-        }
-
-        private Motorbike createNewMotorbike(string i_LicensePlate, string i_ModelName, bool i_IsElectric, object engine, List<Wheel> wheels, List<string> i_UserArgsForNewVehicle)
+        private Motorbike createNewMotorbike(string i_LicensePlate, string i_ModelName, bool i_IsElectric, object engine, WheelArr wheels, List<string> i_UserArgsForNewVehicle)
         {
             Motorbike motorbike;
             bool success1 = Enum.TryParse<eLicense>(i_UserArgsForNewVehicle[0], out eLicense o_License);
@@ -420,7 +386,7 @@ namespace Ex03.GarageLogic
             return motorbike;
         }
 
-        private Truck createNewTruck(string i_LicensePlate, string i_ModelName, bool i_IsElectric, object engine, List<Wheel> wheels, List<string> i_UserArgsForNewVehicle)
+        private Truck createNewTruck(string i_LicensePlate, string i_ModelName, bool i_IsElectric, object engine, WheelArr wheels, List<string> i_UserArgsForNewVehicle)
         {
             Truck truck;
             bool success1 = bool.TryParse(i_UserArgsForNewVehicle[0], out bool o_IsRefrigerated);
@@ -438,7 +404,7 @@ namespace Ex03.GarageLogic
             return truck;
         }
 
-        private Car createNewCar(string i_LicensePlate, string i_ModelName, bool i_IsElectric, object engine, List<Wheel> wheels, List<string> i_UserArgsForNewVehicle)
+        private Car createNewCar(string i_LicensePlate, string i_ModelName, bool i_IsElectric, object engine, WheelArr wheels, List<string> i_UserArgsForNewVehicle)
         {
             Car car;
             bool success1 = Enum.TryParse<eColor>(i_UserArgsForNewVehicle[0], out eColor o_color);

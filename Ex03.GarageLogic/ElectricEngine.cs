@@ -49,30 +49,32 @@ namespace Ex03.GarageLogic
             }
         }
 
+        // TODO : create a property  of how much fuel is left in percent
+
         public override string ToString()
         {
             return string.Format(@"Battery Left: {0} hours   Max:{1} hours", BatteryLeft, MaxBattery);
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object i_Obj)
         {
-            return obj is ElectricEngine engine &&
+            return i_Obj is ElectricEngine engine &&
                    MaxBattery == engine.MaxBattery;
-        }
-
-        public static bool operator ==(ElectricEngine left, ElectricEngine right)
-        {
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(ElectricEngine left, ElectricEngine right)
-        {
-            return !left.Equals(right);
         }
 
         public override int GetHashCode()
         {
             return -250832942 + MaxBattery.GetHashCode();
+        }
+
+        public static bool operator ==(ElectricEngine i_Left, ElectricEngine i_Right)
+        {
+            return i_Left.Equals(i_Right);
+        }
+
+        public static bool operator !=(ElectricEngine i_Left, ElectricEngine i_Right)
+        {
+            return !i_Left.Equals(i_Right);
         }
     }
 }

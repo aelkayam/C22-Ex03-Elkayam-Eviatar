@@ -5,27 +5,30 @@ namespace Ex03.GarageLogic
 {
     public class Props
     {
-        private ParameterInfo pi;
+        // TODO : Use this class instead of strings
+        // TODO : Create this class as generic
+
+        private ParameterInfo m_Pi;
 
         // replace this >>
-        private readonly Type r_type;
+        private readonly Type r_Type;
 
-        private readonly string r_msg;
+        private readonly string r_Msg;
 
-        public Props(string i_msg, Type type)
+        public Props(string i_msg, Type i_Type)
         {
-            this.r_type = type;
-            this.r_msg = i_msg;
+            this.r_Type = i_Type;
+            this.r_Msg = i_msg;
         }
 
         public Type Type
         {
-            get { return r_type; }
+            get { return r_Type; }
         }
 
         public string Message
         {
-            get { return r_msg; }
+            get { return r_Msg; }
         }
     }
 }

@@ -5,6 +5,6 @@
         Black = 1,
         Blue = 2,
         Gray = 3,
-        White = 4 ,
+        White = 4,
     }
 }

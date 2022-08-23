@@ -6,10 +6,13 @@ namespace Ex03.ConsoleUI
 {
     internal class UserInput
     {
-        public static readonly List<string> sr_TrueFalseAns = new List<string>() { "true", "yes", "y", "false", "no", "n" };
+        internal string ReadInput()
+        {
+            return Console.ReadLine().Trim();
+        }
 
-        public string UserName { get; set; }
-
+        // TODO : Create a class that accepts an enum
+        // and eulogizes the possible options
         internal bool GetMenuOptions(out eMenuOptions o_Result)
         {
             return Enum.TryParse<eMenuOptions>(ReadInput(), out o_Result);
@@ -63,9 +66,17 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        internal string ReadInput()
+
+        internal int GetInt(string i_Msg)
         {
-            return Console.ReadLine().Trim();
+            if (int.TryParse(ReadInput(), out int o_reslt))
+            {
+                return o_reslt;
+            }
+            else
+            {
+                throw new FormatException();
+            }
         }
 
         internal string GetInputFormArray(List<string> i_StrArrValues, params string[] i_AnotherMessage)
@@ -81,21 +92,6 @@ namespace Ex03.ConsoleUI
             while (!isUserchooseFormArray);
 
             return result;
-        }
-
-
-
-        internal int GetInt(string i_Msg)
-        {
-            if (int.TryParse(ReadInput(), out int o_reslt))
-            {
-                return o_reslt;
-            }
-            else
-            {
-                throw new FormatException();
-            }
-
         }
     }
 }
