@@ -7,7 +7,7 @@ namespace Ex03.GarageLogic
 {
     internal abstract class Vehicle
     {
-        private const eCarState k_eCarStateInit = eCarState.InRepair;
+        private const eCarState k_ECarStateInit = eCarState.InRepair;
 
         private string m_LicensePlate; // different
 
@@ -61,7 +61,7 @@ namespace Ex03.GarageLogic
             m_LicensePlate = i_LicensePlate;
             m_EnergyLeft = i_EnergyLeft;
             m_Wheels = i_Wheels;
-            m_CarState = k_eCarStateInit;
+            m_CarState = k_ECarStateInit;
             m_Engine = i_Engine;
         }
 
@@ -125,38 +125,6 @@ CarState);
         public override int GetHashCode()
         {
             return LicencePlate.GetHashCode();
-        }
-
-        protected bool HaveTheSameFields(Vehicle i_OtherVehicle)
-        {
-            return m_Engine == i_OtherVehicle.Engine &&
-                m_Wheels == i_OtherVehicle.Wheels &&
-                m_ModelName == i_OtherVehicle.Name;
-        }
-
-        protected static List<string> GetParmsForNew(bool i_isElctiric, int i_NumOfWheel)
-        {
-            List<string> parms = new List<string>();
-            parms.Add("Name of the model");
-            parms.Add("License Plate");
-            parms.Add("Energy Left");
-
-            List<string> wheelPams = Wheel.getPramsForNew();
-            for (int i = 0; i < i_NumOfWheel; ++i)
-            {
-                parms.AddRange(wheelPams);
-            }
-
-            if (i_isElctiric)
-            {
-                parms.AddRange(GasEngine.getPramsForNew());
-            }
-            else
-            {
-                parms.AddRange(ElectricEngine.getPramsForNew());
-            }
-
-            return parms;
         }
 
         internal void UpdateVehicleState(eCarState i_CarStateTarget)

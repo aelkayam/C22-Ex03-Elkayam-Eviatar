@@ -93,11 +93,13 @@ namespace Ex03.GarageLogic
             return string.Format(@"{0}Color:{1}     Doors: {2}", base.ToString(), Color, Doors);
         }
 
-        internal static List<string> GetParmsForNew(bool i_isElctiric, int i_NumOfWheel)
+        internal static List<string> GetParmsForNew()
         {
-            List<string> parms = Vehicle.GetParmsForNew(i_isElctiric, i_NumOfWheel);
-            parms.Add("color");
-            parms.Add("num of dors ");
+            List<string> parms = new List<string>
+            {
+                "color",
+                "number of doors ",
+            };
 
             return parms;
         }

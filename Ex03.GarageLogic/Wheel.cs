@@ -70,18 +70,6 @@ namespace Ex03.GarageLogic
             return string.Format(@"Current: {0}     Max: {1}", CurrentAirPressure, MaxAirPressure);
         }
 
-        internal static List<string> getPramsForNew()
-        {
-            List<string> prams = new List<string>
-            {
-                "wheel Manufacturer",
-                "wheel Max Air Pressure",
-                "Current Air Pressure",
-            };
-
-            return prams;
-        }
-
         public static bool operator ==(Wheel i_Wheel1, Wheel i_Wheel2)
         {
             return i_Wheel1.Equals(i_Wheel2);
