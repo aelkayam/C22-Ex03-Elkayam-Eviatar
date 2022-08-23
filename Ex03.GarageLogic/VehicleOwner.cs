@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
+    // TODO : Make it a wrapper class for in the dictionary
+    // TODO : Bring here in the condition of the vehicle and take it out of the vehicle
     internal struct VehicleOwner
     {
         private string m_OwnerName;

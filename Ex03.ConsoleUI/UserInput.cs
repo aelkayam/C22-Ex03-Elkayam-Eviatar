@@ -6,10 +6,13 @@ namespace Ex03.ConsoleUI
 {
     internal class UserInput
     {
-        private static readonly List<string> sr_TrueFalseAns = new List<string>() { "TRUE", "YES", "Y", "false", "NO", "N" };
+        internal string ReadInput()
+        {
+            return Console.ReadLine().Trim();
+        }
 
-        public string UserName { get; set; }
-
+        // TODO : Create a class that accepts an enum
+        // and eulogizes the possible options
         internal bool GetMenuOptions(out eMenuOptions o_Result)
         {
             return Enum.TryParse<eMenuOptions>(ReadInput(), out o_Result);
@@ -63,9 +66,17 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        internal string ReadInput()
+
+        internal int GetInt(string i_Msg)
         {
-            return Console.ReadLine().Trim();
+            if (int.TryParse(ReadInput(), out int o_reslt))
+            {
+                return o_reslt;
+            }
+            else
+            {
+                throw new FormatException();
+            }
         }
 
         internal string GetInputFormArray(List<string> i_StrArrValues, params string[] i_AnotherMessage)
@@ -75,71 +86,12 @@ namespace Ex03.ConsoleUI
 
             do
             {
-                result = ReadInput().Trim();
+                result = ReadInput().Trim().ToLower();
                 isUserchooseFormArray = i_StrArrValues.Contains(result);
             }
             while (!isUserchooseFormArray);
 
             return result;
-        }
-
-        internal bool GetBool(string i_Msg)
-        {
-            bool isAns = true; // first time not do it
-            bool resletBool = false;
-            string result;
-
-            do
-            {
-                if (!isAns)
-                {
-                    Console.WriteLine("try again");
-                    Console.WriteLine(i_Msg);
-                }
-
-                result = ReadInput();
-                isAns = sr_TrueFalseAns.Contains(result.ToUpper());
-            }
-            while (isAns);
-
-            int i = 0;
-            foreach(string s in sr_TrueFalseAns)
-            {
-                if (s == result)
-                {
-                    resletBool = true;
-                }
-
-                if(i <= sr_TrueFalseAns.Count / 2 )
-                {
-                    break;
-                }
-
-                i++;
-            }
-
-            return resletBool;
-        }
-
-        internal int GetInt(string i_Msg)
-        {
-            int ans;
-            bool isAns = true; // first time not do it 
-
-            do
-            {
-                if (!isAns)
-                {
-                    Console.WriteLine("try again");
-                    Console.WriteLine(i_Msg);
-                }
-
-                string result = ReadInput();
-                isAns = int.TryParse(result, out ans);
-            }
-            while (isAns);
-
-            return ans;
         }
     }
 }

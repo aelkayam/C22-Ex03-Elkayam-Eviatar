@@ -23,7 +23,7 @@ namespace Ex03.GarageLogic
         }
 
         /******** Constructor ************/
-        private Motorbike(string i_Name, string i_LicensePlate, float i_EnergyLeft, List<Wheel> i_Wheels, object i_Engine, eLicense i_License, int i_EngineCapacity)
+        private Motorbike(string i_Name, string i_LicensePlate, float i_EnergyLeft, WheelArr i_Wheels, object i_Engine, eLicense i_License, int i_EngineCapacity)
             : base(i_Name, i_LicensePlate, i_EnergyLeft, i_Wheels, i_Engine)
         {
             r_License = i_License;
@@ -31,13 +31,12 @@ namespace Ex03.GarageLogic
         }
 
         // gas motorbike
-        public Motorbike(string i_Name, string i_LicensePlate, float i_EnergyLeft, List<Wheel> i_Wheels, GasEngine i_Engine, eLicense i_License, int i_EngineCapacity)
+        public Motorbike(string i_Name, string i_LicensePlate, float i_EnergyLeft, WheelArr i_Wheels, GasEngine i_Engine, eLicense i_License, int i_EngineCapacity)
             : this(i_Name, i_LicensePlate, i_EnergyLeft, i_Wheels, (object)i_Engine, i_License, i_EngineCapacity)
         {
         }
 
-        // electric motorbike
-        public Motorbike(string i_Name, string i_LicensePlate, float i_EnergyLeft, List<Wheel> i_Wheels, ElectricEngine i_Engine, eLicense i_License, int i_EngineCapacity)
+        public Motorbike(string i_Name, string i_LicensePlate, float i_EnergyLeft, WheelArr i_Wheels, ElectricEngine i_Engine, eLicense i_License, int i_EngineCapacity)
             : this(i_Name, i_LicensePlate, i_EnergyLeft, i_Wheels, (object)i_Engine, i_License, i_EngineCapacity)
         {
         }
@@ -48,7 +47,7 @@ namespace Ex03.GarageLogic
         public static Motorbike MakeDefaultElectricMotorbike()
         {
             // wheels:
-            List<Wheel> defaultElectricMotorbikeWheels = getDefaultMotorbikeWheels();
+            WheelArr defaultElectricMotorbikeWheels = new WheelArr(2, "default", 0, GarageManager.k_MotorbikeMaxAirPressure);
 
             // engine:
             ElectricEngine defaultElectricEngine = new ElectricEngine(0, GarageManager.k_MotorbikeMaxBatteryTime);
@@ -60,7 +59,7 @@ namespace Ex03.GarageLogic
         public static Motorbike MakeDefaultGasMotorbike()
         {
             // wheels:
-            List<Wheel> defaultGasMotorbikeWheels = getDefaultMotorbikeWheels();
+            WheelArr defaultGasMotorbikeWheels = new WheelArr(2, "default", 0, GarageManager.k_MotorbikeMaxAirPressure);
 
             // engine:
             ElectricEngine defaultGasEngine = new ElectricEngine(0, GarageManager.k_MotorbikeFuelTankCapacity);
@@ -68,29 +67,23 @@ namespace Ex03.GarageLogic
             return new Motorbike("Manufacturer", "LicesePlate", 0, defaultGasMotorbikeWheels, defaultGasEngine, k_License, k_EngineVolume); // default engine capacity for bikes???
         }
 
-        // return list of default bike wheels
-        private static List<Wheel> getDefaultMotorbikeWheels()
+        public override bool IsPropertiesEqual(Vehicle i_Other)
         {
-            // wheels:
-            List<Wheel> defaultElectricMotorbikeWheels = new List<Wheel>(GarageManager.k_MotorbikeNumOfWheels)
-            {
-                new Wheel("default", 0, GarageManager.k_MotorbikeMaxAirPressure),
-                new Wheel("default", 0, GarageManager.k_MotorbikeMaxAirPressure),
-            };
+            bool ans = false;
+            bool isEqualType = i_Other is Motorbike;
 
-            return defaultElectricMotorbikeWheels;
+            if (isEqualType)
+            {
+                ans = ((Vehicle)this).IsPropertiesEqual(i_Other);
+            }
+
+            return ans;
         }
 
         public override string ToString()
         {
             return string.Format(@"{0}License type: {1}     Engine Capacity: {2}", base.ToString(), Licence, EngineCapacity);
         }
-
-        //protected static override List<string> GetParmsForNew(bool i_isElctiric, int i_NumOfWheel)
-        //{
-        //    Vehicle.GetParmsForNew()
-        //    throw new NotImplementedException();
-        //}
 
         internal static List<string> GetParmsForNew()
         {
