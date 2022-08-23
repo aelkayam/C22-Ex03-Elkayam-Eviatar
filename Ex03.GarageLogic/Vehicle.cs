@@ -54,7 +54,7 @@ namespace Ex03.GarageLogic
             internal set { m_Engine = value; }
         }
 
-        public bool isElectric
+        public bool IsElectric
         {
             get
             {
@@ -75,6 +75,7 @@ namespace Ex03.GarageLogic
                     }
 
                 }
+
                 return isElectric;
 
             }
@@ -95,7 +96,7 @@ namespace Ex03.GarageLogic
         private string getAllWheels()
         {
             StringBuilder wheelsList = new StringBuilder();
-            foreach(Wheel wheel in Wheels)
+            foreach (Wheel wheel in Wheels)
             {
                 wheelsList.AppendLine(wheel.ToString());
             }
@@ -155,7 +156,7 @@ CarState);
 
         internal void UpdateVehicleState(eCarState i_CarStateTarget)
         {
-            if(i_CarStateTarget > CarState)
+            if (i_CarStateTarget > CarState)
             {
                 CarState = i_CarStateTarget;
             }
@@ -165,6 +166,54 @@ CarState);
             }
         }
 
+        public virtual bool IsPropertiesEqual(Vehicle i_Other) 
+        {
+            bool engineEqual = isEngineEqual(i_Other);
+            bool wheelsEqual = isWheelsEqual(i_Other);
 
+            return engineEqual && wheelsEqual;
+        }
+
+        private bool isWheelsEqual(Vehicle i_Other)
+        {
+            bool wheelsEqual = false;
+            bool quantityWheels = Wheels.Count == i_Other.Wheels.Count;
+
+            if (quantityWheels)
+            {
+                Wheel[] vehcicalWheels = Wheels.ToArray();
+                Wheel[] otherWheels = i_Other.Wheels.ToArray();
+
+                wheelsEqual = true;
+
+                for (int i = 0; i < Wheels.Count; i++)
+                {
+                    if (vehcicalWheels[i] != otherWheels[i])
+                    {
+                        wheelsEqual = false;
+                        break;
+                    }
+                }
+
+            }
+
+            return wheelsEqual; 
+        }
+
+        private bool isEngineEqual(Vehicle i_Other)
+        {
+            bool engineEqual = false;
+
+            if (IsElectric)
+            {
+                engineEqual = ((ElectricEngine)Engine).Equals(i_Other.Engine);
+            }
+            else
+            {
+                engineEqual = ((GasEngine) Engine).Equals(i_Other.Engine);
+            }
+
+            return engineEqual;
+        }
     }
 }

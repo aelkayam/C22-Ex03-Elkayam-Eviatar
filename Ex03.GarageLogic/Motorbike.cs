@@ -36,7 +36,6 @@ namespace Ex03.GarageLogic
         {
         }
 
-        // electric motorbike
         public Motorbike(string i_Name, string i_LicensePlate, float i_EnergyLeft, List<Wheel> i_Wheels, ElectricEngine i_Engine, eLicense i_License, int i_EngineCapacity)
             : this(i_Name, i_LicensePlate, i_EnergyLeft, i_Wheels, (object)i_Engine, i_License, i_EngineCapacity)
         {
@@ -48,7 +47,7 @@ namespace Ex03.GarageLogic
         public static Motorbike MakeDefaultElectricMotorbike()
         {
             // wheels:
-            List<Wheel> defaultElectricMotorbikeWheels = getDefaultMotorbikeWheels();
+            List<Wheel> defaultElectricMotorbikeWheels = Wheel.GetDefaultListWheels(2, "default", 0, GarageManager.k_MotorbikeMaxAirPressure);
 
             // engine:
             ElectricEngine defaultElectricEngine = new ElectricEngine(0, GarageManager.k_MotorbikeMaxBatteryTime);
@@ -60,7 +59,7 @@ namespace Ex03.GarageLogic
         public static Motorbike MakeDefaultGasMotorbike()
         {
             // wheels:
-            List<Wheel> defaultGasMotorbikeWheels = getDefaultMotorbikeWheels();
+            List<Wheel> defaultGasMotorbikeWheels = Wheel.GetDefaultListWheels(2, "default", 0, GarageManager.k_MotorbikeMaxAirPressure);
 
             // engine:
             ElectricEngine defaultGasEngine = new ElectricEngine(0, GarageManager.k_MotorbikeFuelTankCapacity);
@@ -102,5 +101,35 @@ namespace Ex03.GarageLogic
 
             return parms;
         }
+
+
+        public override bool IsPropertiesEqual(Vehicle i_Other)
+        {
+            Console.WriteLine("in IsPropertiesEqual of Moto ");
+
+            bool ans = false;
+            bool isEqualMoto = isEqualMotorbike(i_Other);
+
+            if (isEqualMoto)
+            {
+                ans = ((Vehicle)this).IsPropertiesEqual(i_Other);
+            }
+
+            return ans;
+        }
+
+        private bool isEqualMotorbike(Vehicle i_Other)
+        {
+            bool ans = false;
+            Motorbike other = i_Other as Motorbike;
+
+            if (other != null)
+            {
+                ans = Licence == other.Licence && EngineCapacity == other.EngineCapacity;
+            }
+
+            return ans;
+        }
+
     }
 }

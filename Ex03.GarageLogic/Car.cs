@@ -25,8 +25,6 @@ namespace Ex03.GarageLogic
             get { return r_Doors; }
         }
 
-        public ElectricEngine ElectricEngine { get; }
-
         /******** Constructor ************/
         private Car(string i_Name, string i_LicensePlate, float i_EnergyLeft, List<Wheel> i_Wheels, object i_Engine, eColor i_Color, eDoors i_Doors)
             : base(i_Name, i_LicensePlate, i_EnergyLeft, i_Wheels, i_Engine)
@@ -52,8 +50,8 @@ namespace Ex03.GarageLogic
         // return electric car model supported by the garage
         public static Car MakeDefaultElectricCar()
         {
-            // wheels:
-            List<Wheel> defaultElectricCarWheels = getDefaultCarWheels();
+            // wheels: GetDefaultListWheels(
+            List<Wheel> defaultElectricCarWheels = Wheel.GetDefaultListWheels(4, "default", 0, GarageManager.k_CarMaxAirPressure);
 
             // engine:
             ElectricEngine defaultElectricEngine = new ElectricEngine(0, GarageManager.k_CarMaxBatteryTime);
@@ -65,7 +63,7 @@ namespace Ex03.GarageLogic
         public static Car MakeDefaultGasCar()
         {
             // wheels:
-            List<Wheel> defaultGasCarWheels = getDefaultCarWheels();
+            List<Wheel> defaultGasCarWheels = Wheel.GetDefaultListWheels(4, "default", 0, GarageManager.k_CarMaxAirPressure);
 
             // engine
             GasEngine defaultGasEngine = new GasEngine(GarageManager.k_CarGasType, 0, GarageManager.k_CarFuelTankCapacity);
@@ -92,7 +90,6 @@ namespace Ex03.GarageLogic
         {
             return string.Format(@"{0}Color:{1}     Doors: {2}", base.ToString(), Color, Doors);
         }
-        // try 
 
 
         internal static List<string> GetParmsForNew()
@@ -104,6 +101,36 @@ namespace Ex03.GarageLogic
             };
 
             return parms;
+        }
+
+        public override bool IsPropertiesEqual(Vehicle i_Other)
+        {
+            Console.WriteLine("in IsPropertiesEqual of truck ");
+
+            bool ans = false;
+            bool isEqualCar = isEquaCar(i_Other);
+
+            if (isEqualCar)
+            {
+
+
+                ans = ((Vehicle)this).IsPropertiesEqual(i_Other);
+            }
+
+            return ans;
+        }
+
+        private bool isEquaCar(Vehicle i_Other)
+        {
+            bool ans = false;
+            Car other = i_Other as Car;
+
+            if ((Object) other != null)
+            {
+                ans = this.Doors == other.Doors && Color == other.Color;
+            }
+
+            return ans;
         }
     }
 }

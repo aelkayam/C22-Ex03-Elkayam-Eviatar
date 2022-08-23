@@ -6,8 +6,6 @@ namespace Ex03.ConsoleUI
 {
     internal class UserInput
     {
-        public static readonly List<string> sr_TrueFalseAns = new List<string>() { "true", "yes", "y", "false", "no", "n" };
-
         public string UserName { get; set; }
 
         internal bool GetMenuOptions(out eMenuOptions o_Result)

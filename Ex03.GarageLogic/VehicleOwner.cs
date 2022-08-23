@@ -33,5 +33,7 @@ namespace Ex03.GarageLogic
         {
             get { return m_LicensePlate; }
         }
+
+        // todo: 
     }
 }

@@ -5,14 +5,9 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    // ======================================================
-    // ****************** GarageManager ****************** //
-    // ======================================================
     public class GarageManager
     {
-        // ======================================================
         /** Default values vehicles that can enter the garage **/
-        // ======================================================
         // Default number of wheels
         internal const byte k_MotorbikeNumOfWheels = 2;
         internal const byte k_CarNumOfWheels = 4;
@@ -43,10 +38,7 @@ namespace Ex03.GarageLogic
         private static readonly List<Vehicle> sr_ValidVehicles;
         public static Random s_Random = new Random();
 
-        // ======================================================
         /** Member values of the object         **/
-        // ======================================================
-
         private string m_Name;
         private List<string> m_EmployeeNames;
 
@@ -191,16 +183,22 @@ namespace Ex03.GarageLogic
             return checkIfExist(i_LicensePlates, out _);
         }
 
-        private void createVehicle()
+        private bool validationNewVehicle(Vehicle i_newVehicle) // Validation = the action of checking or proving the validity or accuracy of something.
         {
+            bool ans = false;
+
+            foreach (Vehicle v in sr_ValidVehicles)
+            {
+                ans = i_newVehicle.IsPropertiesEqual(v);
+
+                if (ans)
+                {
+                    break;
+                }
+            }
+
+            return ans;
         }
-
-        public bool CheckIfValid()
-        {
-            return true;
-        }
-
-
 
         // require license, air (in BAR/PSI) and index of wheels to apply.
         // if no index given, fill all the wheels in the given amount
@@ -262,12 +260,6 @@ namespace Ex03.GarageLogic
             }
         }
 
-        // require license.
-        public void Fix(string i_UserLicensePlate)
-        {
-            UpdateCarState(i_UserLicensePlate, eCarState.Repaired);
-        }
-
         // require license and car state.
         public eCarState UpdateCarState(string i_UserLicensePlate, eCarState i_CarStateTarget)
         {
@@ -308,26 +300,6 @@ namespace Ex03.GarageLogic
             return allLicensePlates.ToString();
         }
 
-        internal static bool IsEngineElectric(object i_Engine)
-        {
-            bool isEngineElectric = false;
-
-            switch (i_Engine)
-            {
-                case GasEngine ge: /// typeof(GasEngine engine):
-                    break;
-                case ElectricEngine ee:
-                    isEngineElectric = true;
-                    break;
-                case null:
-                    throw new ArgumentNullException("NO ENGIN!");
-                default:
-                    throw new FormatException();
-            }
-
-            return isEngineElectric;
-        }
-
         public void InsertNewVehicle(string i_LicensePlate, string i_VehicleType, string i_ModelName, bool i_IsElectric,
             eGasType i_GasTypeToFill, float i_MaxEnergy, float i_EnergyToFill, int i_NumOfWheels, float i_MaxAirPressure,
             float i_CurrentAirPressure, string i_WheelsManufacturer, List<string> i_UserArgsForNewVehicle, string i_Name,
@@ -336,7 +308,7 @@ namespace Ex03.GarageLogic
             try
             {
                 Vehicle v;
-                List<Wheel> wheels = createWheels(i_NumOfWheels, i_WheelsManufacturer, i_MaxAirPressure, i_CurrentAirPressure);
+                List<Wheel> wheels = Wheel.GetDefaultListWheels(i_NumOfWheels, i_WheelsManufacturer, i_MaxAirPressure, i_CurrentAirPressure);
                 object engine = createEngine(i_IsElectric, i_GasTypeToFill, i_EnergyToFill, i_MaxEnergy);
 
                 switch (i_VehicleType)
@@ -352,18 +324,29 @@ namespace Ex03.GarageLogic
                         break;
                     default: throw new FormatException();
                 }
+
+                bool isCarValid = validationNewVehicle(v);
+                if (isCarValid)
+                {
+                    AllVehicles.Add(i_LicensePlate, v);
+                    m_AllOwners.Add(i_LicensePlate, new VehicleOwner(i_Name, /* this is the wrong parameter */i_NumOfWheels, i_LicensePlate));
+                }
+                else
+                {
+                    throw new FormatException(string.Format("{0} : the Insert of the New Vehicle fald  ", Employee));
+                }
+
                 Console.WriteLine(v.ToString());
-                AllVehicles.Add(i_LicensePlate, v);
             }
             catch (ArgumentException ae)
             {
-                throw new FormatException("the Insert of the New Vehicle fald  ", ae);
+                throw new FormatException(string.Format("{0} : the Insert of the New Vehicle fald  ", Employee), ae);
 
                 // we already catch exceptions in runner!
             }
             catch (Exception e)
             {
-                throw new FormatException("the Insert of the New Vehicle fald  " , e);
+                throw new FormatException(string.Format("{0} : the Insert of the New Vehicle fald  ", Employee), e);
                 // we already catch exceptions in runner!
             }
 

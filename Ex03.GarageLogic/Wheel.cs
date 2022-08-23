@@ -30,21 +30,39 @@ namespace Ex03.GarageLogic
 
         public float CurrentAirPressure
         {
-            get { return m_CurrentAirPressure; }
-            set { m_CurrentAirPressure = value; }
+            get { return this.m_CurrentAirPressure; }
+            set { this.m_CurrentAirPressure = value; }
         }
 
         /******** Constructor ************/
         public Wheel(string i_ManufacturerName, float i_CurrentAirPressure, float i_MaxAirPressure)
         {
-            m_ManufacturerName = i_ManufacturerName;
-            m_CurrentAirPressure = Math.Min(i_CurrentAirPressure,  i_MaxAirPressure);
-            m_MaxAirPressure = i_MaxAirPressure;
+            bool isParmsValid = i_CurrentAirPressure <= i_MaxAirPressure && i_MaxAirPressure > 0 && i_CurrentAirPressure > 0;
+            if (!isParmsValid)
+            {
+                throw new ValueOutOfRangeException(i_MaxAirPressure, i_CurrentAirPressure);
+            }
+
+            this.m_ManufacturerName = i_ManufacturerName;
+            this.m_CurrentAirPressure = i_CurrentAirPressure;
+            this.m_MaxAirPressure = i_MaxAirPressure;
         }
 
         public Wheel(float i_MaxAirPressure)
             : this(k_Manufacturer, i_MaxAirPressure, i_MaxAirPressure * k_InflatedPercentage)
         {
+        }
+
+        public static List<Wheel> GetDefaultListWheels(int i_NumOfWheels, string i_ManufacturerName,
+            float i_CurrentAirPressure, float i_MaxAirPressure)
+        {
+            List<Wheel> wheels = new List<Wheel>(i_NumOfWheels);
+            for (int i = 0; i < wheels.Count; i++)
+            {
+                wheels.Add(new Wheel(i_ManufacturerName, i_CurrentAirPressure, i_MaxAirPressure));
+            }
+
+            return wheels;
         }
 
         /******** Methods ************/

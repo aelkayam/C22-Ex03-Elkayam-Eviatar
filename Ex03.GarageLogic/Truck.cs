@@ -39,7 +39,7 @@ namespace Ex03.GarageLogic
         public static Truck MakeDefaultTruck()
         {
             // wheels:
-            List<Wheel> defaultTruckWheels = getDefaultTruckWheels();
+            List<Wheel> defaultTruckWheels = Wheel.GetDefaultListWheels(GarageManager.k_TruckNumOfWheels, "default", 0, GarageManager.k_TruckMaxAirPressure);
 
             // engine:
             GasEngine defaultTruckEngine = new GasEngine(GarageManager.k_TruckGasType, 0, GarageManager.k_TruckFuelTankCapacity);
@@ -75,6 +75,35 @@ namespace Ex03.GarageLogic
             };
 
             return parms;
+        }
+
+        public override bool IsPropertiesEqual(Vehicle i_Other)
+        {
+            Console.WriteLine("in IsPropertiesEqual of truck ");
+            bool ans = false;
+            bool isEqualMoto = isEquaTruck(i_Other);
+
+            if (isEqualMoto)
+            {
+
+
+                ans = ((Vehicle)this).IsPropertiesEqual(i_Other);
+            }
+
+            return ans;
+        }
+
+        private bool isEquaTruck(Vehicle i_Other)
+        {
+            bool ans = false;
+            Truck other = i_Other as Truck;
+
+            if (other != null)
+            {
+                ans = this.IsRefrigerator == other.IsRefrigerator && MaxCapacity == other.MaxCapacity;
+            }
+
+            return ans;
         }
     }
 }

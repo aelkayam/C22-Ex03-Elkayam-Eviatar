@@ -54,16 +54,19 @@ namespace Ex03.ConsoleUI
         {
             this.IsRunning = true;
             run();
+            exitProgram();
+
         }
 
         private void run()
         {
-            Screen.ShowMessage(string.Format("Welcome to {0} garage", Garage.Name));
+            string welcomeMsg = string.Format("Welcome to {0} garage", Garage.Name);
+
             while (IsRunning)
             {
                 try
                 {
-                    eMenuOptions eMenu = menuOptionsOperation();
+                    eMenuOptions eMenu = menuOptionsOperation(welcomeMsg);
                     string userLicensePlate = string.Empty;
 
                     if (eMenu != eMenuOptions.Exit && eMenu != eMenuOptions.AllLicensePlates)
@@ -134,12 +137,13 @@ namespace Ex03.ConsoleUI
                 }
                 catch (Exception e)
                 {
-
                     Screen.ShowMessage(e.Message);
                 }
+
+                UI.ReadInput();
+                Console.ReadLine();
             } // END OF WHILE
 
-            exitProgram();
         }
 
         private void showAllLicensePlates()
@@ -183,6 +187,7 @@ namespace Ex03.ConsoleUI
         // Fill air in the vehicle
         private void fillAirInWheels(string userLicensePlate)
         {
+
             Garage.FillAir(userLicensePlate); // fill to the max!
             Screen.Confirmation();
         }
@@ -221,6 +226,7 @@ namespace Ex03.ConsoleUI
                 }
                 catch (FormatException fe)
                 {
+                    Console.WriteLine(string.Format("fe : not in Screen {0}", fe.Message));
                     Screen.ShowError(eErrorType.FormatError);
                 }
             }
@@ -244,6 +250,7 @@ namespace Ex03.ConsoleUI
                 }
                 catch (FormatException fe)
                 {
+                    Console.WriteLine(string.Format("fe : not in Screen {0}", fe.Message));
                     Screen.ShowError(eErrorType.FormatError);
                 }
             }
@@ -270,14 +277,14 @@ namespace Ex03.ConsoleUI
             UI.ReadInput();
         }
 
-        private eMenuOptions menuOptionsOperation()
+        private eMenuOptions menuOptionsOperation(string i_WelcomeMsg)
         {
             eMenuOptions o_Result;
 
             bool isValidChoice;
             do
             {
-                m_Screen.ShowMenu();
+                m_Screen.ShowMenu(i_WelcomeMsg);
                 isValidChoice = UI.GetMenuOptions(out o_Result);
                 if (!isValidChoice)
                 {
@@ -292,9 +299,9 @@ namespace Ex03.ConsoleUI
         private void insertNewVehicle(string i_UserLicensePlate)
         {
             // check if the vehicle exists
-            bool vehicleExists = updateVehicle(i_UserLicensePlate, k_IsMenuOption);
+            bool isExistsLicensePlates = Garage.DoesLicensePlateExist(i_UserLicensePlate);
 
-            if (!vehicleExists)
+            if (!isExistsLicensePlates)
             {
                 eGasType gasTypeToFill = eGasType.Soler;
                 string vehicleType = getNewVehicleType();
@@ -332,6 +339,10 @@ namespace Ex03.ConsoleUI
 
                 Garage.InsertNewVehicle(i_UserLicensePlate, vehicleType, vehicleModel, isElectric, gasTypeToFill, maxBattery, energyToFill, numOfWheels, maxAirPressure, currentAirPressure, manufacturer, userArgsForNewVehicle, name, phoneNumber);
             }
+            else
+            {
+                updateVehicle(i_UserLicensePlate, k_IsMenuOption);
+            }
         }
 
         private int askInt(string i_Msg)
@@ -363,14 +374,10 @@ namespace Ex03.ConsoleUI
             do
             {
                 Screen.ShowMessage(i_Msg);
-                strReslt = UI.ReadInput();
+                strReslt = UI.ReadInput().ToLower();
             } while (strReslt != "yes" && strReslt != "no");
-        
-            
+
             bool resut = strReslt == "yes";
-
-            return resut;
-
 
             return resut;
         }
