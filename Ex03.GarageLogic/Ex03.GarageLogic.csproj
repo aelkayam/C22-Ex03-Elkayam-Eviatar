@@ -61,6 +61,7 @@
     <Compile Include="Vehicle.cs" />
     <Compile Include="VehicleOwner.cs" />
     <Compile Include="Wheel.cs" />
+    <Compile Include="WheelArr.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
