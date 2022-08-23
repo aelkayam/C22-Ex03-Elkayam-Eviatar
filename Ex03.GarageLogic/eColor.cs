@@ -2,9 +2,9 @@
 {
     public enum eColor
     {
-        Black,
-        Blue,
-        Gray,
-        White,
+        Black = 1,
+        Blue = 2,
+        Gray = 3,
+        White = 4 ,
     }
 }

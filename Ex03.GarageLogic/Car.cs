@@ -97,8 +97,8 @@ namespace Ex03.GarageLogic
         {
             List<string> parms = new List<string>
             {
-                "color",
-                "number of doors ",
+                "color:  Black - 1,  Blue - 2,  Gray - 3,  White - 4 ",
+                "number of doors: Two-Doors - 2,  Three-Doors - 3, Four-Doors = 4, Five-Doors - 5,",
             };
 
             return parms;

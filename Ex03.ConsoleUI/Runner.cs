@@ -215,7 +215,7 @@ namespace Ex03.ConsoleUI
             {
                 try
                 {
-                    Screen.GetGasFromUser();
+                    Screen.GetGasTypeFromUSer();
                     gasType = UI.GasTypePrompt();
                     userResponse = false;
                 }
@@ -301,10 +301,11 @@ namespace Ex03.ConsoleUI
                 string msgForAmountOfEnergy = Screen.k_GetBatteryMsg;
                 string msgForMaxEnergy = "What is the max battery?";
                 string vehicleModel = askString("What is the vehicle manufacturer");
-                bool isElectric = askedBoolean("is the Vehicle Electric?");
+                bool isElectric = askedBoolean("is the Vehicle Electric? (yse / no)");
 
                 if (!isElectric)
                 {
+                    Console.WriteLine(" the car is not Electric");
                     gasTypeToFill = getEGasType();
                     msgForAmountOfEnergy = Screen.k_GetGasMsg;
                     msgForMaxEnergy = "What is the The contents of the fuel tank?";
@@ -335,14 +336,43 @@ namespace Ex03.ConsoleUI
 
         private int askInt(string i_Msg)
         {
-            Screen.ShowMessage(i_Msg);
-            return UI.GetInt(i_Msg);
+            bool isAns = true;
+            int ans = 0;
+            do
+            {
+                try
+                {
+                    Screen.ShowMessage(i_Msg);
+                    ans = UI.GetInt(i_Msg);
+                    isAns = false;
+                }
+                catch
+                {
+
+                }
+
+            } while (isAns);
+
+
+            return ans;
         }
 
         private bool askedBoolean(string i_Msg)
         {
-            Screen.ShowMessage(i_Msg);
-            return UI.GetBool(i_Msg);
+            string strReslt;
+            do
+            {
+                Screen.ShowMessage(i_Msg);
+                strReslt = UI.ReadInput();
+            } while (strReslt != "yes" && strReslt != "no");
+        
+            
+            bool resut = strReslt == "yes";
+
+            return resut;
+
+
+            return resut;
         }
 
         private string askString(string i_Msg)

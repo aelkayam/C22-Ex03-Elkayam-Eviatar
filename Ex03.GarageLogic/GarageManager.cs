@@ -121,13 +121,13 @@ namespace Ex03.GarageLogic
 
             switch (i_VehicleType)
             {
-                case "Car":
+                case "car":
                     list = Car.GetParmsForNew();
                     break;
-                case "Truck":
+                case "truck":
                     list = Truck.GetParmsForNew();
                     break;
-                case "Motorbike":
+                case "motorbike":
                     list = Motorbike.GetParmsForNew();
                     break;
             }
@@ -140,7 +140,7 @@ namespace Ex03.GarageLogic
             List<string> result = new List<string>();
             foreach (Vehicle vehicle in sr_ValidVehicles)
             {
-                string nameVehicle = vehicle.GetType().Name;
+                string nameVehicle = vehicle.GetType().Name.ToLower();
 
                 if (!result.Contains(nameVehicle))
                 {
@@ -206,7 +206,7 @@ namespace Ex03.GarageLogic
         // if no index given, fill all the wheels in the given amount
         public void FillAirInWheels(string i_UserLicensePlate, float i_UnitsToFill, params int[] i_WheelIndex) { }
 
-        // require license. Fill air to the max
+        // require license. Fill air to the max MOVE TO VEHICLE
         public void FillAir(string i_UserLicensePlate)
         {
             if (checkIfExist(i_UserLicensePlate, out Vehicle o_TargetVehicle))
@@ -222,10 +222,10 @@ namespace Ex03.GarageLogic
             }
         }
 
-        // require license and amount of gas
+        // require license and amount of gas MOVE TO VEHICLE
         public void FillGas(string i_UserLicensePlate, float i_GasToFill, eGasType i_TypeOfGasToFill)
         {
-            if (checkIfExist(i_UserLicensePlate, out Vehicle o_TargetVehicle))
+            if (checkIfExist(i_UserLicensePlate, out Vehicle o_TargetVehicle))// move to bool x = 
             {
                 if (o_TargetVehicle.Engine is GasEngine gasEngine)
                 {
@@ -242,7 +242,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        // require license and amount of battery
+        // require license and amount of battery MOVE TO VEHICLE
         public void FillBattery(string i_UserLicensePlate, float i_EnergyToFill)
         {
             if (checkIfExist(i_UserLicensePlate, out Vehicle o_TargetVehicle))
@@ -341,26 +341,29 @@ namespace Ex03.GarageLogic
 
                 switch (i_VehicleType)
                 {
-                    case "Car":
+                    case "car":
                         v = createNewCar(i_LicensePlate, i_ModelName, i_IsElectric, engine, wheels, i_UserArgsForNewVehicle);
                         break;
-                    case "Truck":
+                    case "truck":
                         v = createNewTruck(i_LicensePlate, i_ModelName, i_IsElectric, engine, wheels, i_UserArgsForNewVehicle);
                         break;
-                    case "Motorbike":
+                    case "motorbike":
                         v = createNewMotorbike(i_LicensePlate, i_ModelName, i_IsElectric, engine, wheels, i_UserArgsForNewVehicle);
                         break;
                     default: throw new FormatException();
                 }
-
+                Console.WriteLine(v.ToString());
                 AllVehicles.Add(i_LicensePlate, v);
             }
-            catch (ArgumentException)
+            catch (ArgumentException ae)
             {
+                throw new FormatException("the Insert of the New Vehicle fald  ", ae);
+
                 // we already catch exceptions in runner!
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                throw new FormatException("the Insert of the New Vehicle fald  " , e);
                 // we already catch exceptions in runner!
             }
 
