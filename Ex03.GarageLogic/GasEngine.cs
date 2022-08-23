@@ -64,14 +64,9 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public override string ToString()
+        public override bool Equals(object i_Obj)
         {
-            return string.Format(@"Gas type: {0}    Left: {1}L      Max: {2}L", GasType, GasLeft, MaxGas);
-        }
-
-        public override bool Equals(object obj)
-        {
-            return obj is GasEngine engine &&
+            return i_Obj is GasEngine engine &&
                    GasType == engine.GasType &&
                    MaxGas == engine.MaxGas;
         }
@@ -84,14 +79,19 @@ namespace Ex03.GarageLogic
             return hashCode;
         }
 
-        public static bool operator ==(GasEngine i_gasEngine1, GasEngine i_GasEngine2)
+        public override string ToString()
         {
-            return i_gasEngine1.Equals(i_GasEngine2);
+            return string.Format(@"Gas type: {0}    Left: {1}L      Max: {2}L", GasType, GasLeft, MaxGas);
         }
 
-        public static bool operator !=(GasEngine i_gasEngine1, GasEngine i_GasEngine2)
+        public static bool operator ==(GasEngine i_Left, GasEngine i_Right)
         {
-            return !i_gasEngine1.Equals(i_GasEngine2);
+            return i_Left.Equals(i_Right);
+        }
+
+        public static bool operator !=(GasEngine i_Left, GasEngine i_Right)
+        {
+            return !i_Left.Equals(i_Right);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Ex03.GarageLogic
 {
     internal abstract class Vehicle
     {
-        private const eCarState k_ECarStateInit = eCarState.InRepair;
+        private const eCarState k_ECarStateInit = eCarState.InRepair;  // move it 
 
         private string m_LicensePlate; // different
 
@@ -18,7 +18,7 @@ namespace Ex03.GarageLogic
         // relevant for compare
         private string m_ModelName;
         private object m_Engine; // gas or electric
-        private List<Wheel> m_Wheels;
+        private WheelArr m_Wheels;
 
         /******** Properties ************/
         public string Name
@@ -31,7 +31,7 @@ namespace Ex03.GarageLogic
             get { return m_LicensePlate; }
         }
 
-        public List<Wheel> Wheels
+        public WheelArr Wheels
         {
             get { return m_Wheels; }
         }
@@ -59,30 +59,25 @@ namespace Ex03.GarageLogic
             get
             {
                 bool isElectric = false;
+
                 if (Engine is ElectricEngine)
                 {
                     isElectric = true;
                 }
                 else
                 {
-                    if (Engine is GasEngine)
-                    {
-
-                    }
-                    else
+                    if (!(Engine is GasEngine))
                     {
                         throw new Exception("no engin");
                     }
-
                 }
 
                 return isElectric;
-
             }
         }
 
         /******** Constructor ************/
-        public Vehicle(string i_Name, string i_LicensePlate, float i_EnergyLeft, List<Wheel> i_Wheels, object i_Engine)
+        public Vehicle(string i_Name, string i_LicensePlate, float i_EnergyLeft, WheelArr i_Wheels, object i_Engine)
         {
             m_ModelName = i_Name;
             m_LicensePlate = i_LicensePlate;
@@ -93,38 +88,6 @@ namespace Ex03.GarageLogic
         }
 
         /******** Methods ************/
-        private string getAllWheels()
-        {
-            StringBuilder wheelsList = new StringBuilder();
-            foreach (Wheel wheel in Wheels)
-            {
-                wheelsList.AppendLine(wheel.ToString());
-            }
-
-            wheelsList.AppendLine();
-            return wheelsList.ToString();
-        }
-
-        public override string ToString()
-        {
-            return string.Format(
-@"
-Manufacturer: {0} License: {1}
-Engine:
-{2}
-Wheels:
-{3}
-Energy Left: {4} hours
-Current state: {5}
-
-",
-Name,
-LicencePlate,
-Engine,
-getAllWheels(),
-EnergyLeft,
-CarState);
-        }
 
         public override bool Equals(object obj)
         {
@@ -166,38 +129,13 @@ CarState);
             }
         }
 
-        public virtual bool IsPropertiesEqual(Vehicle i_Other) 
+        public virtual bool IsPropertiesEqual(Vehicle i_Other)
         {
+            Console.WriteLine("in v");
             bool engineEqual = isEngineEqual(i_Other);
-            bool wheelsEqual = isWheelsEqual(i_Other);
+            bool wheelsEqual = Wheels == i_Other.Wheels;
 
             return engineEqual && wheelsEqual;
-        }
-
-        private bool isWheelsEqual(Vehicle i_Other)
-        {
-            bool wheelsEqual = false;
-            bool quantityWheels = Wheels.Count == i_Other.Wheels.Count;
-
-            if (quantityWheels)
-            {
-                Wheel[] vehcicalWheels = Wheels.ToArray();
-                Wheel[] otherWheels = i_Other.Wheels.ToArray();
-
-                wheelsEqual = true;
-
-                for (int i = 0; i < Wheels.Count; i++)
-                {
-                    if (vehcicalWheels[i] != otherWheels[i])
-                    {
-                        wheelsEqual = false;
-                        break;
-                    }
-                }
-
-            }
-
-            return wheelsEqual; 
         }
 
         private bool isEngineEqual(Vehicle i_Other)
@@ -214,6 +152,27 @@ CarState);
             }
 
             return engineEqual;
+        }
+
+        public override string ToString()
+        {
+            return string.Format(
+@"
+Manufacturer: {0} License: {1}
+Engine:
+{2}
+Wheels:
+{3}
+Energy Left: {4} hours
+Current state: {5}
+
+",
+Name,
+LicencePlate,
+Engine,
+Wheels.ToString(),
+EnergyLeft,
+CarState);
         }
     }
 }

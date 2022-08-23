@@ -26,7 +26,7 @@ namespace Ex03.GarageLogic
         }
 
         /******** Constructor ************/
-        public Truck(string i_Name, string i_LicensePlate, float i_EnergyLeft, List<Wheel> i_Wheels, object i_Engine, bool i_isRefrigerator, float i_MaxCapacity)
+        public Truck(string i_Name, string i_LicensePlate, float i_EnergyLeft, WheelArr i_Wheels, object i_Engine, bool i_isRefrigerator, float i_MaxCapacity)
             : base(i_Name, i_LicensePlate, i_EnergyLeft, i_Wheels, i_Engine)
         {
             r_IsRefrigerator = i_isRefrigerator;
@@ -39,7 +39,7 @@ namespace Ex03.GarageLogic
         public static Truck MakeDefaultTruck()
         {
             // wheels:
-            List<Wheel> defaultTruckWheels = Wheel.GetDefaultListWheels(GarageManager.k_TruckNumOfWheels, "default", 0, GarageManager.k_TruckMaxAirPressure);
+            WheelArr defaultTruckWheels = new WheelArr(GarageManager.k_TruckNumOfWheels, "default", 0, GarageManager.k_TruckMaxAirPressure);
 
             // engine:
             GasEngine defaultTruckEngine = new GasEngine(GarageManager.k_TruckGasType, 0, GarageManager.k_TruckFuelTankCapacity);
@@ -49,16 +49,20 @@ namespace Ex03.GarageLogic
             return defaultTruck;
         }
 
-        // return list of default truck wheels
-        private static List<Wheel> getDefaultTruckWheels()
+        public override bool IsPropertiesEqual(Vehicle i_Other)
         {
-            List<Wheel> defaultTruckWheels = new List<Wheel>(GarageManager.k_TruckNumOfWheels);
-            for (int i = 0; i < GarageManager.k_TruckNumOfWheels; i++)
+            Console.WriteLine("in IsPropertiesEqual of truck ");
+            bool ans = false;
+
+            bool isEqualType = i_Other is Truck;
+
+            if (isEqualType)
             {
-                defaultTruckWheels.Add(new Wheel("default", 0, GarageManager.k_TruckMaxAirPressure));
+
+                ans = ((Vehicle)this).IsPropertiesEqual(i_Other);
             }
 
-            return defaultTruckWheels;
+            return ans;
         }
 
         public override string ToString()
@@ -75,35 +79,6 @@ namespace Ex03.GarageLogic
             };
 
             return parms;
-        }
-
-        public override bool IsPropertiesEqual(Vehicle i_Other)
-        {
-            Console.WriteLine("in IsPropertiesEqual of truck ");
-            bool ans = false;
-            bool isEqualMoto = isEquaTruck(i_Other);
-
-            if (isEqualMoto)
-            {
-
-
-                ans = ((Vehicle)this).IsPropertiesEqual(i_Other);
-            }
-
-            return ans;
-        }
-
-        private bool isEquaTruck(Vehicle i_Other)
-        {
-            bool ans = false;
-            Truck other = i_Other as Truck;
-
-            if (other != null)
-            {
-                ans = this.IsRefrigerator == other.IsRefrigerator && MaxCapacity == other.MaxCapacity;
-            }
-
-            return ans;
         }
     }
 }
