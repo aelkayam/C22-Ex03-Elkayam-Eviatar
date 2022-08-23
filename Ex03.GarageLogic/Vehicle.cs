@@ -54,6 +54,32 @@ namespace Ex03.GarageLogic
             internal set { m_Engine = value; }
         }
 
+        public bool isElectric
+        {
+            get
+            {
+                bool isElectric = false;
+                if (Engine is ElectricEngine)
+                {
+                    isElectric = true;
+                }
+                else
+                {
+                    if (Engine is GasEngine)
+                    {
+
+                    }
+                    else
+                    {
+                        throw new Exception("no engin");
+                    }
+
+                }
+                return isElectric;
+
+            }
+        }
+
         /******** Constructor ************/
         public Vehicle(string i_Name, string i_LicensePlate, float i_EnergyLeft, List<Wheel> i_Wheels, object i_Engine)
         {
@@ -138,5 +164,7 @@ CarState);
                 throw new ArgumentException("Cannot go back to " + i_CarStateTarget.ToString());
             }
         }
+
+
     }
 }

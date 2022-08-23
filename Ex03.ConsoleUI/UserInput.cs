@@ -6,7 +6,7 @@ namespace Ex03.ConsoleUI
 {
     internal class UserInput
     {
-        private static readonly List<string> sr_TrueFalseAns = new List<string>() { "TRUE", "YES", "Y", "false", "NO", "N" };
+        public static readonly List<string> sr_TrueFalseAns = new List<string>() { "true", "yes", "y", "false", "no", "n" };
 
         public string UserName { get; set; }
 
@@ -75,7 +75,7 @@ namespace Ex03.ConsoleUI
 
             do
             {
-                result = ReadInput().Trim();
+                result = ReadInput().Trim().ToLower();
                 isUserchooseFormArray = i_StrArrValues.Contains(result);
             }
             while (!isUserchooseFormArray);
@@ -83,63 +83,19 @@ namespace Ex03.ConsoleUI
             return result;
         }
 
-        internal bool GetBool(string i_Msg)
-        {
-            bool isAns = true; // first time not do it
-            bool resletBool = false;
-            string result;
 
-            do
-            {
-                if (!isAns)
-                {
-                    Console.WriteLine("try again");
-                    Console.WriteLine(i_Msg);
-                }
-
-                result = ReadInput();
-                isAns = sr_TrueFalseAns.Contains(result.ToUpper());
-            }
-            while (isAns);
-
-            int i = 0;
-            foreach(string s in sr_TrueFalseAns)
-            {
-                if (s == result)
-                {
-                    resletBool = true;
-                }
-
-                if(i <= sr_TrueFalseAns.Count / 2 )
-                {
-                    break;
-                }
-
-                i++;
-            }
-
-            return resletBool;
-        }
 
         internal int GetInt(string i_Msg)
         {
-            int ans;
-            bool isAns = true; // first time not do it 
-
-            do
+            if (int.TryParse(ReadInput(), out int o_reslt))
             {
-                if (!isAns)
-                {
-                    Console.WriteLine("try again");
-                    Console.WriteLine(i_Msg);
-                }
-
-                string result = ReadInput();
-                isAns = int.TryParse(result, out ans);
+                return o_reslt;
             }
-            while (isAns);
+            else
+            {
+                throw new FormatException();
+            }
 
-            return ans;
         }
     }
 }
