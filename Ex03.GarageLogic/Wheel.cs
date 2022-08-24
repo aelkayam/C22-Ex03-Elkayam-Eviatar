@@ -8,8 +8,6 @@ namespace Ex03.GarageLogic
 {
     internal struct Wheel
     {
-        // TODO : remove this if no use
-
         private string m_ManufacturerName;
         private float m_MaxAirPressure;
         private float m_CurrentAirPressure;

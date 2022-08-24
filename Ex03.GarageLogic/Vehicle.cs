@@ -18,7 +18,6 @@ namespace Ex03.GarageLogic
 
         // irrelevant for compare
         private eCarState m_CarState;
-        private float m_EnergyLeft;
 
         /******** Properties ************/
         public string Name
@@ -38,10 +37,36 @@ namespace Ex03.GarageLogic
 
         public float EnergyLeft
         {
-            get { return m_EnergyLeft; }
-            set { m_EnergyLeft = value; }
+            get
+            {
+                float energyLeft;
+                if (IsElectric)
+                {
+                    energyLeft = ((ElectricEngine)Engine).BatteryLeft;
+                }
+                else
+                {
+                    energyLeft = ((GasEngine)Engine).GasLeft;
+                }
+
+                return energyLeft;
+            }
+
+            set
+            {
+                if (IsElectric)
+                {
+                    ((ElectricEngine)Engine).ChargeBattery(value);
+                }
+                else
+                {
+                    ((GasEngine)Engine).FillTank(value, ((GasEngine)Engine).GasType);
+                }
+            }
         }
 
+        // TODO elka: max energy function
+        // TODO eviatar: Move carState to VehicleOwner
         public eCarState CarState
         {
             get { return m_CarState; }
@@ -77,11 +102,10 @@ namespace Ex03.GarageLogic
         }
 
         /******** Constructor ************/
-        public Vehicle(string i_Name, string i_LicensePlate, float i_EnergyLeft, WheelArr i_Wheels, object i_Engine)
+        public Vehicle(string i_Name, string i_LicensePlate, WheelArr i_Wheels, object i_Engine)
         {
             r_ModelName = i_Name;
             r_LicensePlate = i_LicensePlate;
-            m_EnergyLeft = i_EnergyLeft;
             r_Wheels = i_Wheels;
             m_CarState = k_ECarStateInit;
             m_Engine = i_Engine;
@@ -119,14 +143,7 @@ namespace Ex03.GarageLogic
 
         internal void UpdateVehicleState(eCarState i_CarStateTarget)
         {
-            if (i_CarStateTarget > CarState)
-            {
                 CarState = i_CarStateTarget;
-            }
-            else
-            {
-                throw new ArgumentException("Cannot go back to " + i_CarStateTarget.ToString());
-            }
         }
 
         public virtual bool IsPropertiesEqual(Vehicle i_Other)

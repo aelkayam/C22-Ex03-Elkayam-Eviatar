@@ -6,19 +6,21 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    // TODO : Make it a wrapper class for in the dictionary
-    // TODO : Bring here in the condition of the vehicle and take it out of the vehicle
     internal struct VehicleOwner
     {
         private string m_OwnerName;
-        private int m_OwnerTel;
+        private string m_OwnerTel;
         private string m_LicensePlate;
+        private Vehicle m_Vehicle;
+        private eCarState m_VehicleState;
 
-        public VehicleOwner(string i_OwnerName, int i_OwnerTel, string i_LicensePlate)
+        public VehicleOwner(string i_OwnerName, string i_OwnerTel, string i_LicensePlate, Vehicle i_Vehicle)
         {
             m_OwnerName = i_OwnerName;
             m_OwnerTel = i_OwnerTel;
             m_LicensePlate = i_LicensePlate;
+            m_VehicleState = eCarState.InRepair;
+            m_Vehicle = i_Vehicle;
         }
 
         public string OwnerName
@@ -26,7 +28,7 @@ namespace Ex03.GarageLogic
             get { return m_OwnerName; }
         }
 
-        public int OwnerTel
+        public string OwnerTel
         {
             get { return m_OwnerTel; }
         }
@@ -34,6 +36,12 @@ namespace Ex03.GarageLogic
         public string LicensePlate
         {
             get { return m_LicensePlate; }
+        }
+
+        public eCarState CarState
+        {
+            get { return m_VehicleState; }
+            set { m_VehicleState = value; }
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Ex03.GarageLogic
 {
     public class GarageManager
     {
-        // TODO: move to appropriate departments
+        // TODO elka: move to appropriate departments
         private const string k_InsertionFailed = "{0} : The insertion of the new vehicle failed ";
 
         /** Member values of the object         **/
@@ -248,9 +248,8 @@ namespace Ex03.GarageLogic
             if (checkIfExist(i_UserLicensePlate, out Vehicle o_TargetVehicle))
             {
                 o_TargetVehicle.UpdateVehicleState(i_CarStateTarget);
+                // TODO elka: add correct message
                 return o_TargetVehicle.CarState;
-                // TODO : If CarState is paid remove it from the system
-                // TODO : if CarState Repaired  notice of how much should be paid   Any number of regrets
             }
             else
             {
@@ -292,36 +291,36 @@ namespace Ex03.GarageLogic
             try
             {
                 Console.WriteLine("in v ");
-                Vehicle v;
+                Vehicle enteringVehcile;
                 WheelArr wheels = new WheelArr(i_NumOfWheels, i_WheelsManufacturer, i_CurrentAirPressure, i_MaxAirPressure);
                 object engine = createEngine(i_IsElectric, i_GasTypeToFill, i_EnergyToFill, i_MaxEnergy);
 
                 switch (i_VehicleType)
                 {
                     case "car":
-                        v = createNewCar(i_LicensePlate, i_ModelName, i_IsElectric, engine, wheels, i_UserArgsForNewVehicle);
+                        enteringVehcile = createNewCar(i_LicensePlate, i_ModelName, i_IsElectric, engine, wheels, i_UserArgsForNewVehicle);
                         break;
                     case "truck":
-                        v = createNewTruck(i_LicensePlate, i_ModelName, i_IsElectric, engine, wheels, i_UserArgsForNewVehicle);
+                        enteringVehcile = createNewTruck(i_LicensePlate, i_ModelName, i_IsElectric, engine, wheels, i_UserArgsForNewVehicle);
                         break;
                     case "motorbike":
-                        v = createNewMotorbike(i_LicensePlate, i_ModelName, i_IsElectric, engine, wheels, i_UserArgsForNewVehicle);
+                        enteringVehcile = createNewMotorbike(i_LicensePlate, i_ModelName, i_IsElectric, engine, wheels, i_UserArgsForNewVehicle);
                         break;
                     default: throw new FormatException();
                 }
 
-                bool isCarValid = validationNewVehicle(v);
+                bool isCarValid = validationNewVehicle(enteringVehcile);
                 if (isCarValid)
                 {
-                    AllVehicles.Add(i_LicensePlate, v);
-                    r_AllOwners.Add(i_LicensePlate, new VehicleOwner(i_Name, /* this is the wrong parameter */i_NumOfWheels, i_LicensePlate));
+                    AllVehicles.Add(i_LicensePlate, enteringVehcile);
+                    r_AllOwners.Add(i_LicensePlate, new VehicleOwner(i_Name, i_PhoneNumber, i_LicensePlate, enteringVehcile));
                 }
                 else
                 {
                     throw new FormatException(string.Format(k_InsertionFailed, Employee));
                 }
 
-                Console.WriteLine(v.ToString());
+                Console.WriteLine(enteringVehcile.ToString());
             }
             catch (ArgumentException ae)
             {
@@ -374,11 +373,11 @@ namespace Ex03.GarageLogic
             {
                 if (i_IsElectric)
                 {
-                    motorbike = new Motorbike(i_ModelName, i_LicensePlate, 0f, wheels, (ElectricEngine)engine, o_License, o_EngineCapacity);
+                    motorbike = new Motorbike(i_ModelName, i_LicensePlate, wheels, (ElectricEngine)engine, o_License, o_EngineCapacity);
                 }
                 else
                 {
-                    motorbike = new Motorbike(i_ModelName, i_LicensePlate, 0f, wheels, (GasEngine)engine, o_License, o_EngineCapacity);
+                    motorbike = new Motorbike(i_ModelName, i_LicensePlate, wheels, (GasEngine)engine, o_License, o_EngineCapacity);
                 }
             }
             else
@@ -397,7 +396,7 @@ namespace Ex03.GarageLogic
 
             if (success1 && success2)
             {
-                truck = new Truck(i_ModelName, i_LicensePlate, 0f, wheels, engine, o_IsRefrigerated, o_MaxCapacity);
+                truck = new Truck(i_ModelName, i_LicensePlate, wheels, engine, o_IsRefrigerated, o_MaxCapacity);
             }
             else
             {
@@ -417,11 +416,11 @@ namespace Ex03.GarageLogic
             {
                 if (i_IsElectric)
                 {
-                    car = new Car(i_ModelName, i_LicensePlate, 0f, wheels, (ElectricEngine)engine, o_color, o_Doors);
+                    car = new Car(i_ModelName, i_LicensePlate, wheels, (ElectricEngine)engine, o_color, o_Doors);
                 }
                 else
                 {
-                    car = new Car(i_ModelName, i_LicensePlate, 0f, wheels, (GasEngine)engine, o_color, o_Doors);
+                    car = new Car(i_ModelName, i_LicensePlate, wheels, (GasEngine)engine, o_color, o_Doors);
                 }
             }
             else
