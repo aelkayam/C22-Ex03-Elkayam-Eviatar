@@ -12,8 +12,10 @@ namespace Ex03.ConsoleUI
 
         private readonly Screen r_Screen;
         private readonly UserInput r_UserInput;
+        private readonly Menu r_Menu;
         private bool m_IsRunning;
         private GarageManager m_GarageManager;
+
 
         /******** Properties ************/
         public bool IsRunning
@@ -44,6 +46,7 @@ namespace Ex03.ConsoleUI
             IsRunning = false;
             r_Screen = new Screen();
             r_UserInput = new UserInput();
+            r_Menu = new Menu(r_Screen, r_UserInput);
             List<string> employees = new List<string>() { "Shimon", "Asaf-Plutz", "KMNO" };
 
             m_GarageManager = new GarageManager("Abba Shimon and Sons' garage", employees);
@@ -65,7 +68,7 @@ namespace Ex03.ConsoleUI
             {
                 try
                 {
-                    eMenuOptions eMenu = menuOptionsOperation(welcomeMsg);
+                    eMenuOptions eMenu = r_Menu.MenuOptionsOperation();
                     string userLicensePlate = string.Empty;
 
                     if (eMenu != eMenuOptions.Exit && eMenu != eMenuOptions.AllLicensePlates)
@@ -144,8 +147,7 @@ namespace Ex03.ConsoleUI
         {
             Screen.ShowMessage(Garage.GetDetailsAboutAllVehicles());
 
-            Screen.ShowFilters();
-            eCarState filterTarget = UI.CarStatePrompt();
+            eCarState filterTarget = r_Menu.GetEnumPrompt<eCarState>(Screen.k_FiltersMsg);
 
             string filteredVehicles = Garage.FilterByVehicleState(filterTarget);
             Screen.ShowMessage(filteredVehicles);
@@ -161,8 +163,7 @@ namespace Ex03.ConsoleUI
             {
                 if (i_IsUserRequest)
                 {
-                    Screen.GetVehicleStateFromUser();
-                    carStateTarget = UI.CarStatePrompt();
+                    carStateTarget = r_Menu.GetEnumPrompt<eCarState>(Screen.k_FiltersMsg);
                 }
 
                 Garage.UpdateCarState(i_UserLicensePlate, carStateTarget);
@@ -184,7 +185,7 @@ namespace Ex03.ConsoleUI
         {
             float energyToFill = getFloatForUser(Screen.k_GetGasMsg);
 
-            eGasType gasTypeToFill = getEGasType();
+            eGasType gasTypeToFill = r_Menu.GetEnumPrompt<eGasType>(Screen.k_GetGasTypeMsg);
 
             Garage.FillGas(i_UserLicensePlate, energyToFill, gasTypeToFill);
             Screen.Confirmation();
@@ -198,28 +199,28 @@ namespace Ex03.ConsoleUI
             Screen.Confirmation();
         }
 
-        private eGasType getEGasType()
-        {
-            bool userResponse = true;
-            eGasType gasType = eGasType.Octan98;
-            do
-            {
-                try
-                {
-                    Screen.GetGasTypeFromUSer();
-                    gasType = UI.GasTypePrompt();
-                    userResponse = false;
-                }
-                catch (FormatException fe)
-                {
-                    Screen.ShowError(eErrorType.FormatError);
-                    Screen.ShowMessage(fe.Message);
-                }
-            }
-            while (userResponse);
+        //private eGasType getEGasType()
+        //{
+        //    bool userResponse = true;
+        //    eGasType gasType = eGasType.Octan98;
+        //    do
+        //    {
+        //        try
+        //        {
+        //            Screen.GetGasTypeFromUSer();
+        //            gasType = UI.GasTypePrompt();
+        //            userResponse = false;
+        //        }
+        //        catch (FormatException fe)
+        //        {
+        //            Screen.ShowError(eErrorType.FormatError);
+        //            Screen.ShowMessage(fe.Message);
+        //        }
+        //    }
+        //    while (userResponse);
 
-            return gasType;
-        }
+        //    return gasType;
+        //}
 
         private float getFloatForUser(string i_Msg)
         {
@@ -263,24 +264,24 @@ namespace Ex03.ConsoleUI
             UI.ReadInput();
         }
 
-        private eMenuOptions menuOptionsOperation(string i_WelcomeMsg)
-        {
-            eMenuOptions o_Result;
+        //private eMenuOptions menuOptionsOperation(string i_WelcomeMsg)
+        //{
+        //    eMenuOptions o_Result;
 
-            bool isValidChoice;
-            do
-            {
-                r_Screen.ShowMenu(i_WelcomeMsg);
-                isValidChoice = UI.GetMenuOptions(out o_Result);
-                if (!isValidChoice)
-                {
-                    Screen.ShowMessage("invalid input, try again!");
-                }
-            }
-            while (!isValidChoice);
+        //    bool isValidChoice;
+        //    do
+        //    {
+        //        r_Screen.ShowMenu(i_WelcomeMsg);
+        //        isValidChoice = UI.GetMenuOptions(out o_Result);
+        //        if (!isValidChoice)
+        //        {
+        //            Screen.ShowMessage("invalid input, try again!");
+        //        }
+        //    }
+        //    while (!isValidChoice);
 
-            return o_Result;
-        }
+        //    return o_Result;
+        //}
 
         private void insertNewVehicle(string i_UserLicensePlate)
         {
@@ -300,7 +301,7 @@ namespace Ex03.ConsoleUI
                 }
                 else
                 {
-                    gasTypeToFill = getEGasType();
+                    gasTypeToFill = r_Menu.GetEnumPrompt<eGasType>(Screen.k_GetGasTypeMsg);
                     msgForAmountOfEnergy = Screen.k_GetGasMsg;
                     msgForMaxEnergy = Screen.k_AskMaxFuel;
                 }
