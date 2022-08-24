@@ -167,7 +167,7 @@ namespace Ex03.ConsoleUI
                 }
 
                 Garage.UpdateCarState(i_UserLicensePlate, carStateTarget);
-                Screen.Confirmation();
+                Screen.Confirmation(carStateTarget.ToString());
 
                 ans = true;
             }
