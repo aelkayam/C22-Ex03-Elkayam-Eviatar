@@ -7,7 +7,7 @@ namespace Ex03.GarageLogic
 {
     internal abstract class Vehicle
     {
-        private const eCarState k_ECarStateInit = eCarState.InRepair;  // move it 
+        private const eCarState k_ECarStateDefault = eCarState.InRepair;  // move it 
 
         private readonly string r_LicensePlate; // different
 
@@ -65,7 +65,24 @@ namespace Ex03.GarageLogic
             }
         }
 
-        // TODO elka: max energy function
+        public float MaxEnergy
+        {
+            get
+            {
+                float maxEnergy;
+                if (IsElectric)
+                {
+                    maxEnergy = ((ElectricEngine)Engine).MaxBattery;
+                }
+                else
+                {
+                    maxEnergy = ((GasEngine)Engine).MaxGas;
+                }
+
+                return maxEnergy;
+            }
+        }
+
         // TODO eviatar: Move carState to VehicleOwner
         public eCarState CarState
         {
@@ -107,7 +124,7 @@ namespace Ex03.GarageLogic
             r_ModelName = i_Name;
             r_LicensePlate = i_LicensePlate;
             r_Wheels = i_Wheels;
-            m_CarState = k_ECarStateInit;
+            m_CarState = k_ECarStateDefault;
             m_Engine = i_Engine;
         }
 

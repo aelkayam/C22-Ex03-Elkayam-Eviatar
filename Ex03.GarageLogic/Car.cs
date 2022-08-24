@@ -9,7 +9,12 @@ namespace Ex03.GarageLogic
         private const string k_DoorsOptions = @"Number of doors:    Two-Doors - 2,  Three-Doors - 3, Four-Doors - 4, Five-Doors - 5";
 
         // default values:
-        private const float k_EnergyLeft = 20f;
+        private const byte k_CarNumOfWheels = 4;
+        private const byte k_CarMaxAirPressure = 27;
+        private const float k_CarMaxBatteryTime = 4.5f;
+        private const float k_CarFuelTankCapacity = 52f;
+        private const eGasType k_CarGasType = eGasType.Octan95;
+
         private const eColor k_Color = eColor.Blue;
         private const eDoors k_Doors = eDoors.FourDoors;
 
@@ -53,19 +58,22 @@ namespace Ex03.GarageLogic
         // return electric car model supported by the garage
         public static Car MakeDefaultElectricCar()
         {
-            // engine:
-            ElectricEngine defaultElectricEngine = new ElectricEngine(0, GarageManager.k_CarMaxBatteryTime);
+            // wheels:
+            WheelArr defaultElectricCarWheels = new WheelArr(k_CarNumOfWheels, "default", 0, k_CarMaxAirPressure);
 
-            return new Car("Manufacturer", "LicensePlate", new WheelArr(4, "default", 0, GarageManager.k_CarMaxAirPressure), defaultElectricEngine, k_Color, k_Doors);
+            // engine:
+            ElectricEngine defaultElectricEngine = new ElectricEngine(0, k_CarMaxBatteryTime);
+
+            return new Car("Manufacturer", "LicensePlate", defaultElectricCarWheels, defaultElectricEngine, k_Color, k_Doors);
         }
 
         public static Car MakeDefaultGasCar()
         {
             // wheels:
-            WheelArr defaultGasCarWheels = new WheelArr(4, "default", 0, GarageManager.k_CarMaxAirPressure);
+            WheelArr defaultGasCarWheels = new WheelArr(k_CarNumOfWheels, "default", 0, k_CarMaxAirPressure);
 
             // engine
-            GasEngine defaultGasEngine = new GasEngine(GarageManager.k_CarGasType, 0, GarageManager.k_CarFuelTankCapacity);
+            GasEngine defaultGasEngine = new GasEngine(k_CarGasType, 0, k_CarFuelTankCapacity);
 
             return new Car("Manufacturer", "LicensePlate", defaultGasCarWheels, defaultGasEngine, k_Color, k_Doors);
         }
@@ -75,7 +83,6 @@ namespace Ex03.GarageLogic
             return string.Format(@"{0}Color:{1}     Doors: {2}", base.ToString(), Color, Doors);
         }
 
-        // return gas car model supported by the garage
         public override bool IsPropertiesEqual(Vehicle i_Other)
         {
             bool ans = false;
