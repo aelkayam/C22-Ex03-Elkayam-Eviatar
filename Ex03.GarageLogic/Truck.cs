@@ -44,7 +44,7 @@ namespace Ex03.GarageLogic
             // engine:
             GasEngine defaultTruckEngine = new GasEngine(GarageManager.k_TruckGasType, 0, GarageManager.k_TruckFuelTankCapacity);
 
-            Truck defaultTruck = new Truck("Manufacturer", "LicesePlate", 0, defaultTruckWheels, defaultTruckEngine, k_IsRefrigerated, k_MaxCapacity);
+            Truck defaultTruck = new Truck("Manufacturer", "LicensePlate", 0, defaultTruckWheels, defaultTruckEngine, k_IsRefrigerated, k_MaxCapacity);
 
             return defaultTruck;
         }

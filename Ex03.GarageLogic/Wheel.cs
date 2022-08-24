@@ -8,7 +8,7 @@ namespace Ex03.GarageLogic
 {
     internal struct Wheel
     {
-        // TODO : remove this if no use 
+        // TODO : remove this if no use
         private const string k_Manufacturer = "MICHELIN";
         private const float k_InflatedPercentage = 0.75f;
 
@@ -55,8 +55,7 @@ namespace Ex03.GarageLogic
         {
         }
 
-        public static List<Wheel> GetDefaultListWheels(int i_NumOfWheels, string i_ManufacturerName,
-            float i_CurrentAirPressure, float i_MaxAirPressure)
+        public static List<Wheel> GetDefaultListWheels(int i_NumOfWheels, string i_ManufacturerName, float i_CurrentAirPressure, float i_MaxAirPressure)
         {
             List<Wheel> wheels = new List<Wheel>(i_NumOfWheels);
             for (int i = 0; i < wheels.Count; i++)

@@ -49,21 +49,15 @@ namespace Ex03.GarageLogic
 
         /******** Methods ************/
 
-        public override string ToString()
-        {
-            return string.Format(@"{0}Color:{1}     Doors: {2}", base.ToString(), Color, Doors);
-        }
-
         // return electric car model supported by the garage
         public static Car MakeDefaultElectricCar()
         {
             // engine:
             ElectricEngine defaultElectricEngine = new ElectricEngine(0, GarageManager.k_CarMaxBatteryTime);
 
-            return new Car("Manufacturer", "LicesePlate", k_EnergyLeft, new WheelArr(4, "default", 0, GarageManager.k_CarMaxAirPressure), defaultElectricEngine, k_Color, k_Doors);
+            return new Car("Manufacturer", "LicensePlate", k_EnergyLeft, new WheelArr(4, "default", 0, GarageManager.k_CarMaxAirPressure), defaultElectricEngine, k_Color, k_Doors);
         }
 
-        // return gas car model supported by the garage
         public static Car MakeDefaultGasCar()
         {
             // wheels:
@@ -72,12 +66,17 @@ namespace Ex03.GarageLogic
             // engine
             GasEngine defaultGasEngine = new GasEngine(GarageManager.k_CarGasType, 0, GarageManager.k_CarFuelTankCapacity);
 
-            return new Car("Manufacturer", "LicesePlate", k_EnergyLeft, defaultGasCarWheels, defaultGasEngine, k_Color, k_Doors);
+            return new Car("Manufacturer", "LicensePlate", k_EnergyLeft, defaultGasCarWheels, defaultGasEngine, k_Color, k_Doors);
         }
 
+        public override string ToString()
+        {
+            return string.Format(@"{0}Color:{1}     Doors: {2}", base.ToString(), Color, Doors);
+        }
+
+        // return gas car model supported by the garage
         public override bool IsPropertiesEqual(Vehicle i_Other)
         {
-
             bool ans = false;
             bool isEqualType = i_Other is Car;
 

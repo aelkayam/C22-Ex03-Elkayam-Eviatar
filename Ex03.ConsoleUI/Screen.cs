@@ -12,14 +12,15 @@ namespace Ex03.ConsoleUI
 5   - To fill gas in your vehicle.
 6   - To charge the battery of your vehicle.
 7   - To view the details of your vehicle in the garage.
-0   - To Exit.";
+0   - To Exit.
+";
 
-        private const string k_FiltersMsg = @"===================================
-Filter by vehicle state:
+        private const string k_FiltersMsg = @"Choose filter by vehicle state:
+
 1  - InRepair
 2  - Repaired
 3  - Paid
-===================================";
+";
 
         private const string k_FormatMsg = "Parsing failure, invalid input was typed.";
         private const string k_ArgumentMsg = "Wrong argument was typed.";

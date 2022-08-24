@@ -9,31 +9,31 @@ namespace Ex03.GarageLogic
     {
         private const eCarState k_ECarStateInit = eCarState.InRepair;  // move it 
 
-        private string m_LicensePlate; // different
+        private readonly string r_LicensePlate; // different
+
+        // relevant for compare
+        private readonly string r_ModelName;
+        private readonly WheelArr r_Wheels;
+        private object m_Engine; // gas or electric
 
         // irrelevant for compare
         private eCarState m_CarState;
         private float m_EnergyLeft;
 
-        // relevant for compare
-        private string m_ModelName;
-        private object m_Engine; // gas or electric
-        private WheelArr m_Wheels;
-
         /******** Properties ************/
         public string Name
         {
-            get { return m_ModelName; }
+            get { return r_ModelName; }
         }
 
         public string LicencePlate
         {
-            get { return m_LicensePlate; }
+            get { return r_LicensePlate; }
         }
 
         public WheelArr Wheels
         {
-            get { return m_Wheels; }
+            get { return r_Wheels; }
         }
 
         public float EnergyLeft
@@ -79,10 +79,10 @@ namespace Ex03.GarageLogic
         /******** Constructor ************/
         public Vehicle(string i_Name, string i_LicensePlate, float i_EnergyLeft, WheelArr i_Wheels, object i_Engine)
         {
-            m_ModelName = i_Name;
-            m_LicensePlate = i_LicensePlate;
+            r_ModelName = i_Name;
+            r_LicensePlate = i_LicensePlate;
             m_EnergyLeft = i_EnergyLeft;
-            m_Wheels = i_Wheels;
+            r_Wheels = i_Wheels;
             m_CarState = k_ECarStateInit;
             m_Engine = i_Engine;
         }
@@ -140,8 +140,7 @@ namespace Ex03.GarageLogic
 
         private bool isEngineEqual(Vehicle i_Other)
         {
-            bool engineEqual = false;
-
+            bool engineEqual;
             if (IsElectric)
             {
                 engineEqual = ((ElectricEngine)Engine).Equals(i_Other.Engine);
