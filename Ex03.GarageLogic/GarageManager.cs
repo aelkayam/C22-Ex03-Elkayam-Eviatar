@@ -8,6 +8,7 @@ namespace Ex03.GarageLogic
     public class GarageManager
     {
         private const string k_InsertionFailed = "{0} : The insertion of the new vehicle failed ";
+        private const string k_Lineseparator = "===========================";
 
         private static readonly List<Vehicle> sr_ValidVehicles;
         private static readonly Random sr_Random = new Random();
@@ -16,8 +17,14 @@ namespace Ex03.GarageLogic
         private readonly List<string> r_EmployeeNames;
 
         // make "Owner" object instead of "string" as KEY in dictionary (?)
-        private readonly Dictionary<string, Vehicle> r_AllVehicles;
-        private readonly Dictionary<string, VehicleOwner> r_AllOwners;
+       // private readonly Dictionary<string, Vehicle> r_AllVehicles;
+        private readonly Dictionary<string, VehicleOwner> r_DataOfAllVehicles;
+
+        private Dictionary<string, VehicleOwner> DataOfAllVehicles
+        {
+            get { return r_DataOfAllVehicles; }
+        }
+
         private string m_Name;
 
         /******** Properties ************/
@@ -41,7 +48,7 @@ namespace Ex03.GarageLogic
             set { r_EmployeeNames[0] = value; }
         }
 
-        internal Dictionary<string, Vehicle> AllVehicles { get { return r_AllVehicles; } }
+      //  internal Dictionary<string, Vehicle> AllVehicles { get { return r_AllVehicles; } }
 
         static GarageManager()
         {
@@ -70,14 +77,7 @@ namespace Ex03.GarageLogic
             m_Name = i_Name;
             r_EmployeeNames = i_EmployeeNames;
             new List<string>();
-            r_AllVehicles = new Dictionary<string, Vehicle>();
-            r_AllOwners = new Dictionary<string, VehicleOwner>();
-
-            // for debugging
-
-            //r_AllVehicles.Add("1234", sr_ValidVehicles[0]);
-            //r_AllVehicles.Add("5678", sr_ValidVehicles[1]);
-            //r_AllVehicles.Add("9012", sr_ValidVehicles[2]);
+            r_DataOfAllVehicles = new Dictionary<string, VehicleOwner>();
         }
 
         /******** Methods ************/
@@ -127,14 +127,15 @@ namespace Ex03.GarageLogic
         {
             bool isEmpty = true;
             StringBuilder filteredVehicles = new StringBuilder();
-            filteredVehicles.AppendLine("===========================");
+            filteredVehicles.AppendLine(k_Lineseparator);
 
-            foreach (Vehicle vehicle in AllVehicles.Values)
+            foreach (KeyValuePair<string, VehicleOwner> vehicleOwnerKAndVP in r_DataOfAllVehicles )
             {
-                if (vehicle.CarState == i_FilterTarget)
+
+                if (vehicleOwnerKAndVP.Value.CarState == i_FilterTarget)
                 {
                     isEmpty = false;
-                    filteredVehicles.AppendLine(vehicle.LicencePlate);
+                    filteredVehicles.AppendLine(vehicleOwnerKAndVP.Key);
                 }
             }
 
@@ -143,7 +144,7 @@ namespace Ex03.GarageLogic
                 filteredVehicles.AppendLine("No matching vehicles found!");
             }
 
-            filteredVehicles.Append("===========================");
+            filteredVehicles.Append(k_Lineseparator);
 
             return filteredVehicles.ToString();
         }
@@ -169,7 +170,11 @@ namespace Ex03.GarageLogic
 
             if (i_LicensePlateToLookFor != null)
             {
-                result = r_AllVehicles.TryGetValue(i_LicensePlateToLookFor, out o_Vehicle);
+                result = r_DataOfAllVehicles.TryGetValue(i_LicensePlateToLookFor, out VehicleOwner owner);
+                if (result)
+                {
+                    o_Vehicle = owner.Vehicle;
+                }
             }
 
             return result;
@@ -185,12 +190,12 @@ namespace Ex03.GarageLogic
                 }
                 else
                 {
-                    throw new ArgumentException("This vehicle is not powered by gas");
+                    throw new ArgumentException(string.Format("{0} :This vehicle is not powered by gas", Employee));
                 }
             }
             else
             {
-                throw new ArgumentException("This vehicle does not exist in our garage");
+                throw new ArgumentException(string.Format("{0} :This vehicle does not exist in our garage", Employee));
             }
         }
 
@@ -221,7 +226,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                throw new ArgumentException("This vehicle does not exist in our garage");
+                throw new ArgumentException("{0} : This vehicle does not exist in our garage", Employee);
             }
         }
 
@@ -262,7 +267,7 @@ namespace Ex03.GarageLogic
                 Vehicle enteringVehcile;
                 WheelArr wheels = new WheelArr(i_NumOfWheels, i_WheelsManufacturer, i_CurrentAirPressure, i_MaxAirPressure);
                 object engine = createEngine(i_IsElectric, i_GasTypeToFill, i_EnergyToFill, i_MaxEnergy);
-
+                // for sr_
                 switch (i_VehicleType)
                 {
                     case "car":
@@ -280,8 +285,7 @@ namespace Ex03.GarageLogic
                 bool isCarValid = validationNewVehicle(enteringVehcile);
                 if (isCarValid)
                 {
-                    AllVehicles.Add(i_LicensePlate, enteringVehcile);
-                    r_AllOwners.Add(i_LicensePlate, new VehicleOwner(i_Name, i_PhoneNumber, i_LicensePlate, enteringVehcile));
+                    DataOfAllVehicles.Add(i_LicensePlate, new VehicleOwner(i_Name, i_PhoneNumber, i_LicensePlate, enteringVehcile));
                 }
                 else
                 {
@@ -304,14 +308,14 @@ namespace Ex03.GarageLogic
         public string GetDetailsAboutAllVehicles()
         {
             StringBuilder allLicensePlates = new StringBuilder(string.Empty);
-            allLicensePlates.AppendLine("===========================");
+            allLicensePlates.AppendLine(k_Lineseparator);
 
-            foreach (string licensePlate in AllVehicles.Keys)
+            foreach (string licensePlate in DataOfAllVehicles.Keys)
             {
                 allLicensePlates.AppendLine(licensePlate);
             }
 
-            allLicensePlates.Append("===========================");
+            allLicensePlates.Append(k_Lineseparator);
 
             return allLicensePlates.ToString();
         }
@@ -350,7 +354,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                throw new FormatException("wrong arguments");
+                throw new FormatException(string.Format("{0} :wrong arguments", Employee));
             }
 
             return motorbike;
@@ -364,11 +368,18 @@ namespace Ex03.GarageLogic
 
             if (success1 && success2)
             {
-                truck = new Truck(i_ModelName, i_LicensePlate, wheels, engine, o_IsRefrigerated, o_MaxCapacity);
+                if (i_IsElectric)
+                {
+                    truck = new Truck(i_ModelName, i_LicensePlate, wheels, (ElectricEngine)engine, o_IsRefrigerated, o_MaxCapacity);
+                }
+                else
+                {
+                    truck = new Truck(i_ModelName, i_LicensePlate, wheels, (GasEngine)engine, o_IsRefrigerated, o_MaxCapacity);
+                }
             }
             else
             {
-                throw new FormatException("wrong arguments");
+                throw new FormatException(string.Format("{0} :wrong arguments", Employee));
             }
 
             return truck;
@@ -389,11 +400,11 @@ namespace Ex03.GarageLogic
                 else
                 {
                     car = new Car(i_ModelName, i_LicensePlate, wheels, (GasEngine)engine, o_color, o_Doors);
+                    }
                 }
-            }
             else
             {
-                throw new FormatException("wrong arguments");
+                throw new FormatException(string.Format("{0} :wrong arguments", Employee));
             }
 
             return car;

@@ -36,6 +36,7 @@ namespace Ex03.ConsoleUI
         public eMenuOptions MenuOptionsOperation()
         {
             eMenuOptions o_Result;
+            Console.ForegroundColor = ConsoleColor.Yellow;
 
             bool isValidChoice;
             do
@@ -48,6 +49,7 @@ namespace Ex03.ConsoleUI
                 }
             }
             while (!isValidChoice);
+            Console.ForegroundColor = ConsoleColor.White;
 
             return o_Result;
         }
