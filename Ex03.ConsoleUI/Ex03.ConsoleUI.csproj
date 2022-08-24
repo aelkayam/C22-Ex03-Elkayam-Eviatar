@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="eErrorType.cs" />
     <Compile Include="eMenuOptions.cs" />
+    <Compile Include="Menu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Runner.cs" />
     <Compile Include="Screen.cs" />
