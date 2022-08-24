@@ -18,6 +18,7 @@ namespace Ex03.ConsoleUI
 7   - To view the details of your vehicle in the garage.
 0   - To Exit.
 ";
+
         private const string k_FormtForMsg = @"{0} 
 {1}";
 
@@ -35,6 +36,7 @@ namespace Ex03.ConsoleUI
         public eMenuOptions MenuOptionsOperation()
         {
             eMenuOptions o_Result;
+            Console.ForegroundColor = ConsoleColor.Yellow;
 
             bool isValidChoice;
             do
@@ -47,6 +49,7 @@ namespace Ex03.ConsoleUI
                 }
             }
             while (!isValidChoice);
+            Console.ForegroundColor = ConsoleColor.White;
 
             return o_Result;
         }
@@ -94,25 +97,24 @@ namespace Ex03.ConsoleUI
         {
             string strToPrint = string.Format(k_FormtForMsg, i_QForPrint, CreateOptionsFromEnum(typeof(TEnum)));
 
-            TEnum io_Result = default; // TODO: ?? is the name good 
-
+            TEnum result = default;
             bool isValid = false;
             do
             {
                 try
                 {
                     r_Screen.ShowMessage(strToPrint);
-                    io_Result = enumPrompt<TEnum>();
+                    result = enumPrompt<TEnum>();
                     isValid = true;
                 }
-                catch
+                catch(Exception e)
                 {
                     r_Screen.ShowError(eErrorType.FormatError);
                 }
             }
             while (!isValid);
 
-            return (TEnum)io_Result;
+            return (TEnum)result;
         }
     }
 }

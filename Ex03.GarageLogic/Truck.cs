@@ -30,11 +30,21 @@ namespace Ex03.GarageLogic
         }
 
         /******** Constructor ************/
-        public Truck(string i_Name, string i_LicensePlate, WheelArr i_Wheels, object i_Engine, bool i_isRefrigerator, float i_MaxCapacity)
+        private Truck(string i_Name, string i_LicensePlate, WheelArr i_Wheels, object i_Engine, bool i_isRefrigerator, float i_MaxCapacity)
             : base(i_Name, i_LicensePlate, i_Wheels, i_Engine)
         {
             r_IsRefrigerator = i_isRefrigerator;
             r_MaxCapacity = i_MaxCapacity;
+        }
+
+        public Truck(string i_Name, string i_LicensePlate, WheelArr i_Wheels, ElectricEngine i_Engine, bool i_isRefrigerator, float i_MaxCapacity)
+            : this(i_Name, i_LicensePlate, i_Wheels, (object)i_Engine, i_isRefrigerator, i_MaxCapacity)
+        {
+        }
+
+        public Truck(string i_Name, string i_LicensePlate, WheelArr i_Wheels, GasEngine i_Engine, bool i_isRefrigerator, float i_MaxCapacity)
+            : this(i_Name, i_LicensePlate, i_Wheels, (object)i_Engine, i_isRefrigerator, i_MaxCapacity)
+        {
         }
 
         /******** Methods ************/

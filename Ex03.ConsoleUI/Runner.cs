@@ -63,6 +63,7 @@ namespace Ex03.ConsoleUI
         private void run()
         {
             string welcomeMsg = string.Format("Welcome to {0} garage", Garage.Name);
+            d();
 
             while (IsRunning)
             {
@@ -139,7 +140,7 @@ namespace Ex03.ConsoleUI
                     Screen.ShowMessage(e.Message);
                 }
 
-                Thread.Sleep(2000);
+                Thread.Sleep(5000);
             } // END OF WHILE
         }
 
@@ -170,6 +171,10 @@ namespace Ex03.ConsoleUI
                 Screen.Confirmation(carStateTarget.ToString());
 
                 ans = true;
+            }
+            else
+            {
+                throw new ArgumentException(string.Format("{0} : nam your License Plate in not in my Garage", Garage.Owner));
             }
 
             return ans;
