@@ -28,25 +28,23 @@ namespace Ex03.GarageLogic
             get { return r_Doors; }
         }
 
-        // TODO: Create a function that says motor percentage is there
-
         /******** Constructor ************/
-        private Car(string i_Name, string i_LicensePlate, float i_EnergyLeft, WheelArr i_Wheels, object i_Engine, eColor i_Color, eDoors i_Doors)
-            : base(i_Name, i_LicensePlate, i_EnergyLeft, i_Wheels, i_Engine)
+        private Car(string i_Name, string i_LicensePlate, WheelArr i_Wheels, object i_Engine, eColor i_Color, eDoors i_Doors)
+            : base(i_Name, i_LicensePlate, i_Wheels, i_Engine)
         {
             m_Color = i_Color;
             r_Doors = i_Doors;
         }
 
         // gas car
-        public Car(string i_Name, string i_LicensePlate, float i_EnergyLeft, WheelArr i_Wheels, GasEngine i_Engine, eColor i_Color, eDoors i_Doors)
-            : this(i_Name, i_LicensePlate, i_EnergyLeft, i_Wheels, (object)i_Engine, i_Color, i_Doors)
+        public Car(string i_Name, string i_LicensePlate, WheelArr i_Wheels, GasEngine i_Engine, eColor i_Color, eDoors i_Doors)
+            : this(i_Name, i_LicensePlate, i_Wheels, (object)i_Engine, i_Color, i_Doors)
         {
         }
 
         // electric car
-        public Car(string i_Name, string i_LicensePlate, float i_EnergyLeft, WheelArr i_Wheels, ElectricEngine i_Engine, eColor i_Color, eDoors i_Doors)
-            : this(i_Name, i_LicensePlate, i_EnergyLeft, i_Wheels, (object)i_Engine, i_Color, i_Doors)
+        public Car(string i_Name, string i_LicensePlate, WheelArr i_Wheels, ElectricEngine i_Engine, eColor i_Color, eDoors i_Doors)
+            : this(i_Name, i_LicensePlate, i_Wheels, (object)i_Engine, i_Color, i_Doors)
         {
         }
 
@@ -58,7 +56,7 @@ namespace Ex03.GarageLogic
             // engine:
             ElectricEngine defaultElectricEngine = new ElectricEngine(0, GarageManager.k_CarMaxBatteryTime);
 
-            return new Car("Manufacturer", "LicensePlate", k_EnergyLeft, new WheelArr(4, "default", 0, GarageManager.k_CarMaxAirPressure), defaultElectricEngine, k_Color, k_Doors);
+            return new Car("Manufacturer", "LicensePlate", new WheelArr(4, "default", 0, GarageManager.k_CarMaxAirPressure), defaultElectricEngine, k_Color, k_Doors);
         }
 
         public static Car MakeDefaultGasCar()
@@ -69,7 +67,7 @@ namespace Ex03.GarageLogic
             // engine
             GasEngine defaultGasEngine = new GasEngine(GarageManager.k_CarGasType, 0, GarageManager.k_CarFuelTankCapacity);
 
-            return new Car("Manufacturer", "LicensePlate", k_EnergyLeft, defaultGasCarWheels, defaultGasEngine, k_Color, k_Doors);
+            return new Car("Manufacturer", "LicensePlate", defaultGasCarWheels, defaultGasEngine, k_Color, k_Doors);
         }
 
         public override string ToString()

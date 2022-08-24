@@ -289,47 +289,46 @@ namespace Ex03.ConsoleUI
 
             if (!isExistsLicensePlates)
             {
-                eGasType gasTypeToFill = eGasType.Soler;
-                string vehicleType = getNewVehicleType();
-                string msgForAmountOfEnergy = Screen.k_GetBatteryMsg;
-
-                string msgForMaxEnergy = Screen.k_AskMaxBattery;
-                string vehicleModel = askString(Screen.k_AskVehicleManufacturer);
                 bool isElectric = askedBoolean(Screen.k_AskIsElectric);
+                string vehicleType, msgForAmountOfEnergy, msgForMaxEnergy, vehicleModel;
+                eGasType gasTypeToFill = default;
 
-                if (!isElectric)
+                if (isElectric)
+                {
+                    msgForAmountOfEnergy = Screen.k_GetBatteryMsg;
+                    msgForMaxEnergy = Screen.k_AskMaxBattery;
+                }
+                else
                 {
                     gasTypeToFill = getEGasType();
                     msgForAmountOfEnergy = Screen.k_GetGasMsg;
                     msgForMaxEnergy = Screen.k_AskMaxFuel;
                 }
 
-                // TODO: Maybe change the variable names to a different form
-                // department name Member name in class
-                // like wheelMaxAP
+                vehicleType = getNewVehicleType();
+                vehicleModel = askString(Screen.k_AskVehicleManufacturer);
 
-                float energyToFill = getFloatForUser(msgForAmountOfEnergy);
-                float maxBattery = getFloatForUser(msgForMaxEnergy);
+                float engineCurrentEnergy = getFloatForUser(msgForAmountOfEnergy);
+                float engineMaxEnergy = getFloatForUser(msgForMaxEnergy);
 
-                int numOfWheels = askInt(Screen.k_AskHowManyWheels);
+                int wheelsAmount = askInt(Screen.k_AskHowManyWheels);
+                float wheelAirPressureMax = getFloatForUser(Screen.k_AskMaxAirPressure);
+                float wheelAirPressureCurrent = getFloatForUser(Screen.k_AskCurrentAirPressure);
+                string wheelManufacturer = askString(Screen.k_AskWheelManufacturer);
 
-                float maxAirPressure = getFloatForUser(Screen.k_AskMaxAirPressure);
-                float currentAirPressure = getFloatForUser(Screen.k_AskCurrentAirPressure);
-
-                string manufacturerWeel = askString(Screen.k_AskWheelManufacturer);
-                List<string> argsNeedForNewVehiclem = Garage.GetParams(vehicleType);
+                List<string> argsNeedForNewVehicle = Garage.GetParams(vehicleType);
                 List<string> userArgsForNewVehicle = new List<string>();
 
-                foreach (string arg in argsNeedForNewVehiclem)
+                foreach (string arg in argsNeedForNewVehicle)
                 {
                     Screen.ShowMessage(string.Format("Please enter {0}", arg));
                     userArgsForNewVehicle.Add(UI.ReadInput());
                 }
 
-                string name = askString(Screen.k_AskOwnerName);
-                string phoneNumber = askString(Screen.k_AskOwnerTelNumber);
+                string ownerName = askString(Screen.k_AskOwnerName);
+                string ownerPhone = askString(Screen.k_AskOwnerTelNumber);
 
-                Garage.InsertNewVehicle(i_UserLicensePlate, vehicleType, vehicleModel, isElectric, gasTypeToFill, maxBattery, energyToFill, numOfWheels, maxAirPressure, currentAirPressure, manufacturerWeel, userArgsForNewVehicle, name, phoneNumber);
+                Garage.InsertNewVehicle(i_UserLicensePlate, vehicleType, vehicleModel, isElectric, gasTypeToFill, engineMaxEnergy, engineCurrentEnergy, wheelsAmount, wheelAirPressureMax, wheelAirPressureCurrent, wheelManufacturer, userArgsForNewVehicle, ownerName, ownerPhone);
             }
             else
             {

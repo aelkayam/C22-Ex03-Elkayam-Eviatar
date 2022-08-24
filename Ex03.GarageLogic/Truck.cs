@@ -26,8 +26,8 @@ namespace Ex03.GarageLogic
         }
 
         /******** Constructor ************/
-        public Truck(string i_Name, string i_LicensePlate, float i_EnergyLeft, WheelArr i_Wheels, object i_Engine, bool i_isRefrigerator, float i_MaxCapacity)
-            : base(i_Name, i_LicensePlate, i_EnergyLeft, i_Wheels, i_Engine)
+        public Truck(string i_Name, string i_LicensePlate, WheelArr i_Wheels, object i_Engine, bool i_isRefrigerator, float i_MaxCapacity)
+            : base(i_Name, i_LicensePlate, i_Wheels, i_Engine)
         {
             r_IsRefrigerator = i_isRefrigerator;
             r_MaxCapacity = i_MaxCapacity;
@@ -44,7 +44,7 @@ namespace Ex03.GarageLogic
             // engine:
             GasEngine defaultTruckEngine = new GasEngine(GarageManager.k_TruckGasType, 0, GarageManager.k_TruckFuelTankCapacity);
 
-            Truck defaultTruck = new Truck("Manufacturer", "LicensePlate", 0, defaultTruckWheels, defaultTruckEngine, k_IsRefrigerated, k_MaxCapacity);
+            Truck defaultTruck = new Truck("Manufacturer", "LicensePlate", defaultTruckWheels, defaultTruckEngine, k_IsRefrigerated, k_MaxCapacity);
 
             return defaultTruck;
         }

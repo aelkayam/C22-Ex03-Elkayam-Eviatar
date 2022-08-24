@@ -11,33 +11,23 @@ namespace Ex03.ConsoleUI
             return Console.ReadLine().Trim();
         }
 
-        // TODO : Create a class that accepts an enum
+        // TODO eviatar: Create a class that accepts an enum
         // and eulogizes the possible options
-        internal bool GetMenuOptions(out eMenuOptions o_Result)
+        internal bool GetMenuOptions(out eMenuOptions o_Results)
         {
-            return Enum.TryParse<eMenuOptions>(ReadInput(), true, out o_Result);
-        }
-
-        internal string LicensePlatePrompt()
-        {
-            return ReadInput();
-        }
-
-        internal string GetString()
-        {
-            return ReadInput();
-        }
-
-        internal float EnergyToFillPrompt()
-        {
-            if(float.TryParse(ReadInput(), out float value))
+            bool isValid = false;
+            try
             {
-                return value;
+                o_Results = EnumPrompt<eMenuOptions>();
+                isValid = true;
             }
-            else
+            catch
             {
-                throw new FormatException();
+                o_Results = default;
+                Console.WriteLine("catch getMEnuOptions");
             }
+
+            return isValid;
         }
 
         internal eGasType GasTypePrompt()
@@ -57,6 +47,34 @@ namespace Ex03.ConsoleUI
             if(Enum.TryParse<eCarState>(ReadInput(), true, out eCarState o_CarState))
             {
                 return o_CarState;
+            }
+            else
+            {
+                throw new FormatException();
+            }
+        }
+
+        internal TEnum EnumPrompt<TEnum>()
+            where TEnum : Enum
+        {
+            return (TEnum)Enum.Parse(typeof(TEnum), ReadInput(), true);
+        }
+
+        internal string LicensePlatePrompt()
+        {
+            return ReadInput();
+        }
+
+        internal string GetString()
+        {
+            return ReadInput();
+        }
+
+        internal float EnergyToFillPrompt()
+        {
+            if(float.TryParse(ReadInput(), out float value))
+            {
+                return value;
             }
             else
             {
