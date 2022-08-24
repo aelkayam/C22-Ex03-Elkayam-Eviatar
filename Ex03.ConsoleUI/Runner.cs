@@ -16,7 +16,6 @@ namespace Ex03.ConsoleUI
         private bool m_IsRunning;
         private GarageManager m_GarageManager;
 
-
         /******** Properties ************/
         public bool IsRunning
         {
@@ -62,7 +61,7 @@ namespace Ex03.ConsoleUI
 
         private void run()
         {
-            string welcomeMsg = string.Format("Welcome to {0} garage", Garage.Name);
+            Screen.ShowMessage(string.Format("Welcome to {0} garage", Garage.Name));
             d();
 
             while (IsRunning)
@@ -156,10 +155,10 @@ namespace Ex03.ConsoleUI
 
         private bool updateVehicle(string i_UserLicensePlate, bool i_IsUserRequest)
         {
-            bool ans = false;
             eCarState carStateTarget = eCarState.Repaired;
 
             bool doesLicensePlateExist = Garage.DoesLicensePlateExist(i_UserLicensePlate);
+            bool ans;
             if (doesLicensePlateExist)
             {
                 if (i_IsUserRequest)
@@ -168,13 +167,13 @@ namespace Ex03.ConsoleUI
                 }
 
                 Garage.UpdateCarState(i_UserLicensePlate, carStateTarget);
-                Screen.Confirmation(carStateTarget.ToString());
+                Screen.ConfirmUpdate(carStateTarget.ToString());
 
                 ans = true;
             }
             else
             {
-                throw new ArgumentException(string.Format("{0} : nam your License Plate in not in my Garage", Garage.Owner));
+                throw new ArgumentException(string.Format("{0} : name your license plate in not in my Garage", Garage.Owner));
             }
 
             return ans;
@@ -183,7 +182,7 @@ namespace Ex03.ConsoleUI
         private void fillAirInWheelsToMax(string i_UserLicensePlate)
         {
             Garage.FillAir(i_UserLicensePlate);
-            Screen.Confirmation();
+            Screen.ConfirmAirPressure();
         }
 
         private void fillGas(string i_UserLicensePlate)
@@ -193,7 +192,7 @@ namespace Ex03.ConsoleUI
             eGasType gasTypeToFill = r_Menu.GetEnumPrompt<eGasType>(Screen.k_GetGasTypeMsg);
 
             Garage.FillGas(i_UserLicensePlate, energyToFill, gasTypeToFill);
-            Screen.Confirmation();
+            Screen.ConfirmGas(energyToFill.ToString());
         }
 
         private void chargeBattery(string i_UserLicensePlate)
@@ -201,7 +200,7 @@ namespace Ex03.ConsoleUI
             float energyToFill = getFloatForUser(Screen.k_GetBatteryMsg);
 
             Garage.FillBattery(i_UserLicensePlate, energyToFill);
-            Screen.Confirmation();
+            Screen.ConfirmBattery(energyToFill.ToString());
         }
 
         private float getFloatForUser(string i_Msg)

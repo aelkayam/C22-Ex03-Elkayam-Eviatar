@@ -15,9 +15,6 @@ namespace Ex03.GarageLogic
 
         /** Member values of the object         **/
         private readonly List<string> r_EmployeeNames;
-
-        // make "Owner" object instead of "string" as KEY in dictionary (?)
-       // private readonly Dictionary<string, Vehicle> r_AllVehicles;
         private readonly Dictionary<string, VehicleOwner> r_DataOfAllVehicles;
 
         private Dictionary<string, VehicleOwner> DataOfAllVehicles
@@ -149,8 +146,6 @@ namespace Ex03.GarageLogic
             return filteredVehicles.ToString();
         }
 
-        public void FillAirInWheels(string i_UserLicensePlate, float i_UnitsToFill, params int[] i_WheelIndex) { }
-
         public void FillAir(string i_UserLicensePlate)
         {
             if (checkIfExist(i_UserLicensePlate, out Vehicle o_TargetVehicle))
@@ -267,7 +262,7 @@ namespace Ex03.GarageLogic
                 Vehicle enteringVehcile;
                 WheelArr wheels = new WheelArr(i_NumOfWheels, i_WheelsManufacturer, i_CurrentAirPressure, i_MaxAirPressure);
                 object engine = createEngine(i_IsElectric, i_GasTypeToFill, i_EnergyToFill, i_MaxEnergy);
-                // for sr_
+
                 switch (i_VehicleType)
                 {
                     case "car":
@@ -354,7 +349,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                throw new FormatException(string.Format("{0} :wrong arguments", Employee));
+                throw new FormatException(string.Format("{0} : wrong arguments", Employee));
             }
 
             return motorbike;
@@ -379,7 +374,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                throw new FormatException(string.Format("{0} :wrong arguments", Employee));
+                throw new FormatException(string.Format("{0} : wrong arguments", Employee));
             }
 
             return truck;
@@ -404,7 +399,7 @@ namespace Ex03.GarageLogic
                 }
             else
             {
-                throw new FormatException(string.Format("{0} :wrong arguments", Employee));
+                throw new FormatException(string.Format("{0} : wrong arguments", Employee));
             }
 
             return car;

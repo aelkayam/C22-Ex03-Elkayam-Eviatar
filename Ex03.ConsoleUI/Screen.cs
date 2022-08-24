@@ -4,7 +4,7 @@ namespace Ex03.ConsoleUI
 {
     internal class Screen
     {
-        public const string k_FiltersMsg = "Choose filter by vehicle state:";
+        public const string k_FiltersMsg = "Choose vehicle state:";
 
         public const string k_GetGasTypeMsg = "Please enter what type of gas to fill";
         private const string k_FormatMsg = "Parsing failure, invalid input was typed.";
@@ -15,7 +15,6 @@ namespace Ex03.ConsoleUI
         public const string k_GetBatteryMsg = "Please enter how many hours you want to charge into the battery:";
         public const string k_GetGasMsg = "Please enter how much gas you want to fill:";
 
-        private const string k_GetVehicleStateMsg = "Please enter the new state (Repaired/Paid):";
         public const string k_AskForCarType = @"Please enter the type of vehicle you want to enter the garage";
         public const string k_AskMaxBattery = "What is the max battery?";
         public const string k_AskVehicleManufacturer = "What is the vehicle manufacturer?";
@@ -28,7 +27,11 @@ namespace Ex03.ConsoleUI
         public const string k_AskOwnerName = "What is the owner's name?";
         public const string k_AskOwnerTelNumber = "What is the owner's phone number?";
         private const string k_ActionSucces = "Successfully done!";
-        private const string k_UpdateSuccess = "vehicle updated to '{0}'";
+        private const string k_ActionSuccessArgs = "'{0}' successfully!";
+        private const string k_UpdateSuccess = "Updated your vehicle to {0} successfully!";
+        private const string k_GasSuccess = "Filled {0}L to your fuel tank successfully!";
+        private const string k_BatterySuccess = "charged {0} hours to your vehicle battery successfully!";
+        private const string k_AirFillSuccess = "Maximum air pressure in all your wheels!";
         private const string k_ActionFailure = "Action denied.";
 
         /******** Methods ************/
@@ -76,7 +79,27 @@ namespace Ex03.ConsoleUI
 
         internal void Confirmation(string i_Args)
         {
+            print(string.Format(k_ActionSuccessArgs, i_Args));
+        }
+
+        internal void ConfirmUpdate(string i_Args)
+        {
             print(string.Format(k_UpdateSuccess, i_Args));
+        }
+
+        internal void ConfirmGas(string i_Args)
+        {
+            print(string.Format(k_GasSuccess, i_Args));
+        }
+
+        internal void ConfirmBattery(string i_Args)
+        {
+            print(string.Format(k_BatterySuccess, i_Args));
+        }
+
+        internal void ConfirmAirPressure()
+        {
+            print(k_AirFillSuccess);
         }
 
         internal void Failure()

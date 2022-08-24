@@ -7,9 +7,9 @@ namespace Ex03.GarageLogic
 {
     internal abstract class Vehicle
     {
-        private const eCarState k_ECarStateDefault = eCarState.InRepair;  // move it 
+        private const eCarState k_ECarStateDefault = eCarState.InRepair;
 
-        private readonly string r_LicensePlate; // different
+        private readonly string r_LicensePlate;
 
         // relevant for compare
         private readonly string r_ModelName;
