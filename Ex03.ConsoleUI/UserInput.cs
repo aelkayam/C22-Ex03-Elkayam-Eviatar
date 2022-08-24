@@ -11,55 +11,6 @@ namespace Ex03.ConsoleUI
             return Console.ReadLine().Trim();
         }
 
-        // TODO eviatar: Create a class that accepts an enum
-        // and eulogizes the possible options
-        //internal bool GetMenuOptions(out eMenuOptions o_Results)
-        //{
-        //    bool isValid = false;
-        //    try
-        //    {
-        //        o_Results = EnumPrompt<eMenuOptions>();
-        //        isValid = true;
-        //    }
-        //    catch
-        //    {
-        //        o_Results = default;
-        //        Console.WriteLine("catch getMEnuOptions");
-        //    }
-
-        //    return isValid;
-        //}
-
-        //internal eGasType GasTypePrompt()
-        //{
-        //    if(Enum.TryParse<eGasType>(ReadInput(), true, out eGasType o_GasType))
-        //    {
-        //        return o_GasType;
-        //    }
-        //    else
-        //    {
-        //        throw new FormatException();
-        //    }
-        //}
-
-        //internal eCarState CarStatePrompt()
-        //{
-        //    if(Enum.TryParse<eCarState>(ReadInput(), true, out eCarState o_CarState))
-        //    {
-        //        return o_CarState;
-        //    }
-        //    else
-        //    {
-        //        throw new FormatException();
-        //    }
-        //}
-
-        //internal TEnum EnumPrompt<TEnum>()
-        //    where TEnum : Enum
-        //{
-        //    return (TEnum)Enum.Parse(typeof(TEnum), ReadInput(), true);
-        //}
-
         internal string LicensePlatePrompt()
         {
             return ReadInput();

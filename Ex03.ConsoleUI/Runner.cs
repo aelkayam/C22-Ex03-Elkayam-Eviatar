@@ -199,29 +199,6 @@ namespace Ex03.ConsoleUI
             Screen.Confirmation();
         }
 
-        //private eGasType getEGasType()
-        //{
-        //    bool userResponse = true;
-        //    eGasType gasType = eGasType.Octan98;
-        //    do
-        //    {
-        //        try
-        //        {
-        //            Screen.GetGasTypeFromUSer();
-        //            gasType = UI.GasTypePrompt();
-        //            userResponse = false;
-        //        }
-        //        catch (FormatException fe)
-        //        {
-        //            Screen.ShowError(eErrorType.FormatError);
-        //            Screen.ShowMessage(fe.Message);
-        //        }
-        //    }
-        //    while (userResponse);
-
-        //    return gasType;
-        //}
-
         private float getFloatForUser(string i_Msg)
         {
             bool userResponse = true;
@@ -263,25 +240,6 @@ namespace Ex03.ConsoleUI
             Screen.ShowMessage("Goodbye! press enter to exit the garage :D");
             UI.ReadInput();
         }
-
-        //private eMenuOptions menuOptionsOperation(string i_WelcomeMsg)
-        //{
-        //    eMenuOptions o_Result;
-
-        //    bool isValidChoice;
-        //    do
-        //    {
-        //        r_Screen.ShowMenu(i_WelcomeMsg);
-        //        isValidChoice = UI.GetMenuOptions(out o_Result);
-        //        if (!isValidChoice)
-        //        {
-        //            Screen.ShowMessage("invalid input, try again!");
-        //        }
-        //    }
-        //    while (!isValidChoice);
-
-        //    return o_Result;
-        //}
 
         private void insertNewVehicle(string i_UserLicensePlate)
         {

@@ -57,26 +57,6 @@ namespace Ex03.ConsoleUI
             print(k_GetLicensePlateMsg);
         }
 
-        //public void GetBatteryFromUser()
-        //{
-        //    print(k_GetBatteryMsg);
-        //}
-
-        //public void GetGasFromUser()
-        //{
-        //    print(k_GetGasMsg);
-        //}
-
-        //internal void GetGasTypeFromUSer()
-        //{
-        //    print(k_GetGasTypeMsg);
-        //}
-
-        //internal void GetVehicleStateFromUser()
-        //{
-        //    print(k_GetVehicleStateMsg);
-        //}
-
         private void print(string i_Message)
         {
             Console.WriteLine(i_Message);
@@ -87,11 +67,6 @@ namespace Ex03.ConsoleUI
             Console.Clear();
             print(i_StrMenu);
         }
-
-        //internal void ShowFilters()
-        //{
-        //    print(k_FiltersMsg);
-        //}
 
         internal void Confirmation()
         {

@@ -66,7 +66,7 @@ namespace Ex03.GarageLogic
         }
 
         // TODO elka: max energy function
-        // TODO eviatar: Move carState to VehicleOwner
+        // TODO eviatar: after change the Dictionary Move carState to VehicleOwner 
         public eCarState CarState
         {
             get { return m_CarState; }
