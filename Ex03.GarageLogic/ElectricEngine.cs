@@ -21,6 +21,11 @@ namespace Ex03.GarageLogic
             set { m_MaxBattery = value; }
         }
 
+        public float BatteryLeftPercent
+        {
+            get { return (BatteryLeft / MaxBattery) * 100; }
+        }
+
         /******** Constructor ************/
         public ElectricEngine(float i_BatteryLeft, float i_MaxBattery)
         {
@@ -30,13 +35,11 @@ namespace Ex03.GarageLogic
 
         /******** Methods ************/
 
-        // charge to the max
         internal void ChargeBattery()
         {
             BatteryLeft = MaxBattery;
         }
 
-        // charge by given amount (hours)
         internal void ChargeBattery(float i_EnergyToFill)
         {
             if(BatteryLeft + i_EnergyToFill <= MaxBattery)
@@ -48,8 +51,6 @@ namespace Ex03.GarageLogic
                 throw new ValueOutOfRangeException(MaxBattery - BatteryLeft, 0);
             }
         }
-
-        // TODO : create a property  of how much fuel is left in percent
 
         public override string ToString()
         {

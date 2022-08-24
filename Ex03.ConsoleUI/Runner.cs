@@ -10,9 +10,9 @@ namespace Ex03.ConsoleUI
     {
         private const bool k_IsMenuOption = true;
 
+        private readonly Screen r_Screen;
+        private readonly UserInput r_UserInput;
         private bool m_IsRunning;
-        private Screen m_Screen;
-        private UserInput m_UserInput;
         private GarageManager m_GarageManager;
 
         /******** Properties ************/
@@ -24,12 +24,12 @@ namespace Ex03.ConsoleUI
 
         public Screen Screen
         {
-            get { return m_Screen; }
+            get { return r_Screen; }
         }
 
         public UserInput UI
         {
-            get { return m_UserInput; }
+            get { return r_UserInput; }
         }
 
         public GarageManager Garage
@@ -42,8 +42,8 @@ namespace Ex03.ConsoleUI
         public Runner()
         {
             IsRunning = false;
-            m_Screen = new Screen();
-            m_UserInput = new UserInput();
+            r_Screen = new Screen();
+            r_UserInput = new UserInput();
             List<string> employees = new List<string>() { "Shimon", "Asaf-Plutz", "KMNO" };
 
             m_GarageManager = new GarageManager("Abba Shimon and Sons' garage", employees);
@@ -55,7 +55,6 @@ namespace Ex03.ConsoleUI
             this.IsRunning = true;
             run();
             exitProgram();
-
         }
 
         private void run()
@@ -90,7 +89,7 @@ namespace Ex03.ConsoleUI
                             break;
 
                         case eMenuOptions.FillAirInWheels: // 4
-                            fillAirInWheels(userLicensePlate);
+                            fillAirInWheelsToMax(userLicensePlate);
                             break;
 
                         case eMenuOptions.FillGas: // 5
@@ -110,7 +109,7 @@ namespace Ex03.ConsoleUI
                             break;
 
                         default:
-                            // d(); 
+                            // d();
                             Console.WriteLine("default");
                             break;
                     }
@@ -143,37 +142,22 @@ namespace Ex03.ConsoleUI
 
         private void showAllLicensePlates()
         {
-            Screen.ShowFilters();
             Screen.ShowMessage(Garage.GetDetailsAboutAllVehicles());
 
-            // TODO: move it to const
-            Screen.ShowMessage("Please enter your choice ");
+            Screen.ShowFilters();
             eCarState filterTarget = UI.CarStatePrompt();
 
-            string allCar = Garage.FilterByVehicleState(filterTarget);
-            if (allCar == null)
-            {
-                allCar = "no filter";
-
-                // TODO: move it to const
-            }
-
-            Screen.ShowMessage(allCar);
+            string filteredVehicles = Garage.FilterByVehicleState(filterTarget);
+            Screen.ShowMessage(filteredVehicles);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="i_UserLicensePlate"></param>
-        /// <param name="i_IsUserRequest"></param>
-        /// <returns>True if the license plate exists</returns>
         private bool updateVehicle(string i_UserLicensePlate, bool i_IsUserRequest)
         {
             bool ans = false;
             eCarState carStateTarget = eCarState.Repaired;
 
-            bool isExistsLicensePlates = Garage.DoesLicensePlateExist(i_UserLicensePlate);
-            if (isExistsLicensePlates)
+            bool doesLicensePlateExist = Garage.DoesLicensePlateExist(i_UserLicensePlate);
+            if (doesLicensePlateExist)
             {
                 if (i_IsUserRequest)
                 {
@@ -190,14 +174,12 @@ namespace Ex03.ConsoleUI
             return ans;
         }
 
-        // Fill air in the vehicle
-        private void fillAirInWheels(string i_UserLicensePlate)
+        private void fillAirInWheelsToMax(string i_UserLicensePlate)
         {
-            Garage.FillAir(i_UserLicensePlate); // fill to the max!
+            Garage.FillAir(i_UserLicensePlate);
             Screen.Confirmation();
         }
 
-        // Fill gas in the vehicle and confirm
         private void fillGas(string i_UserLicensePlate)
         {
             float energyToFill = getFloatForUser(Screen.k_GetGasMsg);
@@ -208,7 +190,6 @@ namespace Ex03.ConsoleUI
             Screen.Confirmation();
         }
 
-        // Charge battery in the vehicle and confirm
         private void chargeBattery(string i_UserLicensePlate)
         {
             float energyToFill = getFloatForUser(Screen.k_GetBatteryMsg);
@@ -231,8 +212,8 @@ namespace Ex03.ConsoleUI
                 }
                 catch (FormatException fe)
                 {
-                    Console.WriteLine(string.Format("fe : not in Screen {0}", fe.Message));
                     Screen.ShowError(eErrorType.FormatError);
+                    Screen.ShowMessage(fe.Message);
                 }
             }
             while (userResponse);
@@ -255,8 +236,8 @@ namespace Ex03.ConsoleUI
                 }
                 catch (FormatException fe)
                 {
-                    Console.WriteLine(string.Format("fe : not in Screen {0}", fe.Message));
                     Screen.ShowError(eErrorType.FormatError);
+                    Screen.ShowMessage(fe.Message);
                 }
             }
             while (userResponse);
@@ -289,7 +270,7 @@ namespace Ex03.ConsoleUI
             bool isValidChoice;
             do
             {
-                m_Screen.ShowMenu(i_WelcomeMsg);
+                r_Screen.ShowMenu(i_WelcomeMsg);
                 isValidChoice = UI.GetMenuOptions(out o_Result);
                 if (!isValidChoice)
                 {
@@ -312,17 +293,15 @@ namespace Ex03.ConsoleUI
                 string vehicleType = getNewVehicleType();
                 string msgForAmountOfEnergy = Screen.k_GetBatteryMsg;
 
-                // TODO : move all the string to the screen to be const
-                string msgForMaxEnergy = "What is the max battery?";// TODO: move it to const
-                string vehicleModel = askString("What is the vehicle manufacturer");// TODO: move it to const
-                bool isElectric = askedBoolean("is the Vehicle Electric? (yse / no)");// TODO: move it to const
+                string msgForMaxEnergy = Screen.k_AskMaxBattery;
+                string vehicleModel = askString(Screen.k_AskVehicleManufacturer);
+                bool isElectric = askedBoolean(Screen.k_AskIsElectric);
 
                 if (!isElectric)
                 {
-                    Console.WriteLine(" the car is not Electric");// TODO: move it to const
                     gasTypeToFill = getEGasType();
                     msgForAmountOfEnergy = Screen.k_GetGasMsg;
-                    msgForMaxEnergy = "What is the The contents of the fuel tank?";// TODO: move it to const
+                    msgForMaxEnergy = Screen.k_AskMaxFuel;
                 }
 
                 // TODO: Maybe change the variable names to a different form
@@ -332,24 +311,23 @@ namespace Ex03.ConsoleUI
                 float energyToFill = getFloatForUser(msgForAmountOfEnergy);
                 float maxBattery = getFloatForUser(msgForMaxEnergy);
 
-                int numOfWheels = askInt("How many wheels are there?");                // TODO: move it to const
+                int numOfWheels = askInt(Screen.k_AskHowManyWheels);
 
-                float maxAirPressure = getFloatForUser("What is the max pressure of the wheels?");                // TODO: move it to const
+                float maxAirPressure = getFloatForUser(Screen.k_AskMaxAirPressure);
+                float currentAirPressure = getFloatForUser(Screen.k_AskCurrentAirPressure);
 
-                float currentAirPressure = getFloatForUser("What is the current pressure of the wheels?");                // TODO: move it to const
-
-                string manufacturerWeel = askString("What is the Wheel manufacturer");                // TODO: move it to const
-
+                string manufacturerWeel = askString(Screen.k_AskWheelManufacturer);
                 List<string> argsNeedForNewVehiclem = Garage.GetParams(vehicleType);
                 List<string> userArgsForNewVehicle = new List<string>();
+
                 foreach (string arg in argsNeedForNewVehiclem)
                 {
                     Screen.ShowMessage(string.Format("Please enter {0}", arg));
                     userArgsForNewVehicle.Add(UI.ReadInput());
                 }
 
-                string name = askString("What is the owner name?");                // TODO: move it to const
-                string phoneNumber = askString("What is the owner's phone number?");                 // TODO: move it to const
+                string name = askString(Screen.k_AskOwnerName);
+                string phoneNumber = askString(Screen.k_AskOwnerTelNumber);
 
                 Garage.InsertNewVehicle(i_UserLicensePlate, vehicleType, vehicleModel, isElectric, gasTypeToFill, maxBattery, energyToFill, numOfWheels, maxAirPressure, currentAirPressure, manufacturerWeel, userArgsForNewVehicle, name, phoneNumber);
             }
@@ -361,7 +339,7 @@ namespace Ex03.ConsoleUI
 
         private int askInt(string i_Msg)
         {
-            bool isAns = true;
+            bool isAns = false;
             int ans = 0;
             do
             {
@@ -369,14 +347,14 @@ namespace Ex03.ConsoleUI
                 {
                     Screen.ShowMessage(i_Msg);
                     ans = UI.GetInt(i_Msg);
-                    isAns = false;
+                    isAns = true;
                 }
-                catch
+                catch(FormatException)
                 {
-                    // TODO : add catch
+                    Screen.ShowError(eErrorType.FormatError);
                 }
-
-            } while (isAns);
+            }
+            while (!isAns);
 
             return ans;
         }
@@ -390,7 +368,8 @@ namespace Ex03.ConsoleUI
                 strReslt = UI.ReadInput().ToLower();
 
                 // TDOD: Make this function similar to the second ^^
-            } while (strReslt != "yes" && strReslt != "no");
+            }
+            while (strReslt != "yes" && strReslt != "no");
 
             bool resut = strReslt == "yes";
 
@@ -419,7 +398,7 @@ namespace Ex03.ConsoleUI
             return UI.GetInputFormArray(vehicleTypes, sb.ToString());
         }
 
-        public void d()
+        private void d()
         {
             List<string> args = new List<string>() { "1", "4" };
             Garage.InsertNewVehicle("15145", "car", "wer", false, eGasType.Octan95, 52, 4, 4, 27, 15, "mo", args, "avi", "asdfsad");

@@ -15,18 +15,16 @@ namespace Ex03.ConsoleUI
         // and eulogizes the possible options
         internal bool GetMenuOptions(out eMenuOptions o_Result)
         {
-            return Enum.TryParse<eMenuOptions>(ReadInput(), out o_Result);
+            return Enum.TryParse<eMenuOptions>(ReadInput(), true, out o_Result);
         }
 
         internal string LicensePlatePrompt()
         {
-            // no restrictions :D
             return ReadInput();
         }
 
         internal string GetString()
         {
-            // no restrictions :D
             return ReadInput();
         }
 
@@ -44,7 +42,7 @@ namespace Ex03.ConsoleUI
 
         internal eGasType GasTypePrompt()
         {
-            if(Enum.TryParse<eGasType>(ReadInput(), out eGasType o_GasType))
+            if(Enum.TryParse<eGasType>(ReadInput(), true, out eGasType o_GasType))
             {
                 return o_GasType;
             }
@@ -56,7 +54,7 @@ namespace Ex03.ConsoleUI
 
         internal eCarState CarStatePrompt()
         {
-            if(Enum.TryParse<eCarState>(ReadInput(), out eCarState o_CarState))
+            if(Enum.TryParse<eCarState>(ReadInput(), true, out eCarState o_CarState))
             {
                 return o_CarState;
             }
@@ -65,7 +63,6 @@ namespace Ex03.ConsoleUI
                 throw new FormatException();
             }
         }
-
 
         internal int GetInt(string i_Msg)
         {

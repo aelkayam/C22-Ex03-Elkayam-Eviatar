@@ -5,6 +5,9 @@ namespace Ex03.GarageLogic
 {
     internal class Car : Vehicle
     {
+        private const string k_ColorsOptions = @"Colors:    Black - 1,  Blue - 2,  Gray - 3,  White - 4 ";
+        private const string k_DoorsOptions = @"Number of doors:    Two-Doors - 2,  Three-Doors - 3, Four-Doors - 4, Five-Doors - 5";
+
         // default values:
         private const float k_EnergyLeft = 20f;
         private const eColor k_Color = eColor.Blue;
@@ -49,21 +52,15 @@ namespace Ex03.GarageLogic
 
         /******** Methods ************/
 
-        public override string ToString()
-        {
-            return string.Format(@"{0}Color:{1}     Doors: {2}", base.ToString(), Color, Doors);
-        }
-
         // return electric car model supported by the garage
         public static Car MakeDefaultElectricCar()
         {
             // engine:
             ElectricEngine defaultElectricEngine = new ElectricEngine(0, GarageManager.k_CarMaxBatteryTime);
 
-            return new Car("Manufacturer", "LicesePlate", k_EnergyLeft, new WheelArr(4, "default", 0, GarageManager.k_CarMaxAirPressure), defaultElectricEngine, k_Color, k_Doors);
+            return new Car("Manufacturer", "LicensePlate", k_EnergyLeft, new WheelArr(4, "default", 0, GarageManager.k_CarMaxAirPressure), defaultElectricEngine, k_Color, k_Doors);
         }
 
-        // return gas car model supported by the garage
         public static Car MakeDefaultGasCar()
         {
             // wheels:
@@ -72,12 +69,17 @@ namespace Ex03.GarageLogic
             // engine
             GasEngine defaultGasEngine = new GasEngine(GarageManager.k_CarGasType, 0, GarageManager.k_CarFuelTankCapacity);
 
-            return new Car("Manufacturer", "LicesePlate", k_EnergyLeft, defaultGasCarWheels, defaultGasEngine, k_Color, k_Doors);
+            return new Car("Manufacturer", "LicensePlate", k_EnergyLeft, defaultGasCarWheels, defaultGasEngine, k_Color, k_Doors);
         }
 
+        public override string ToString()
+        {
+            return string.Format(@"{0}Color:{1}     Doors: {2}", base.ToString(), Color, Doors);
+        }
+
+        // return gas car model supported by the garage
         public override bool IsPropertiesEqual(Vehicle i_Other)
         {
-
             bool ans = false;
             bool isEqualType = i_Other is Car;
 
@@ -93,9 +95,8 @@ namespace Ex03.GarageLogic
         {
             List<string> parms = new List<string>
             {
-                // TODO : move the to the be const 
-                "color:  Black - 1,  Blue - 2,  Gray - 3,  White - 4 ",
-                "number of doors: Two-Doors - 2,  Three-Doors - 3, Four-Doors = 4, Five-Doors - 5,",
+                k_ColorsOptions,
+                k_DoorsOptions,
             };
 
             return parms;

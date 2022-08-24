@@ -52,7 +52,7 @@ namespace Ex03.GarageLogic
             // engine:
             ElectricEngine defaultElectricEngine = new ElectricEngine(0, GarageManager.k_MotorbikeMaxBatteryTime);
 
-            return new Motorbike("Manufacturer", "LicesePlate", 0, defaultElectricMotorbikeWheels, defaultElectricEngine, k_License, k_EngineVolume); // default engine capacity for bikes???
+            return new Motorbike("Manufacturer", "LicensePlate", 0, defaultElectricMotorbikeWheels, defaultElectricEngine, k_License, k_EngineVolume); // default engine capacity for bikes???
         }
 
         // return gas motorbike model supported by the garage
@@ -64,7 +64,7 @@ namespace Ex03.GarageLogic
             // engine:
             ElectricEngine defaultGasEngine = new ElectricEngine(0, GarageManager.k_MotorbikeFuelTankCapacity);
 
-            return new Motorbike("Manufacturer", "LicesePlate", 0, defaultGasMotorbikeWheels, defaultGasEngine, k_License, k_EngineVolume); // default engine capacity for bikes???
+            return new Motorbike("Manufacturer", "LicensePlate", 0, defaultGasMotorbikeWheels, defaultGasEngine, k_License, k_EngineVolume); // default engine capacity for bikes???
         }
 
         public override bool IsPropertiesEqual(Vehicle i_Other)
