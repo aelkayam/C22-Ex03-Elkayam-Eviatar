@@ -8,7 +8,7 @@ namespace Ex03.GarageLogic
 {
     internal class WheelArr
     {
-        // TODO :  Move the wheel class to be a nested class
+        // TODO eviatar:  Move the wheel class to be a nested class
         private Wheel[] m_Wheels;
 
         public WheelArr(int i_NumOfWheel, string i_ManufacturerName, float i_CurrentAirPressure, float i_MaxAirPressure)
