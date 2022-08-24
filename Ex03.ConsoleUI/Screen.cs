@@ -12,14 +12,15 @@ namespace Ex03.ConsoleUI
 5   - To fill gas in your vehicle.
 6   - To charge the battery of your vehicle.
 7   - To view the details of your vehicle in the garage.
-0   - To Exit.";
+0   - To Exit.
+";
 
-        private const string k_FiltersMsg = @"===================================
-Filter by vehicle state:
+        private const string k_FiltersMsg = @"Choose filter by vehicle state:
+
 1  - InRepair
 2  - Repaired
 3  - Paid
-===================================";
+";
 
         private const string k_FormatMsg = "Parsing failure, invalid input was typed.";
         private const string k_ArgumentMsg = "Wrong argument was typed.";
@@ -38,6 +39,16 @@ Filter by vehicle state:
         private const string k_ActionSucces = "Successfully done!";
         private const string k_ActionFailure = "Action denied.";
         public const string k_AskForCarType = @"Please enter the type of vehicle you want to enter the garage";
+        public const string k_AskMaxBattery = "What is the max battery?";
+        public const string k_AskVehicleManufacturer = "What is the vehicle manufacturer?";
+        public const string k_AskIsElectric = "is the Vehicle Electric? (yes / no)";
+        public const string k_AskMaxFuel = "What is the max capacity of the fuel tank?";
+        public const string k_AskHowManyWheels = "How many wheels the vehicle has?";
+        public const string k_AskMaxAirPressure = "What is the max pressure of the wheels?";
+        public const string k_AskCurrentAirPressure = "What is the current pressure of the wheels?";
+        public const string k_AskWheelManufacturer = "What is the wheels' manufacturer";
+        public const string k_AskOwnerName = "What is the owner's name?";
+        public const string k_AskOwnerTelNumber = "What is the owner's phone number?";
 
         /******** Methods ************/
         public void ShowMessage(string i_MessageToShow)

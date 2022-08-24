@@ -62,6 +62,7 @@ namespace Ex03.GarageLogic
 
             return sb.ToString();
         }
+
         public override bool Equals(object i_Obj)
         {
             WheelArr wheels = i_Obj as WheelArr;
@@ -96,6 +97,12 @@ namespace Ex03.GarageLogic
             return !i_Left.Equals(i_Right);
         }
 
-
+        public override int GetHashCode()
+        {
+            int hashCode = -659638343;
+            hashCode = (hashCode * -1521134295) + EqualityComparer<Wheel[]>.Default.GetHashCode(m_Wheels);
+            hashCode = (hashCode * -1521134295) + Count.GetHashCode();
+            return hashCode;
+        }
     }
 }

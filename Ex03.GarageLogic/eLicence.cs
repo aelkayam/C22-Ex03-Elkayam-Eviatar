@@ -9,4 +9,5 @@
     }
 
     // TODO: Understand how to use functions in enum
+    // TODO: (answer) we cannot use functions in enums :D
 }
