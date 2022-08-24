@@ -293,17 +293,15 @@ namespace Ex03.ConsoleUI
                 string vehicleType = getNewVehicleType();
                 string msgForAmountOfEnergy = Screen.k_GetBatteryMsg;
 
-                // TODO : move all the string to the screen to be const
-                string msgForMaxEnergy = "What is the max battery?";// TODO: move it to const
-                string vehicleModel = askString("What is the vehicle manufacturer");// TODO: move it to const
-                bool isElectric = askedBoolean("is the Vehicle Electric? (yes / no)");// TODO: move it to const
+                string msgForMaxEnergy = Screen.k_AskMaxBattery;
+                string vehicleModel = askString(Screen.k_AskVehicleManufacturer);
+                bool isElectric = askedBoolean(Screen.k_AskIsElectric);
 
                 if (!isElectric)
                 {
-                    Console.WriteLine(" the car is not Electric");// TODO: move it to const
                     gasTypeToFill = getEGasType();
                     msgForAmountOfEnergy = Screen.k_GetGasMsg;
-                    msgForMaxEnergy = "What is the The contents of the fuel tank?";// TODO: move it to const
+                    msgForMaxEnergy = Screen.k_AskMaxFuel;
                 }
 
                 // TODO: Maybe change the variable names to a different form
@@ -313,24 +311,23 @@ namespace Ex03.ConsoleUI
                 float energyToFill = getFloatForUser(msgForAmountOfEnergy);
                 float maxBattery = getFloatForUser(msgForMaxEnergy);
 
-                int numOfWheels = askInt("How many wheels are there?");                // TODO: move it to const
+                int numOfWheels = askInt(Screen.k_AskHowManyWheels);
 
-                float maxAirPressure = getFloatForUser("What is the max pressure of the wheels?");                // TODO: move it to const
+                float maxAirPressure = getFloatForUser(Screen.k_AskMaxAirPressure);
+                float currentAirPressure = getFloatForUser(Screen.k_AskCurrentAirPressure);
 
-                float currentAirPressure = getFloatForUser("What is the current pressure of the wheels?");                // TODO: move it to const
-
-                string manufacturerWeel = askString("What is the Wheel manufacturer");                // TODO: move it to const
-
+                string manufacturerWeel = askString(Screen.k_AskWheelManufacturer);
                 List<string> argsNeedForNewVehiclem = Garage.GetParams(vehicleType);
                 List<string> userArgsForNewVehicle = new List<string>();
+
                 foreach (string arg in argsNeedForNewVehiclem)
                 {
                     Screen.ShowMessage(string.Format("Please enter {0}", arg));
                     userArgsForNewVehicle.Add(UI.ReadInput());
                 }
 
-                string name = askString("What is the owner name?");                // TODO: move it to const
-                string phoneNumber = askString("What is the owner's phone number?");                 // TODO: move it to const
+                string name = askString(Screen.k_AskOwnerName);
+                string phoneNumber = askString(Screen.k_AskOwnerTelNumber);
 
                 Garage.InsertNewVehicle(i_UserLicensePlate, vehicleType, vehicleModel, isElectric, gasTypeToFill, maxBattery, energyToFill, numOfWheels, maxAirPressure, currentAirPressure, manufacturerWeel, userArgsForNewVehicle, name, phoneNumber);
             }
@@ -342,7 +339,7 @@ namespace Ex03.ConsoleUI
 
         private int askInt(string i_Msg)
         {
-            bool isAns = true;
+            bool isAns = false;
             int ans = 0;
             do
             {
@@ -350,14 +347,14 @@ namespace Ex03.ConsoleUI
                 {
                     Screen.ShowMessage(i_Msg);
                     ans = UI.GetInt(i_Msg);
-                    isAns = false;
+                    isAns = true;
                 }
-                catch
+                catch(FormatException)
                 {
-                    // TODO : add catch
+                    Screen.ShowError(eErrorType.FormatError);
                 }
             }
-            while (isAns);
+            while (!isAns);
 
             return ans;
         }

@@ -39,6 +39,16 @@ namespace Ex03.ConsoleUI
         private const string k_ActionSucces = "Successfully done!";
         private const string k_ActionFailure = "Action denied.";
         public const string k_AskForCarType = @"Please enter the type of vehicle you want to enter the garage";
+        public const string k_AskMaxBattery = "What is the max battery?";
+        public const string k_AskVehicleManufacturer = "What is the vehicle manufacturer?";
+        public const string k_AskIsElectric = "is the Vehicle Electric? (yes / no)";
+        public const string k_AskMaxFuel = "What is the max capacity of the fuel tank?";
+        public const string k_AskHowManyWheels = "How many wheels the vehicle has?";
+        public const string k_AskMaxAirPressure = "What is the max pressure of the wheels?";
+        public const string k_AskCurrentAirPressure = "What is the current pressure of the wheels?";
+        public const string k_AskWheelManufacturer = "What is the wheels' manufacturer";
+        public const string k_AskOwnerName = "What is the owner's name?";
+        public const string k_AskOwnerTelNumber = "What is the owner's phone number?";
 
         /******** Methods ************/
         public void ShowMessage(string i_MessageToShow)

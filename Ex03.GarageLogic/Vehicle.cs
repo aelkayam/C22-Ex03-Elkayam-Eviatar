@@ -68,7 +68,7 @@ namespace Ex03.GarageLogic
                 {
                     if (!(Engine is GasEngine))
                     {
-                        throw new Exception("no engin");
+                        throw new Exception("not suitable engine");
                     }
                 }
 
@@ -147,7 +147,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                engineEqual = ((GasEngine) Engine).Equals(i_Other.Engine);
+                engineEqual = ((GasEngine)Engine).Equals(i_Other.Engine);
             }
 
             return engineEqual;

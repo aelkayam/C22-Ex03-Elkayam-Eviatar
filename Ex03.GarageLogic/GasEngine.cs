@@ -28,6 +28,11 @@ namespace Ex03.GarageLogic
             set { m_MaxGas = value; }
         }
 
+        public float GasLeftPercent
+        {
+            get { return (GasLeft / MaxGas) * 100; }
+        }
+
         /******** Constructor ************/
         public GasEngine(eGasType i_GasType, float i_GasLeft, float i_MaxGas)
         {
@@ -38,13 +43,11 @@ namespace Ex03.GarageLogic
 
         /******** Methods ************/
 
-        // fill tank to the max
         public void FillTank()
         {
             GasLeft = MaxGas;
         }
 
-        // fill tank by given amount (liters)
         public void FillTank(float i_GasToFill, eGasType i_GasTypeToFill)
         {
             if(i_GasTypeToFill == GasType)

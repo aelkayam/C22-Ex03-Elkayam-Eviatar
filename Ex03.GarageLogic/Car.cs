@@ -5,6 +5,9 @@ namespace Ex03.GarageLogic
 {
     internal class Car : Vehicle
     {
+        private const string k_ColorsOptions = @"Colors:    Black - 1,  Blue - 2,  Gray - 3,  White - 4 ";
+        private const string k_DoorsOptions = @"Number of doors:    Two-Doors - 2,  Three-Doors - 3, Four-Doors - 4, Five-Doors - 5";
+
         // default values:
         private const float k_EnergyLeft = 20f;
         private const eColor k_Color = eColor.Blue;
@@ -92,9 +95,8 @@ namespace Ex03.GarageLogic
         {
             List<string> parms = new List<string>
             {
-                // TODO : move the to the be const 
-                "color:  Black - 1,  Blue - 2,  Gray - 3,  White - 4 ",
-                "number of doors: Two-Doors - 2,  Three-Doors - 3, Four-Doors = 4, Five-Doors - 5,",
+                k_ColorsOptions,
+                k_DoorsOptions,
             };
 
             return parms;
