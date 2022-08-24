@@ -5,6 +5,12 @@ namespace Ex03.GarageLogic
 {
     internal class Motorbike : Vehicle
     {
+        private const byte k_MotorbikeNumOfWheels = 2;
+        private const byte k_MotorbikeMaxAirPressure = 31;
+        private const float k_MotorbikeMaxBatteryTime = 2.8f;
+        private const float k_MotorbikeFuelTankCapacity = 5.4f;
+
+        private const eGasType k_MotorbikeGasType = eGasType.Octan98;
         private const eLicense k_License = eLicense.A;
         private const int k_EngineVolume = 1000;
 
@@ -47,24 +53,24 @@ namespace Ex03.GarageLogic
         public static Motorbike MakeDefaultElectricMotorbike()
         {
             // wheels:
-            WheelArr defaultElectricMotorbikeWheels = new WheelArr(2, "default", 0, GarageManager.k_MotorbikeMaxAirPressure);
+            WheelArr defaultElectricMotorbikeWheels = new WheelArr(k_MotorbikeNumOfWheels, "default", 0, k_MotorbikeMaxAirPressure);
 
             // engine:
-            ElectricEngine defaultElectricEngine = new ElectricEngine(0, GarageManager.k_MotorbikeMaxBatteryTime);
+            ElectricEngine defaultElectricEngine = new ElectricEngine(0, k_MotorbikeMaxBatteryTime);
 
-            return new Motorbike("Manufacturer", "LicensePlate", defaultElectricMotorbikeWheels, defaultElectricEngine, k_License, k_EngineVolume); // default engine capacity for bikes???
+            return new Motorbike("Manufacturer", "LicensePlate", defaultElectricMotorbikeWheels, defaultElectricEngine, k_License, k_EngineVolume);
         }
 
         // return gas motorbike model supported by the garage
         public static Motorbike MakeDefaultGasMotorbike()
         {
             // wheels:
-            WheelArr defaultGasMotorbikeWheels = new WheelArr(2, "default", 0, GarageManager.k_MotorbikeMaxAirPressure);
+            WheelArr defaultGasMotorbikeWheels = new WheelArr(2, "default", 0, k_MotorbikeMaxAirPressure);
 
             // engine:
-            ElectricEngine defaultGasEngine = new ElectricEngine(0, GarageManager.k_MotorbikeFuelTankCapacity);
+            GasEngine defaultGasEngine = new GasEngine(k_MotorbikeGasType, 0, k_MotorbikeFuelTankCapacity);
 
-            return new Motorbike("Manufacturer", "LicensePlate", defaultGasMotorbikeWheels, defaultGasEngine, k_License, k_EngineVolume); // default engine capacity for bikes???
+            return new Motorbike("Manufacturer", "LicensePlate", defaultGasMotorbikeWheels, defaultGasEngine, k_License, k_EngineVolume);
         }
 
         public override bool IsPropertiesEqual(Vehicle i_Other)

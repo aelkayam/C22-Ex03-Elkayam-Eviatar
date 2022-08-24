@@ -8,8 +8,12 @@ namespace Ex03.GarageLogic
 {
     internal class Truck : Vehicle
     {
-        private const bool k_IsRefrigerated = false;
+        private const byte k_TruckNumOfWheels = 16;
+        private const byte k_TruckMaxAirPressure = 25;
+        private const float k_TruckFuelTankCapacity = 135f;
         private const float k_MaxCapacity = 2000;
+        private const bool k_IsRefrigerated = false;
+        private const eGasType k_TruckGasType = eGasType.Soler;
 
         private readonly bool r_IsRefrigerator;
         private readonly float r_MaxCapacity;
@@ -39,10 +43,10 @@ namespace Ex03.GarageLogic
         public static Truck MakeDefaultTruck()
         {
             // wheels:
-            WheelArr defaultTruckWheels = new WheelArr(GarageManager.k_TruckNumOfWheels, "default", 0, GarageManager.k_TruckMaxAirPressure);
+            WheelArr defaultTruckWheels = new WheelArr(k_TruckNumOfWheels, "default", 0, k_TruckMaxAirPressure);
 
             // engine:
-            GasEngine defaultTruckEngine = new GasEngine(GarageManager.k_TruckGasType, 0, GarageManager.k_TruckFuelTankCapacity);
+            GasEngine defaultTruckEngine = new GasEngine(k_TruckGasType, 0, k_TruckFuelTankCapacity);
 
             Truck defaultTruck = new Truck("Manufacturer", "LicensePlate", defaultTruckWheels, defaultTruckEngine, k_IsRefrigerated, k_MaxCapacity);
 
@@ -58,7 +62,6 @@ namespace Ex03.GarageLogic
 
             if (isEqualType)
             {
-
                 ans = ((Vehicle)this).IsPropertiesEqual(i_Other);
             }
 
