@@ -16,8 +16,6 @@ namespace Ex03.ConsoleUI
         public const string k_GetGasMsg = "Please enter how much gas you want to fill:";
 
         private const string k_GetVehicleStateMsg = "Please enter the new state (Repaired/Paid):";
-        private const string k_ActionSucces = "Successfully done!";
-        private const string k_ActionFailure = "Action denied.";
         public const string k_AskForCarType = @"Please enter the type of vehicle you want to enter the garage";
         public const string k_AskMaxBattery = "What is the max battery?";
         public const string k_AskVehicleManufacturer = "What is the vehicle manufacturer?";
@@ -29,6 +27,9 @@ namespace Ex03.ConsoleUI
         public const string k_AskWheelManufacturer = "What is the wheels' manufacturer";
         public const string k_AskOwnerName = "What is the owner's name?";
         public const string k_AskOwnerTelNumber = "What is the owner's phone number?";
+        private const string k_ActionSucces = "Successfully done!";
+        private const string k_UpdateSuccess = "vehicle updated to '{0}'";
+        private const string k_ActionFailure = "Action denied.";
 
         /******** Methods ************/
         public void ShowMessage(string i_MessageToShow)
@@ -71,6 +72,11 @@ namespace Ex03.ConsoleUI
         internal void Confirmation()
         {
             print(k_ActionSucces);
+        }
+
+        internal void Confirmation(string i_Args)
+        {
+            print(string.Format(k_UpdateSuccess, i_Args));
         }
 
         internal void Failure()

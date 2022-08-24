@@ -7,8 +7,10 @@ namespace Ex03.GarageLogic
 {
     public class GarageManager
     {
-        // TODO elka: move to appropriate departments
         private const string k_InsertionFailed = "{0} : The insertion of the new vehicle failed ";
+
+        private static readonly List<Vehicle> sr_ValidVehicles;
+        private static readonly Random sr_Random = new Random();
 
         /** Member values of the object         **/
         private readonly List<string> r_EmployeeNames;
@@ -17,38 +19,6 @@ namespace Ex03.GarageLogic
         private readonly Dictionary<string, Vehicle> r_AllVehicles;
         private readonly Dictionary<string, VehicleOwner> r_AllOwners;
         private string m_Name;
-
-        /** Default values vehicles that can enter the garage **/
-
-        // Default number of wheels
-        internal const byte k_MotorbikeNumOfWheels = 2;
-        internal const byte k_CarNumOfWheels = 4;
-        internal const byte k_TruckNumOfWheels = 16;
-
-        // Default pressure values
-        internal const byte k_MotorbikeMaxAirPressure = 31;
-        internal const byte k_CarMaxAirPressure = 27;
-        internal const byte k_TruckMaxAirPressure = 25;
-
-        // Default fuel type
-        internal const eGasType k_MotorbikeGasType = eGasType.Octan98;
-        internal const eGasType k_CarGasType = eGasType.Octan95;
-        internal const eGasType k_TruckGasType = eGasType.Soler;
-
-        // Default Maximum battery time
-        internal const float k_MotorbikeMaxBatteryTime = 2.8f;
-        internal const float k_CarMaxBatteryTime = 4.5f;
-
-        // Default Fuel tank contents
-        internal const float k_MotorbikeFuelTankCapacity = 5.4f;
-        internal const float k_CarFuelTankCapacity = 52f;
-        internal const float k_TruckFuelTankCapacity = 135f;
-
-        // Default Truck Refrigerated
-        internal const bool k_TruckRefrigerated = true;
-
-        private static readonly List<Vehicle> sr_ValidVehicles;
-        private static readonly Random sr_Random = new Random();
 
         /******** Properties ************/
         public string Name
@@ -243,13 +213,11 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public eCarState UpdateCarState(string i_UserLicensePlate, eCarState i_CarStateTarget)
+        public void UpdateCarState(string i_UserLicensePlate, eCarState i_CarStateTarget)
         {
             if (checkIfExist(i_UserLicensePlate, out Vehicle o_TargetVehicle))
             {
                 o_TargetVehicle.UpdateVehicleState(i_CarStateTarget);
-                // TODO elka: add correct message
-                return o_TargetVehicle.CarState;
             }
             else
             {
