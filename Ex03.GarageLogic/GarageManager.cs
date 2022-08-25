@@ -210,7 +210,7 @@ namespace Ex03.GarageLogic
 
             foreach (Vehicle v in sr_ValidVehicles)
             {
-                ans = i_NewVehicle.IsPropertiesEqual(v);
+                ans = i_NewVehicle.ArePropertiesEqual(v);
 
                 if (ans)
                 {

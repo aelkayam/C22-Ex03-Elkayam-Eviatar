@@ -129,9 +129,9 @@ namespace Ex03.GarageLogic
             /******** Constructor ************/
             public Wheel(string i_ManufacturerName, float i_CurrentAirPressure, float i_MaxAirPressure)
             {
-                bool isParmsValid = i_CurrentAirPressure < i_MaxAirPressure && i_MaxAirPressure > 0 && i_CurrentAirPressure >= 0;
+                bool isParamsValid = i_CurrentAirPressure < i_MaxAirPressure && i_MaxAirPressure > 0 && i_CurrentAirPressure >= 0;
 
-                if (!isParmsValid)
+                if (!isParamsValid)
                 {
                     throw new ValueOutOfRangeException(i_MaxAirPressure, i_CurrentAirPressure);
                 }

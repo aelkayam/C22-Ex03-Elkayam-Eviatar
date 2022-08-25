@@ -44,8 +44,8 @@ namespace Ex03.ConsoleUI
         {
             IsRunning = false;
             m_GarageManager = new GarageManager();
-            r_Screen = new Screen();
-            r_UserInput = new UserInput();
+            r_Screen = default;
+            r_UserInput = default;
             r_Menu = new Menu(r_Screen, r_UserInput);
         }
 

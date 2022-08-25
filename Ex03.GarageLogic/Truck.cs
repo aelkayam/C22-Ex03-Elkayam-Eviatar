@@ -63,7 +63,7 @@ namespace Ex03.GarageLogic
             return defaultTruck;
         }
 
-        public override bool IsPropertiesEqual(Vehicle i_Other)
+        public override bool ArePropertiesEqual(Vehicle i_Other)
         {
             bool ans = false;
 
@@ -71,7 +71,7 @@ namespace Ex03.GarageLogic
 
             if (isEqualType)
             {
-                ans = ((Vehicle)this).IsPropertiesEqual(i_Other);
+                ans = ((Vehicle)this).ArePropertiesEqual(i_Other);
             }
 
             return ans;

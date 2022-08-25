@@ -152,7 +152,7 @@ namespace Ex03.GarageLogic
                 CarState = i_CarStateTarget;
         }
 
-        public virtual bool IsPropertiesEqual(Vehicle i_Other)
+        public virtual bool ArePropertiesEqual(Vehicle i_Other)
         {
             bool engineEqual = isEngineEqual(i_Other);
             bool wheelsEqual = Wheels == i_Other.Wheels;

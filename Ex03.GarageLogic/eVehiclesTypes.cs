@@ -2,8 +2,5 @@
 {
     public enum eVehiclesTypes
     {
-        Motorbike,
-        Car,
-        Truck,
     }
 }
