@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Ex03.ConsoleUI
 {
@@ -27,8 +24,6 @@ namespace Ex03.ConsoleUI
 
         public Menu(Screen i_Screen, UserInput i_UserInput)
         {
-            Console.WriteLine("in Menu const");
-
             r_Screen = i_Screen;
             r_UserInput = i_UserInput;
         }
@@ -42,7 +37,7 @@ namespace Ex03.ConsoleUI
             do
             {
                 r_Screen.ShowMenu(k_MenuMsg);
-                isValidChoice = GetMenuOptions(out o_Result);
+                isValidChoice = getMenuOptions(out o_Result);
                 if (!isValidChoice)
                 {
                     r_Screen.ShowMessage("invalid input, try again!");
@@ -54,7 +49,7 @@ namespace Ex03.ConsoleUI
             return o_Result;
         }
 
-        private bool GetMenuOptions(out eMenuOptions o_Results)
+        private bool getMenuOptions(out eMenuOptions o_Results)
         {
             bool isValid = false;
             try
@@ -65,7 +60,6 @@ namespace Ex03.ConsoleUI
             catch
             {
                 o_Results = default;
-                Console.WriteLine("catch getMEnuOptions");
             }
 
             return isValid;
@@ -107,7 +101,7 @@ namespace Ex03.ConsoleUI
                     result = enumPrompt<TEnum>();
                     isValid = true;
                 }
-                catch(Exception e)
+                catch(Exception)
                 {
                     r_Screen.ShowError(eErrorType.FormatError);
                 }

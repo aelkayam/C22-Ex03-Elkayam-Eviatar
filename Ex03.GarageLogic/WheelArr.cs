@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
     internal class WheelArr
     {
-        private Wheel[] m_Wheels;
+        private readonly Wheel[] r_Wheels;
 
         public WheelArr(int i_NumOfWheel, string i_ManufacturerName, float i_CurrentAirPressure, float i_MaxAirPressure)
         {
-            this.m_Wheels = new Wheel[i_NumOfWheel];
+            this.r_Wheels = new Wheel[i_NumOfWheel];
+
             for (int j = 0; j < i_NumOfWheel; j++)
             {
                 this[j] = new Wheel(i_ManufacturerName, i_CurrentAirPressure, i_MaxAirPressure);
@@ -21,23 +20,23 @@ namespace Ex03.GarageLogic
 
         public WheelArr(int i_NumOfWheel)
         {
-            this.m_Wheels = new Wheel[i_NumOfWheel];
+            this.r_Wheels = new Wheel[i_NumOfWheel];
         }
 
         public int Count
         {
-            get { return m_Wheels.Length; }
+            get { return r_Wheels.Length; }
         }
 
         private Wheel this[int i]
         {
-            get { return m_Wheels[i]; }
-            set { m_Wheels[i] = value; }
+            get { return r_Wheels[i]; }
+            set { r_Wheels[i] = value; }
         }
 
         public void FillAir()
         {
-            foreach (Wheel wheel in m_Wheels)
+            foreach (Wheel wheel in r_Wheels)
             {
                 wheel.FillAir();
             }
@@ -45,7 +44,7 @@ namespace Ex03.GarageLogic
 
         public void FillAir(float i_AirPressureToAdd)
         {
-            foreach (Wheel wheel in m_Wheels)
+            foreach (Wheel wheel in r_Wheels)
             {
                 wheel.FillAir(i_AirPressureToAdd);
             }
@@ -53,8 +52,8 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder("wheels:");
-            foreach (Wheel w in m_Wheels)
+            StringBuilder sb = new StringBuilder("wheels: ");
+            foreach (Wheel w in r_Wheels)
             {
                 sb.AppendFormat(w.ToString());
             }
@@ -64,18 +63,16 @@ namespace Ex03.GarageLogic
 
         public override bool Equals(object i_Obj)
         {
-            WheelArr wheels = i_Obj as WheelArr;
-
             bool ans = true;
-            if ((object)wheels == null)
+            if (!(i_Obj is WheelArr wheels))
             {
                 ans = false;
             }
             else
             {
-                for (int i = 0; i < m_Wheels.Length; i++)
+                for (int i = 0; i < r_Wheels.Length; i++)
                 {
-                    if (!this[i].Equals(wheels.m_Wheels[i]))
+                    if (!this[i].Equals(wheels.r_Wheels[i]))
                     {
                         ans = false;
                         break;
@@ -99,7 +96,7 @@ namespace Ex03.GarageLogic
         public override int GetHashCode()
         {
             int hashCode = -659638343;
-            hashCode = (hashCode * -1521134295) + EqualityComparer<Wheel[]>.Default.GetHashCode(m_Wheels);
+            hashCode = (hashCode * -1521134295) + EqualityComparer<Wheel[]>.Default.GetHashCode(r_Wheels);
             hashCode = (hashCode * -1521134295) + Count.GetHashCode();
             return hashCode;
         }
@@ -175,7 +172,7 @@ namespace Ex03.GarageLogic
 
             public override string ToString()
             {
-                return string.Format(@"Current: {0}     Max: {1}", CurrentAirPressure, MaxAirPressure);
+                return string.Format(@" Current: {0}    Max: {1} ", CurrentAirPressure, MaxAirPressure);
             }
 
             public override bool Equals(object i_Obj)

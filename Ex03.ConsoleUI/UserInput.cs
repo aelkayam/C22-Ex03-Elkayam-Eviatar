@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
 {
@@ -23,9 +22,9 @@ namespace Ex03.ConsoleUI
 
         internal float EnergyToFillPrompt()
         {
-            if(float.TryParse(ReadInput(), out float value))
+            if(float.TryParse(ReadInput(), out float o_Value))
             {
-                return value;
+                return o_Value;
             }
             else
             {
@@ -33,11 +32,11 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        internal int GetInt(string i_Msg)
+        internal int GetInt()
         {
-            if (int.TryParse(ReadInput(), out int o_reslt))
+            if (int.TryParse(ReadInput(), out int o_Result))
             {
-                return o_reslt;
+                return o_Result;
             }
             else
             {
@@ -45,11 +44,10 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        internal string GetInputFormArray(List<string> i_StrArrValues, params string[] i_AnotherMessage)
+        internal string GetInputFormArray(List<string> i_StrArrValues)
         {
-            bool isUserchooseFormArray = false;
-            string result = string.Empty;
-
+            bool isUserchooseFormArray;
+            string result;
             do
             {
                 result = ReadInput().Trim().ToLower();

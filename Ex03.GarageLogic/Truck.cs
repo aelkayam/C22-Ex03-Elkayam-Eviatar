@@ -65,7 +65,6 @@ namespace Ex03.GarageLogic
 
         public override bool IsPropertiesEqual(Vehicle i_Other)
         {
-            Console.WriteLine("in IsPropertiesEqual of truck ");
             bool ans = false;
 
             bool isEqualType = i_Other is Truck;

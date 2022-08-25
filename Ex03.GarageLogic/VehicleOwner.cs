@@ -1,32 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
     internal struct VehicleOwner
     {
-        private string m_OwnerName;
+        private readonly string r_OwnerName;
 
         public string OwnerName
         {
-            get { return m_OwnerName; }
+            get { return r_OwnerName; }
         }
 
-        private string m_OwnerTel;
+        private readonly string r_OwnerTel;
 
         public string OwnerTel
         {
-            get { return m_OwnerTel; }
+            get { return r_OwnerTel; }
         }
 
-        private string m_LicensePlate;
+        private readonly string r_LicensePlate;
 
         public string LicensePlate
         {
-            get { return m_LicensePlate; }
+            get { return r_LicensePlate; }
         }
 
         private Vehicle m_Vehicle;
@@ -47,14 +45,11 @@ namespace Ex03.GarageLogic
 
         public VehicleOwner(string i_OwnerName, string i_OwnerTel, string i_LicensePlate, Vehicle i_Vehicle)
         {
-            m_OwnerName = i_OwnerName;
-            m_OwnerTel = i_OwnerTel;
-            m_LicensePlate = i_LicensePlate;
+            r_OwnerName = i_OwnerName;
+            r_OwnerTel = i_OwnerTel;
+            r_LicensePlate = i_LicensePlate;
             m_VehicleState = eCarState.InRepair;
             m_Vehicle = i_Vehicle;
         }
-
-
-
     }
 }

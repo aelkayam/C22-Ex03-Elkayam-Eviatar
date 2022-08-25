@@ -1,22 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
 
 namespace Ex03.GarageLogic
 {
     internal abstract class Vehicle
     {
-        private const eCarState k_ECarStateDefault = eCarState.InRepair;  // move it 
-
-        private readonly string r_LicensePlate; // different
-
-        // relevant for compare
+        private const eCarState k_ECarStateDefault = eCarState.InRepair;
+        private readonly string r_LicensePlate;
         private readonly string r_ModelName;
         private readonly WheelArr r_Wheels;
-        private object m_Engine; // gas or electric
-
-        // irrelevant for compare
+        private object m_Engine;
         private eCarState m_CarState;
 
         /******** Properties ************/
@@ -83,7 +75,6 @@ namespace Ex03.GarageLogic
             }
         }
 
-        // TODO eviatar: Move carState to VehicleOwner
         public eCarState CarState
         {
             get { return m_CarState; }
@@ -129,7 +120,6 @@ namespace Ex03.GarageLogic
         }
 
         /******** Methods ************/
-
         public override bool Equals(object obj)
         {
             bool results = false;
@@ -142,15 +132,14 @@ namespace Ex03.GarageLogic
             return results;
         }
 
-        // license plate comparison
-        public static bool operator ==(Vehicle i_vehicle1, Vehicle i_vehicle2)
+        public static bool operator ==(Vehicle i_Vehicle1, Vehicle i_Vehicle2)
         {
-            return i_vehicle1.LicencePlate == i_vehicle2.LicencePlate;
+            return i_Vehicle1.LicencePlate == i_Vehicle2.LicencePlate;
         }
 
-        public static bool operator !=(Vehicle i_vehicle1, Vehicle i_vehicle2)
+        public static bool operator !=(Vehicle i_Vehicle1, Vehicle i_Vehicle2)
         {
-            return i_vehicle1 != i_vehicle2;
+            return i_Vehicle1 != i_Vehicle2;
         }
 
         public override int GetHashCode()
@@ -165,7 +154,6 @@ namespace Ex03.GarageLogic
 
         public virtual bool IsPropertiesEqual(Vehicle i_Other)
         {
-            Console.WriteLine("in v");
             bool engineEqual = isEngineEqual(i_Other);
             bool wheelsEqual = Wheels == i_Other.Wheels;
 
