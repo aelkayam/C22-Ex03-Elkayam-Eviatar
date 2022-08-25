@@ -11,6 +11,7 @@ namespace Ex03.GarageLogic
         public WheelArr(int i_NumOfWheel, string i_ManufacturerName, float i_CurrentAirPressure, float i_MaxAirPressure)
         {
             this.r_Wheels = new Wheel[i_NumOfWheel];
+
             for (int j = 0; j < i_NumOfWheel; j++)
             {
                 this[j] = new Wheel(i_ManufacturerName, i_CurrentAirPressure, i_MaxAirPressure);
@@ -51,7 +52,7 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder("wheels:");
+            StringBuilder sb = new StringBuilder("wheels: ");
             foreach (Wheel w in r_Wheels)
             {
                 sb.AppendFormat(w.ToString());

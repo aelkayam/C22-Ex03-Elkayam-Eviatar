@@ -43,12 +43,10 @@ namespace Ex03.ConsoleUI
         public Runner()
         {
             IsRunning = false;
+            m_GarageManager = new GarageManager();
             r_Screen = new Screen();
             r_UserInput = new UserInput();
             r_Menu = new Menu(r_Screen, r_UserInput);
-            List<string> employees = new List<string>() { "Shimon", "Asaf-Plutz", "KMNO" };
-
-            m_GarageManager = new GarageManager("Abba Shimon and Sons' garage", employees);
         }
 
         /******** Methods ************/
@@ -61,9 +59,7 @@ namespace Ex03.ConsoleUI
 
         private void run()
         {
-            Screen.ShowMessage(string.Format("Welcome to {0} garage", Garage.Name));
-            d();
-
+            Screen.ShowMessage("Welcome to our garage!");
             while (IsRunning)
             {
                 try
@@ -79,46 +75,39 @@ namespace Ex03.ConsoleUI
 
                     switch (eMenu)
                     {
-                        case eMenuOptions.InsertVehicle: // 1
+                        case eMenuOptions.InsertVehicle:
                             insertNewVehicle(userLicensePlate);
                             break;
 
-                        case eMenuOptions.AllLicensePlates: // 2
+                        case eMenuOptions.AllLicensePlates:
                             showAllLicensePlates();
                             break;
 
-                        case eMenuOptions.UpdateVehicle: // 3
+                        case eMenuOptions.UpdateVehicle:
                             updateVehicle(userLicensePlate, k_IsMenuOption);
                             break;
 
-                        case eMenuOptions.FillAirInWheels: // 4
+                        case eMenuOptions.FillAirInWheels:
                             fillAirInWheelsToMax(userLicensePlate);
                             break;
 
-                        case eMenuOptions.FillGas: // 5
+                        case eMenuOptions.FillGas:
                             fillGas(userLicensePlate);
                             break;
 
-                        case eMenuOptions.ChargeBattery: // 6
+                        case eMenuOptions.ChargeBattery:
                             chargeBattery(userLicensePlate);
                             break;
 
-                        case eMenuOptions.ShowDetails: // 7
+                        case eMenuOptions.ShowDetails:
                             showDetails(userLicensePlate);
                             break;
 
-                        case eMenuOptions.Exit: // 0
+                        case eMenuOptions.Exit:
                             stopProgram();
-                            break;
-
-                        default:
-                            // d();
-                            Console.WriteLine("default");
                             break;
                     }
                 }
-
-                // TODO: check the order (~what order?)
                 catch (FormatException fe)
                 {
                     Screen.ShowError(eErrorType.FormatError);
@@ -173,7 +162,7 @@ namespace Ex03.ConsoleUI
             }
             else
             {
-                throw new ArgumentException(string.Format("{0} : name your license plate in not in my Garage", Garage.Owner));
+                throw new ArgumentException("name This license plate is not in our garage");
             }
 
             return ans;
@@ -308,7 +297,7 @@ namespace Ex03.ConsoleUI
                 try
                 {
                     Screen.ShowMessage(i_Msg);
-                    ans = UI.GetInt(i_Msg);
+                    ans = UI.GetInt();
                     isAns = true;
                 }
                 catch(FormatException)
@@ -328,8 +317,6 @@ namespace Ex03.ConsoleUI
             {
                 Screen.ShowMessage(i_Msg);
                 strReslt = UI.ReadInput().ToLower();
-
-                // TDOD: Make this function similar to the second ^^
             }
             while (strReslt != "yes" && strReslt != "no");
 
@@ -357,15 +344,7 @@ namespace Ex03.ConsoleUI
 
             Screen.ShowMessage(sb.ToString());
 
-            return UI.GetInputFormArray(vehicleTypes, sb.ToString());
-        }
-
-        private void d()
-        {
-            List<string> args = new List<string>() { "1", "4" };
-            Garage.InsertNewVehicle("15145", "car", "wer", false, eGasType.Octan95, 52, 4, 4, 27, 15, "mo", args, "avi", "asdfsad");
-            Garage.InsertNewVehicle("15165", "car", "wer", false, eGasType.Octan95, 52, 4, 4, 27, 15, "mo", args, "avi", "asdfsad");
-            Garage.InsertNewVehicle("15163", "car", "wer", false, eGasType.Octan95, 52, 4, 4, 27, 15, "mo", args, "avi", "asdfsad");
+            return UI.GetInputFormArray(vehicleTypes);
         }
     }
 }
