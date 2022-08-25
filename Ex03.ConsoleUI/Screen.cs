@@ -2,7 +2,7 @@
 
 namespace Ex03.ConsoleUI
 {
-    internal class Screen
+    internal struct Screen
     {
         public const string k_FiltersMsg = "Choose vehicle state:";
 

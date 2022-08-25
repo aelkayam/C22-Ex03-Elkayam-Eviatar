@@ -128,7 +128,7 @@ namespace Ex03.ConsoleUI
                     Screen.ShowMessage(e.Message);
                 }
 
-                Thread.Sleep(5000);
+                waitForKeyPress();
             } // END OF WHILE
         }
 
@@ -162,7 +162,7 @@ namespace Ex03.ConsoleUI
             }
             else
             {
-                throw new ArgumentException("name This license plate is not in our garage");
+                throw new ArgumentException("This license plate is not in our garage");
             }
 
             return ans;
@@ -219,6 +219,12 @@ namespace Ex03.ConsoleUI
         private void showDetails(string i_UserLicensePlate)
         {
             Screen.ShowMessage(Garage.GetDetailsAboutVehicle(i_UserLicensePlate));
+        }
+
+        private void waitForKeyPress()
+        {
+            Screen.ShowMessage("\nPlease enter any key to continue...");
+            UI.ReadInput();
         }
 
         private void stopProgram()
