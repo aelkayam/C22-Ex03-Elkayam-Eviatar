@@ -72,14 +72,14 @@ namespace Ex03.GarageLogic
             return new Motorbike("Manufacturer", "LicensePlate", defaultGasMotorbikeWheels, defaultGasEngine, k_License, k_EngineVolume);
         }
 
-        public override bool IsPropertiesEqual(Vehicle i_Other)
+        public override bool ArePropertiesEqual(Vehicle i_Other)
         {
             bool ans = false;
             bool isEqualType = i_Other is Motorbike;
 
             if (isEqualType)
             {
-                ans = ((Vehicle)this).IsPropertiesEqual(i_Other);
+                ans = ((Vehicle)this).ArePropertiesEqual(i_Other);
             }
 
             return ans;

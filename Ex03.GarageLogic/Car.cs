@@ -82,14 +82,14 @@ namespace Ex03.GarageLogic
             return string.Format(@"{0}Color:{1}     Doors: {2}", base.ToString(), Color, Doors);
         }
 
-        public override bool IsPropertiesEqual(Vehicle i_Other)
+        public override bool ArePropertiesEqual(Vehicle i_Other)
         {
             bool ans = false;
             bool isEqualType = i_Other is Car;
 
             if (isEqualType)
             {
-                ans = base.IsPropertiesEqual(i_Other);
+                ans = base.ArePropertiesEqual(i_Other);
             }
 
             return ans;
