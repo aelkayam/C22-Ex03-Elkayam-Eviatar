@@ -346,18 +346,18 @@ namespace Ex03.GarageLogic
         private Car createNewCar(string i_LicensePlate, string i_ModelName, bool i_IsElectric, object i_Engine, WheelArr i_Wheels, List<string> i_UserArgsForNewVehicle)
         {
             Car car;
-            bool success1 = Enum.TryParse<eColor>(i_UserArgsForNewVehicle[0], out eColor o_color);
+            bool success1 = Enum.TryParse<eColor>(i_UserArgsForNewVehicle[0], out eColor o_Color);
             bool success2 = Enum.TryParse<eDoors>(i_UserArgsForNewVehicle[1], out eDoors o_Doors);
 
             if (success1 && success2)
             {
                 if (i_IsElectric)
                 {
-                    car = new Car(i_ModelName, i_LicensePlate, i_Wheels, (ElectricEngine)i_Engine, o_color, o_Doors);
+                    car = new Car(i_ModelName, i_LicensePlate, i_Wheels, (ElectricEngine)i_Engine, o_Color, o_Doors);
                 }
                 else
                 {
-                    car = new Car(i_ModelName, i_LicensePlate, i_Wheels, (GasEngine)i_Engine, o_color, o_Doors);
+                    car = new Car(i_ModelName, i_LicensePlate, i_Wheels, (GasEngine)i_Engine, o_Color, o_Doors);
                     }
                 }
             else
